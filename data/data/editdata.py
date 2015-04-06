@@ -21,7 +21,7 @@ for trip in trips:
 	except:
 		trip[7] = None
 path = "hubway_trips_compressed.csv" 
-#os.remove(path)
+os.remove(path)
 datafile = csv.writer(open(path,'a'))
 datafile.writerow(header)
 datafile.writerows(trips)
