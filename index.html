@@ -1,18 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <head lang="en">
-    <meta charset="UTF-8">
-    <title>DataHub</title>
-    <!-- ADD javascript-->
-    <script src="js/d3.min.js" charset="utf-8"></script>
-    <script src="js/jquery-2.1.3.min.js" charset="utf-8"></script>
-    <script src="js/bootstrap.min.js" charset="utf-8"></script>
-    <!--Stylesheets-->
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <title>datahub</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.css' rel='stylesheet' />
+    <style>
+    body {
+		padding-top: 60px;
+	}
+	#map {
+		height:600px;
+	}
+	</style>
   </head>
 
   <body>
-  </body>
 
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#" style="color:lightgreen">datahub</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">overview</a></li>
+            <li><a href="#">interesting findings</a></li>
+            <li><a href="#">digging deeper</a></li>
+            <li><a href="#">process book</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+    <table class="table">
+	    <thead>
+	    	<tr>
+	    		<th width="25%"></th>
+	    		<th></th>
+	    	</tr>
+	    </thead>
+	    <tbody>
+	    	<tr>
+	    		<td style="background-color:lightcoral">SIDEBAR ERRBODY</td>
+	    		<td><div id="map"></div></td>
+	    	</tr>
+	    </tbody>
+    </table>
+
+    <table class="table">
+	    <thead>
+	    	<tr>
+	    		<th></th>
+	    	</tr>
+	    </thead>
+	    <tbody>
+	    	<tr>
+	    		<td style="background-color:yellowgreen">OTHER THINGS?!</td>
+	    	</tr>
+	    </tbody>
+    </table>
+
+    </div><!-- /.container -->
+<script src="js/jquery-2.1.3.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+<script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.js'></script>
+<script src="js/d3.min.js"></script>
+<script src="js/token.js"></script>
+<script>
+// Create a map in the div #map
+L.mapbox.map('map', 'niamhdurfee.lm89b15c');
+</script>
+
+  </body>
 </html>
+
+
+
+
+
+
+
