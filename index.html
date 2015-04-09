@@ -71,8 +71,31 @@
 	    </thead>
 	    <tbody>
 	    	<tr>
-	    		<td><div>FILTER<form class="form" id="filterform">
-         <div class="form-group"></div>  
+	    		<td><div><h2>breakdowns</h2><form class="form" id="filterform">
+          <p>
+         <div class="btn-group btn-group-sm" role="group">
+            <button type="button" class="btn btn-default">Male</button>
+            <button type="button" class="btn btn-default">Female</button>
+         </div>
+         </p><p>
+         <div class="btn-group btn-group-sm" role="group">
+            <button type="button" class="btn btn-default">Outgoing</button>
+            <button type="button" class="btn btn-default">Incoming</button>
+         </div>  
+         <p>
+         <div><svg id="triptime" height="50"></svg></div>
+         <div><svg id="tripdist" height="50"></svg></div>
+         <div><svg id="age" height="50"></svg></div>
+         <div><svg id="timeofday" height="50"></svg></div>
+         <div class="btn-group btn-group-sm" role="group">
+            <button type="button" class="btn btn-default">Su</button>
+            <button type="button" class="btn btn-default">M</button>
+            <button type="button" class="btn btn-default">Tu</button>
+            <button type="button" class="btn btn-default">W</button>
+            <button type="button" class="btn btn-default">Th</button>
+            <button type="button" class="btn btn-default">F</button>
+            <button type="button" class="btn btn-default">Sa</button>
+         </div>  
           </form></div></td>
           <td><div id="map"></div></td>
           <!-- <td><div id="details"></div></td> -->
@@ -102,7 +125,8 @@
 <script src="js/token.js"></script>
 <script>
 // Create a map in the div #map
-L.mapbox.map('map', 'niamhdurfee.lmdl8410');
+var map = L.mapbox.map('map', 'niamhdurfee.lmdl8410');
+
 </script>
 
   </body>
