@@ -30,12 +30,12 @@ MapVis = function(_parentElement, _data, _metaData) {
 MapVis.prototype.initVis = function() {
 
   var map = L.mapbox.map('mapVis', 'niamhdurfee.lmdl8410');
+
   var polyline_options = {
     color: '#222'
   };
   var line_points = [[42.361285,-71.06514],[42.353412,-71.044624]]
   var polyline = L.polyline(line_points, polyline_options).addTo(map);
-
 
   // // filter, aggregate, modify data
   // this.wrangleData(null);
