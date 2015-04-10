@@ -167,7 +167,6 @@ $(function() {
       d3.csv("data/hubway_trips.min.csv", function(error, tripData) {
         if (!error) {
           d3.json("data/hubway_stations.json", function(errorStation, stationData) {
-            console.log(stationData)
             if (!errorStation) {
               dataLoaded(tripData, stationData)
             }
