@@ -117,13 +117,13 @@
     </table>
 
     </div><!-- /.container -->
-<script src="js/jquery-2.1.3.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script src="libs/jquery-2.1.3.min.js"></script>
+<script src="libs/bootstrap.min.js"></script>
 <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.js'></script>
-<script src="js/d3.min.js"></script>
-<script src="js/token.js"></script>
-<script src="js/mapvis.js"></script>
+<script src="libs/d3.min.js"></script>
+<script src="libs/token.js"></script>
+<script src="libs/mapvis.js"></script>
 <script>
 // Create a map in the div #map
 
@@ -164,9 +164,9 @@ $(function() {
     };
 
     var startHere = function() {
-      d3.csv("data/hubway_trips.min.csv", function(error, tripData) {
+      d3.csv("data/trips.min.csv", function(error, tripData) {
         if (!error) {
-          d3.json("data/hubway_stations.json", function(errorStation, stationData) {
+          d3.json("data/stations.json", function(errorStation, stationData) {
             if (!errorStation) {
               dataLoaded(tripData, stationData)
             }
