@@ -1,11 +1,11 @@
 /**
- * MapVis
+ * TempVis
  * @param _parentElement -- the HTML or SVG element (D3 node) to which to attach the vis
  * @param _data -- the data array
  * @param _metaData -- the meta-data / data description object
  * @constructor
  */
-MapVis = function(_parentElement, _data, _metaData) {
+TempVis = function(_parentElement, _data, _metaData) {
   this.parentElement = _parentElement;
   this.data = _data;
   this.metaData = _metaData;
@@ -27,28 +27,20 @@ MapVis = function(_parentElement, _data, _metaData) {
 /**
  * Method that sets up the SVG and the variables
  */
-MapVis.prototype.initVis = function() {
-
-  var map = L.mapbox.map('mapVis', 'niamhdurfee.lmdl8410');
-
-  var polyline_options = {
-    color: '#222'
-  };
-  var line_points = [[42.361285,-71.06514],[42.353412,-71.044624]]
-  var polyline = L.polyline(line_points, polyline_options).addTo(map);
+TempVis.prototype.initVis = function() {
 
   // // filter, aggregate, modify data
-  // this.wrangleData(null);
+  this.wrangleData(null);
 
   // // call the update method
-  // this.updateVis();
+  this.updateVis();
 }
 
-MapVis.prototype.wrangleData = function(_filterFunction) {
+TempVis.prototype.wrangleData = function(_filterFunction) {
   this.displayData = this.filterAndAggregate(_filterFunction);
 }
 
-MapVis.prototype.updateVis = function() {
+TempVis.prototype.updateVis = function() {
   var that = this;
 }
 
@@ -58,7 +50,7 @@ MapVis.prototype.updateVis = function() {
  * be defined here.
  * @param selection
  */
-MapVis.prototype.onSelectionChange = function() {
+TempVis.prototype.onSelectionChange = function() {
 
   this.updateVis();
 }
@@ -71,7 +63,7 @@ MapVis.prototype.onSelectionChange = function() {
  *
  * */
 
-MapVis.prototype.filterAndAggregate = function(_filter) {
+TempVis.prototype.filterAndAggregate = function(_filter) {
   // Set filter to a function that accepts all items
   var filter = function() {
     return true;
