@@ -10,7 +10,7 @@ MapVis = function(_parentElement, _data, _metaData) {
   this.data = _data;
   this.metaData = _metaData;
   this.displayData = [];
-
+  console.log(this.parentElement);
   // Define all "constants" here
   this.margin = {
       top: 10,
@@ -18,8 +18,8 @@ MapVis = function(_parentElement, _data, _metaData) {
       bottom: 10,
       left: 10
     },
-    this.width = this.parentElement.innerWidth() - this.margin.left - this.margin.right,
-    this.height = this.parentElement.innerHeight() - this.margin.top - this.margin.bottom;
+    this.width = this.parentElement.node().clientWidth - this.margin.left - this.margin.right,
+    this.height = this.parentElement.node().clientHeight - this.margin.top - this.margin.bottom;
 
   this.initVis();
 }
