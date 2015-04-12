@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" sizes="57x57" href="img/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="img/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="img/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="img/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="img/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="img/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="img/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="img/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+    <link rel="manifest" href="img/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="img/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <title>datahub</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+      
+      <style>
+        body {
+            padding-top: 60px;
+        }
+        #forceVis {
+		  min-height:600px;
+	    }
+          
+      </style>
+
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#" style="color:lightgreen">datahub</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">overview</a></li>
+            <li><a href="#">interesting findings</a></li>
+            <li><a href="#">digging deeper</a></li>
+            <li><a href="#">process book</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+    
+        <div class="col-md-10 col-md-offset-1">
+            <div id="forceVis">
+                
+            </div>
+        </div>
+
+
+    </div><!-- /.container -->
+        <script src="libs/jquery-2.1.3.min.js"></script>
+        <script src="libs/bootstrap.min.js"></script>
+        <script src="libs/d3.min.js"></script>
+        <script src="js/forceVis.js"></script>
+
+    <script>
+
+    $(function() {
+
+        // this function can convert Date objects to a string
+        // it can also convert strings to Date objects
+        // see: https://github.com/mbostock/d3/wiki/Time-Formatting
+        var dateFormatter = d3.time.format("%Y-%m-%d");
+
+        //==========================================
+        //--- HERE IS WHERE ALL THE MAGIC STARTS --
+        //==========================================
+
+        // variables keeping global knowledge of the data
+        var tripData = [];
+        var stationData = {};
+
+        // call this function after Data is loaded, reformatted and bound to the variables
+        var initVis = function() {
+          var MyEventHandler = new Object();
+
+          // Instantiate all Vis Objects here
+          var forceVis = new ForceVis(d3.select("#forceVis"), tripData, stationData, MyEventHandler);
+
+          // Bind the eventHandler to other Vis Objects
+          $(MyEventHandler).bind("selectionChanged", function(event, from, to, status) {
+            // age_vis.onSelectionChange(from, to, status);
+          })
+        };
+
+        // call this function after both files are loaded -- error should be "null" if no error
+        var dataLoaded = function(_tripData, _stationData) {
+            stationData = _stationData;
+                // time: dateFormatter.parse(d.day),
+            tripData = _tripData;
+            initVis();
+        };
+
+        var startHere = function() {
+          d3.csv("data/trips.min.csv", function(error, tripData) {
+            if (!error) {
+              d3.json("data/stations.json", function(errorStation, stationData) {
+                if (!errorStation) {
+                  dataLoaded(tripData, stationData)
+                }
+              })
+            }
+          })
+        };
+
+        startHere();
+      })
+    </script>
+
+  </body>
+</html>
+
+
+
+
+
+
+
