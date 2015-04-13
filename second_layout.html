@@ -32,7 +32,7 @@
             padding-top: 60px;
         }
         #forceVis {
-		  min-height:600px;
+		  min-height:800px;
 	    }
           
       </style>
@@ -111,15 +111,16 @@
         };
 
         var startHere = function() {
-          d3.csv("data/trips.min.csv", function(error, tripData) {
-            if (!error) {
-              d3.json("data/stations.json", function(errorStation, stationData) {
+          
+            d3.text("data/matrix.csv", function(text) {
+              tripData = d3.csv.parseRows(text);
+            });
+
+            d3.json("data/stations.json", function(errorStation, stationData) {
                 if (!errorStation) {
                   dataLoaded(tripData, stationData)
                 }
-              })
-            }
-          })
+            });
         };
 
         startHere();
