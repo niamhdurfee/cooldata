@@ -11,8 +11,8 @@ trips = [re.split(',', trip[:-2]) for trip in open('possibletrips.csv')]
 trips = trips[1:]
 
 # # Lexi uncomment these
-# trips = trips[7379:] 
-# i = 7379
+# trips = trips[7380:] 
+# i = 7380
 
 # # Dayne these ones! 
 # trips = trips[4879:]
@@ -45,7 +45,7 @@ for trip in trips:
 
 # # Lexi's
 # pathNotWorking = "notworkingLexi.csv"
-# pathFile = "trip_stats_7379.csv"
+# pathFile = "trip_stats_7380.csv"
 
 # # Dayne's
 # pathFile = "trip_stats_4879.csv"
