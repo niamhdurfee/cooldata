@@ -27,10 +27,10 @@ possibletrips = [re.split(',',trip) for trip in possibletrips]
 # 	datafile.writerow(trip)
 
 
-i = 2468
+i = 7470
 data = []
 nw = []
-for trip in possibletrips[2469:]:
+for trip in possibletrips[7471:]:
 	i += 1
 	orig = stations[trip[0]]
 	dest = stations[trip[1]]
