@@ -5,12 +5,15 @@
  * @param _metaData -- the meta-data / data description object
  * @constructor
  */
-MapVis = function(_parentElement, _data, _metaData) {
+MapVis = function(_parentElement, _tripData, _stationData, _routeData, MyEventHandler) {
   this.parentElement = _parentElement;
-  this.data = _data;
-  this.metaData = _metaData;
+  this.tripData = _tripData;
+  this.stationData = _stationData;
+  this.routeData = _routeData;
   this.displayData = [];
-  console.log(this.parentElement);
+  // console.log(this.tripData);
+  console.log(this.stationData);
+  // console.log(this.routeData);
   // Define all "constants" here
   this.margin = {
       top: 10,
@@ -22,7 +25,7 @@ MapVis = function(_parentElement, _data, _metaData) {
   this.height = this.parentElement.node().clientHeight - this.margin.top - this.margin.bottom;
 
   this.initVis();
-}
+};
 
 /**
  * Method that sets up the SVG and the variables
@@ -34,23 +37,30 @@ MapVis.prototype.initVis = function() {
   var polyline_options = {
     color: '#222'
   };
-  var line_points = [[42.361285,-71.06514],[42.353412,-71.044624]]
+  var line_points = [[42.361285,-71.06514],[42.353412,-71.044624]];
   var polyline = L.polyline(line_points, polyline_options).addTo(map);
+  $.each(this.stationData, function(i,d) {
+    coors = d.geometry.coordinates;
+    if (coors) {
+      L.circle([coors[1],coors[0]], 50).addTo(map);
+    }
+  });
+
 
   // // filter, aggregate, modify data
   // this.wrangleData(null);
 
   // // call the update method
   // this.updateVis();
-}
+};
 
 MapVis.prototype.wrangleData = function(_filterFunction) {
   this.displayData = this.filterAndAggregate(_filterFunction);
-}
+};
 
 MapVis.prototype.updateVis = function() {
   var that = this;
-}
+};
 
 /**
  * Gets called by event handler and should create new aggregated data
@@ -61,7 +71,7 @@ MapVis.prototype.updateVis = function() {
 MapVis.prototype.onSelectionChange = function() {
 
   this.updateVis();
-}
+};
 
 /*
  *
@@ -75,12 +85,12 @@ MapVis.prototype.filterAndAggregate = function(_filter) {
   // Set filter to a function that accepts all items
   var filter = function() {
     return true;
-  }
-  if (_filter != null) {
+  };
+  if (_filter !== null) {
     filter = _filter;
   }
 
   var that = this;
 
   return res;
-}
+};
