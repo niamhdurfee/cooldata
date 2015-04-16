@@ -1,0 +1,995 @@
+{"25": 
+{"fullname":"Tremont St / W Newton St",
+"short":"Tremont St / W Newton St",
+"lat":42.341332,
+"long":-71.076847,
+"hood":"South End" 
+ },
+"12": 
+{"fullname":"Ruggles Station / Columbus Ave.",
+"short":"Ruggles Station / Columbus Ave",
+"lat":42.335911,
+"long":-71.088496,
+"hood":"South End" 
+ },
+"56": 
+{"fullname":"Dudley Square",
+"short":"Dudley Square",
+"lat":42.3281898,
+"long":-71.0833545,
+"hood":"South End" 
+ },
+"4": 
+{"fullname":"Tremont St. at Berkeley St.",
+"short":"Tremont St / Berkeley St",
+"lat":42.345392,
+"long":-71.069616,
+"hood":"South End" 
+ },
+"27": 
+{"fullname":"Roxbury Crossing Station",
+"short":"Roxbury Crossing Station",
+"lat":42.331567,
+"long":-71.094734,
+"hood":"South End" 
+ },
+"13": 
+{"fullname":"Boston Medical Center - 721 Mass. Ave.",
+"short":"Boston Medical Center",
+"lat":42.334057,
+"long":-71.07403,
+"hood":"South End" 
+ },
+"57": 
+{"fullname":"Columbus Ave. at Mass. Ave.",
+"short":"Columbus Ave / Mass. Ave",
+"lat":42.340799,
+"long":-71.081572,
+"hood":"South End" 
+ },
+"51": 
+{"fullname":"Washington St. at Lenox St.",
+"short":"Washington St / Lenox St",
+"lat":42.3348756,
+"long":-71.0790969,
+"hood":"South End" 
+ },
+"39": 
+{"fullname":"Washington St. at Rutland St.",
+"short":"Washington St / Rutland St",
+"lat":42.338623,
+"long":-71.074182,
+"hood":"South End" 
+ },
+"63": 
+{"fullname":"Dorchester Ave. at Gillette Park",
+"short":"Dorchester Ave / Gillette Park",
+"lat":42.344023,
+"long":-71.057054,
+"hood":"South End" 
+ },
+"83": 
+{"fullname":"South Bay Plaza",
+"short":"South Bay Plaza",
+"lat":42.325941,
+"long":-71.065928,
+"hood":"South End" 
+ },
+"85": 
+{"fullname":"Andrew Station - Dorchester Ave at Humboldt Pl",
+"short":"Andrew Station",
+"lat":42.330825,
+"long":-71.057007,
+"hood":"South End" 
+ },
+"26": 
+{"fullname":"Washington St. at Waltham St.",
+"short":"Washington St / Waltham St",
+"lat":42.341522,
+"long":-71.068922,
+"hood":"South End" 
+ },
+"93": 
+{"fullname":"JFK / UMASS Station",
+"short":"JFK / UMASS Station",
+"lat":42.320494,
+"long":-71.051122,
+"hood":"South Boston" 
+ },
+"92": 
+{"fullname":"University of Massachusetts Boston",
+"short":"UMass Boston",
+"lat":42.311819,
+"long":-71.035705,
+"hood":"South Boston" 
+ },
+"7": 
+{"fullname":"Fan Pier",
+"short":"Fan Pier",
+"lat":42.353412,
+"long":-71.044624,
+"hood":"Seaport" 
+ },
+"24": 
+{"fullname":"Seaport Square - Seaport Blvd. at Boston Wharf",
+"short":"Seaport Blvd / Boston Wharf",
+"lat":42.351821,
+"long":-71.045461,
+"hood":"Seaport" 
+ },
+"31": 
+{"fullname":"Seaport Hotel",
+"short":"Seaport Hotel",
+"lat":42.348833,
+"long":-71.041747,
+"hood":"Seaport" 
+ },
+"64": 
+{"fullname":"Congress / Sleeper",
+"short":"Congress / Sleeper",
+"lat":42.3511,
+"long":-71.0496,
+"hood":"Seaport" 
+ },
+"65": 
+{"fullname":"Boston Convention & Exhibition Center",
+"short":"Boston Convention Center",
+"lat":42.347342,
+"long":-71.044348,
+"hood":"Seaport" 
+ },
+"22": 
+{"fullname":"South Station - 700 Atlantic Ave.",
+"short":"South Station",
+"lat":42.352175,
+"long":-71.055547,
+"hood":"Downtown" 
+ },
+"20": 
+{"fullname":"Aquarium Station - 200 Atlantic Ave.",
+"short":"Aquarium",
+"lat":42.35977,
+"long":-71.051601,
+"hood":"Downtown" 
+ },
+"23": 
+{"fullname":"Mayor Thomas M. Menino - Government Center",
+"short":"Government Center",
+"lat":42.359677,
+"long":-71.059364,
+"hood":"Downtown" 
+ },
+"6": 
+{"fullname":"Cambridge St. at Joy St.",
+"short":"Cambridge St / Joy St",
+"lat":42.361285,
+"long":-71.06514,
+"hood":"Downtown" 
+ },
+"38": 
+{"fullname":"TD Garden - Legends Way",
+"short":"North Station",
+"lat":42.365471,
+"long":-71.061451,
+"hood":"Downtown" 
+ },
+"35": 
+{"fullname":"Summer St. / Arch St.",
+"short":"Summer St. / Arch St.",
+"lat":42.354594,
+"long":-71.05896,
+"hood":"Downtown" 
+ },
+"40": 
+{"fullname":"Lewis Wharf - Atlantic Ave.",
+"short":"Lewis Wharf - Atlantic Ave",
+"lat":42.363871,
+"long":-71.050877,
+"hood":"Downtown" 
+ },
+"43": 
+{"fullname":"Rowes Wharf - Atlantic Ave",
+"short":"Rowes Wharf - Atlantic Ave",
+"lat":42.357143,
+"long":-71.050699,
+"hood":"Downtown" 
+ },
+"44": 
+{"fullname":"Faneuil Hall - Union St. at North St.",
+"short":"Faneuil Hall",
+"lat":42.360583,
+"long":-71.056868,
+"hood":"Downtown" 
+ },
+"47": 
+{"fullname":"Cross St. at Hanover St.",
+"short":"Cross St / Hanover St",
+"lat":42.362811,
+"long":-71.056067,
+"hood":"Downtown" 
+ },
+"49": 
+{"fullname":"Stuart St. at Charles St.",
+"short":"Stuart St / Charles St",
+"lat":42.351146,
+"long":-71.066289,
+"hood":"Downtown" 
+ },
+"48": 
+{"fullname":"Post Office Square",
+"short":"Post Office Square",
+"lat":42.356755,
+"long":-71.055407,
+"hood":"Downtown" 
+ },
+"54": 
+{"fullname":"Tremont St / West St",
+"short":"Tremont St / West St",
+"lat":42.354979,
+"long":-71.063348,
+"hood":"Downtown" 
+ },
+"59": 
+{"fullname":"Chinatown Gate Plaza - Surface Rd. at Beach St.",
+"short":"Chinatown Gate Plaza",
+"lat":42.351356,
+"long":-71.059367,
+"hood":"Downtown" 
+ },
+"60": 
+{"fullname":"Charles Circle - Charles St. at Cambridge St.",
+"short":"Charles Circle",
+"lat":42.360877,
+"long":-71.07131,
+"hood":"Downtown" 
+ },
+"81": 
+{"fullname":"Boylston St / Washington St",
+"short":"Boylston St / Washington St",
+"lat":42.352409,
+"long":-71.062679,
+"hood":"Downtown" 
+ },
+"52": 
+{"fullname":"Newbury St / Hereford St",
+"short":"Newbury St / Hereford St",
+"lat":42.348717,
+"long":-71.085954,
+"hood":"Back Bay" 
+ },
+"46": 
+{"fullname":"Christian Science Plaza",
+"short":"Christian Science Plaza",
+"lat":42.343864,
+"long":-71.085918,
+"hood":"Back Bay" 
+ },
+"5": 
+{"fullname":"Northeastern U / North Parking Lot",
+"short":"Northeastern North Lot",
+"lat":42.341814,
+"long":-71.090179,
+"hood":"Back Bay" 
+ },
+"53": 
+{"fullname":"Beacon St / Mass Ave",
+"short":"Beacon St / Mass Ave",
+"lat":42.350851,
+"long":-71.089886,
+"hood":"Back Bay" 
+ },
+"55": 
+{"fullname":"Boylston / Mass Ave",
+"short":"Boylston / Mass Ave",
+"lat":42.347265,
+"long":-71.088088,
+"hood":"Back Bay" 
+ },
+"16": 
+{"fullname":"Back Bay / South End Station",
+"short":"Back Bay / South End Station",
+"lat":42.347433,
+"long":-71.076163,
+"hood":"Back Bay" 
+ },
+"21": 
+{"fullname":"Prudential Center / Belvidere",
+"short":"Prudential Center",
+"lat":42.345959,
+"long":-71.082578,
+"hood":"Back Bay" 
+ },
+"61": 
+{"fullname":"Boylston at Fairfield",
+"short":"Boylston at Fairfield",
+"lat":42.348323,
+"long":-71.082674,
+"hood":"Back Bay" 
+ },
+"36": 
+{"fullname":"Boston Public Library - 700 Boylston St.",
+"short":"Boston Public Library",
+"lat":42.349673,
+"long":-71.077303,
+"hood":"Back Bay" 
+ },
+"42": 
+{"fullname":"Boylston St. at Arlington St.",
+"short":"Boylston St / Arlington St",
+"lat":42.352096,
+"long":-71.070378,
+"hood":"Back Bay" 
+ },
+"50": 
+{"fullname":"Boylston St / Berkeley St",
+"short":"Boylston St / Berkeley St",
+"lat":42.350989,
+"long":-71.073644,
+"hood":"Back Bay" 
+ },
+"58": 
+{"fullname":"The Esplanade - Beacon St. at Arlington St.",
+"short":"The Esplanade",
+"lat":42.355596,
+"long":-71.07278,
+"hood":"Back Bay" 
+ },
+"10": 
+{"fullname":"B.U. Central - 725 Comm. Ave.",
+"short":"B.U. Central",
+"lat":42.350075,
+"long":-71.105884,
+"hood":"Fenway" 
+ },
+"11": 
+{"fullname":"Longwood Ave / Binney St",
+"short":"Longwood Ave / Binney St",
+"lat":42.338629,
+"long":-71.1065,
+"hood":"Fenway" 
+ },
+"19": 
+{"fullname":"Buswell Park",
+"short":"Buswell Park",
+"lat":42.347527,
+"long":-71.105828,
+"hood":"Fenway" 
+ },
+"14": 
+{"fullname":"Louis Pasteur / Longwood Ave",
+"short":"Louis Pasteur / Longwood Ave",
+"lat":42.337171,
+"long":-71.102797,
+"hood":"Fenway" 
+ },
+"3": 
+{"fullname":"Colleges of the Fenway",
+"short":"Colleges of the Fenway",
+"lat":42.340021,
+"long":-71.100812,
+"hood":"Fenway" 
+ },
+"34": 
+{"fullname":"Overland St at Brookline Ave",
+"short":"Overland St / Brookline Ave",
+"lat":42.346171,
+"long":-71.099855,
+"hood":"Fenway" 
+ },
+"33": 
+{"fullname":"Kenmore Sq / Comm Ave",
+"short":"Kenmore Sq / Comm Ave",
+"lat":42.349046,
+"long":-71.096831,
+"hood":"Fenway" 
+ },
+"45": 
+{"fullname":"Yawkey Way at Boylston St.",
+"short":"Yawkey Way / Boylston St",
+"lat":42.344763,
+"long":-71.09788,
+"hood":"Fenway" 
+ },
+"30": 
+{"fullname":"Brigham Cir / Huntington Ave",
+"short":"Brigham Cir / Huntington Ave",
+"lat":42.334073,
+"long":-71.105221,
+"hood":"Fenway" 
+ },
+"32": 
+{"fullname":"Landmark Centre",
+"short":"Landmark Centre",
+"lat":42.343912,
+"long":-71.102221,
+"hood":"Fenway" 
+ },
+"62": 
+{"fullname":"Longwood Ave/Riverway",
+"short":"Longwood Ave / Riverway",
+"lat":42.340299,
+"long":-71.109927,
+"hood":"Fenway" 
+ },
+"8": 
+{"fullname":"Union Square - Brighton Ave. at Cambridge St.",
+"short":"Union Square - Brighton Ave",
+"lat":42.353334,
+"long":-71.137313,
+"hood":"Allston" 
+ },
+"9": 
+{"fullname":"Agganis Arena - 925 Comm Ave.",
+"short":"Agganis Arena",
+"lat":42.351313,
+"long":-71.116174,
+"hood":"Allston" 
+ },
+"15": 
+{"fullname":"Harvard Real Estate - Brighton Mills - 370 Western Ave",
+"short":"Harvard Real Estate",
+"lat":42.361667,
+"long":-71.13802,
+"hood":"Allston" 
+ },
+"37": 
+{"fullname":"New Balance - 38 Guest St.",
+"short":"New Balance - 38 Guest St",
+"lat":42.357247,
+"long":-71.146452,
+"hood":"Allston" 
+ },
+"17": 
+{"fullname":"Harvard University Housing - 111 Western Ave. at Soldiers Field Park ",
+"short":"Harvard University Housing",
+"lat":42.365074,
+"long":-71.119581,
+"hood":"Allston" 
+ },
+"18": 
+{"fullname":"Harvard Real Estate - 219 Western Ave. at North Harvard St.",
+"short":"219 Western Ave",
+"lat":42.36337,
+"long":-71.129791,
+"hood":"Allston" 
+ },
+"29": 
+{"fullname":"Innovation Lab - 125 Western Ave. at Batten Way",
+"short":"Harvard Innovation Lab",
+"lat":42.363732,
+"long":-71.124565,
+"hood":"Allston" 
+ },
+"41": 
+{"fullname":"Packard's Corner - Comm. Ave. at Brighton Ave.",
+"short":"Comm Ave / Brighton Ave",
+"lat":42.352261,
+"long":-71.123831,
+"hood":"Allston" 
+ },
+"66": 
+{"fullname":"Allston Green District - Commonwealth Ave & Griggs St",
+"short":"Comm Ave / Griggs St",
+"lat":42.348607,
+"long":-71.13401,
+"hood":"Allston" 
+ },
+"69": 
+{"fullname":"Coolidge Corner - Beacon St @ Centre St",
+"short":"Coolidge Corner",
+"lat":42.341598,
+"long":-71.123338,
+"hood":"Brookline" 
+ },
+"82": 
+{"fullname":"Brookline Town Hall / Library Washington St",
+"short":"Brookline Town Hall",
+"lat":42.333689,
+"long":-71.120526,
+"hood":"Brookline" 
+ },
+"86": 
+{"fullname":"Brookline Village - Station Street @ MBTA",
+"short":"Brookline Village @ MBTA",
+"lat":42.332799,
+"long":-71.116205,
+"hood":"Brookline" 
+ },
+"90": 
+{"fullname":"Lechmere Station at Cambridge St / First St",
+"short":"Lechmere Station",
+"lat":42.3707,
+"long":-71.07711,
+"hood":"Cambridge" 
+ },
+"91": 
+{"fullname":"One Kendall Square at Hampshire St / Portland St",
+"short":"One Kendall Square",
+"lat":42.366277,
+"long":-71.09169,
+"hood":"Cambridge" 
+ },
+"72": 
+{"fullname":"One Broadway / Kendall Sq at Main St / 3rd St",
+"short":"One Broadway / Kendall Sq",
+"lat":42.362613,
+"long":-71.084105,
+"hood":"Cambridge" 
+ },
+"80": 
+{"fullname":"MIT Stata Center at Vassar St / Main St",
+"short":"MIT Stata Center",
+"lat":42.362429,
+"long":-71.090188,
+"hood":"Cambridge" 
+ },
+"67": 
+{"fullname":"MIT at Mass Ave / Amherst St",
+"short":"MIT Mass Ave",
+"lat":42.3581,
+"long":-71.093198,
+"hood":"Cambridge" 
+ },
+"95": 
+{"fullname":"Cambridge St - at Columbia St / Webster Ave",
+"short":"Cambridge St / Columbia St",
+"lat":42.372969,
+"long":-71.094445,
+"hood":"Cambridge" 
+ },
+"75": 
+{"fullname":"Lafayette Square at Mass Ave / Main St / Columbia St",
+"short":"Lafayette Square",
+"lat":42.363562,
+"long":-71.10042,
+"hood":"Cambridge" 
+ },
+"88": 
+{"fullname":"Inman Square at Vellucci Plaza / Hampshire St",
+"short":"Inman Square",
+"lat":42.374035,
+"long":-71.101427,
+"hood":"Cambridge" 
+ },
+"68": 
+{"fullname":"Central Square at Mass Ave / Essex St",
+"short":"Central Square",
+"lat":42.36507,
+"long":-71.1031,
+"hood":"Cambridge" 
+ },
+"76": 
+{"fullname":"Central Sq Post Office / Cambridge City Hall at Mass Ave / Pleasant St",
+"short":"Cambridge City Hall",
+"lat":42.366426,
+"long":-71.105495,
+"hood":"Cambridge" 
+ },
+"96": 
+{"fullname":"Cambridge Main Library at Broadway / Trowbridge St",
+"short":"Cambridge Main Library",
+"lat":42.373379,
+"long":-71.111075,
+"hood":"Cambridge" 
+ },
+"87": 
+{"fullname":"Harvard University Housing - 115 Putnam Ave at Peabody Terrace",
+"short":"Harvard Housing",
+"lat":42.366621,
+"long":-71.114214,
+"hood":"Cambridge" 
+ },
+"97": 
+{"fullname":"Harvard  University River Houses at DeWolfe St / Cowperthwaite St",
+"short":"Harvard River Houses",
+"lat":42.369182,
+"long":-71.117152,
+"hood":"Cambridge" 
+ },
+"70": 
+{"fullname":"Harvard Kennedy School at Bennett St / Eliot St",
+"short":"Harvard Kennedy School",
+"lat":42.372244,
+"long":-71.121851,
+"hood":"Cambridge" 
+ },
+"73": 
+{"fullname":"Harvard Square at Brattle St / Eliot St",
+"short":"Harvard Square – Brattle",
+"lat":42.373231,
+"long":-71.120886,
+"hood":"Cambridge" 
+ },
+"74": 
+{"fullname":"Harvard Square at Mass Ave/ Dunster",
+"short":"Harvard Square – Mass Ave",
+"lat":42.373268,
+"long":-71.118579,
+"hood":"Cambridge" 
+ },
+"84": 
+{"fullname":"CambridgeSide Galleria - CambridgeSide PL at Land Blvd",
+"short":"CambridgeSide Galleria",
+"lat":42.366981,
+"long":-71.076472,
+"hood":"Cambridge" 
+ },
+"89": 
+{"fullname":"Harvard Law School at Mass Ave / Jarvis St",
+"short":"Harvard Law School",
+"lat":42.379011,
+"long":-71.119945,
+"hood":"Cambridge" 
+ },
+"77": 
+{"fullname":"Somerville City Hall",
+"short":"Somerville City Hall",
+"lat":42.386428,
+"long":-71.096413,
+"hood":"Somerville" 
+ },
+"78": 
+{"fullname":"Union Square - Somerville",
+"short":"Union Square - Somerville",
+"lat":42.379637,
+"long":-71.095319,
+"hood":"Somerville" 
+ },
+"79": 
+{"fullname":"Beacon St at Washington / Kirkland",
+"short":"Beacon St / Washington",
+"lat":42.378551,
+"long":-71.106541,
+"hood":"Somerville" 
+ },
+"71": 
+{"fullname":"Conway Park - Somerville Avenue",
+"short":"Conway Park",
+"lat":42.383405,
+"long":-71.107593,
+"hood":"Somerville" 
+ },
+"94": 
+{"fullname":"Charlestown - Main St at Austin St",
+"short":"Charlestown - Main St",
+"lat":42.375603,
+"long":-71.064608,
+"hood":"Charlestown" 
+ },
+"98": 
+{"fullname":"Charlestown - Warren St at Chelsea St",
+"short":"Charlestown - Warren St",
+"lat":42.371848,
+"long":-71.060292,
+"hood":"Charlestown" 
+ },
+"99": 
+{"fullname":"Mayor Thomas M. Menino - Government Center",
+"short":"",
+"lat":42.35892,
+"long":-71.057629,
+"hood":"-" 
+ },
+"100": 
+{"fullname":"Dudley Square",
+"short":"",
+"lat":42.328654,
+"long":-71.084198,
+"hood":"-" 
+ },
+"101": 
+{"fullname":"BIDMC - Brookline at Burlington St",
+"short":"",
+"lat":42.345733,
+"long":-71.100694,
+"hood":"-" 
+ },
+"102": 
+{"fullname":"Boston Medical Center -  East Concord at Harrison Ave",
+"short":"",
+"lat":42.336437,
+"long":-71.073089,
+"hood":"-" 
+ },
+"103": 
+{"fullname":"Boylston at Fairfield",
+"short":"",
+"lat":42.348762,
+"long":-71.082383,
+"hood":"-" 
+ },
+"104": 
+{"fullname":"Andrew Station - Dorchester Ave at Humboldt Pl",
+"short":"",
+"lat":42.330716,
+"long":-71.057044,
+"hood":"-" 
+ },
+"105": 
+{"fullname":"Mt Pleasant Ave / Dudley Town Common",
+"short":"",
+"lat":42.325333,
+"long":-71.075354,
+"hood":"-" 
+ },
+"106": 
+{"fullname":"West Broadway at Dorchester St",
+"short":"",
+"lat":42.335693,
+"long":-71.045859,
+"hood":"-" 
+ },
+"107": 
+{"fullname":"South Boston Library - 646 East Broadway",
+"short":"",
+"lat":42.335741,
+"long":-71.03877,
+"hood":"-" 
+ },
+"108": 
+{"fullname":"E. Cottage St at Columbia Rd",
+"short":"",
+"lat":42.320561,
+"long":-71.06198,
+"hood":"-" 
+ },
+"109": 
+{"fullname":"Upham's Corner - Ramsey St at Dudley St",
+"short":"",
+"lat":42.317225,
+"long":-71.065421,
+"hood":"-" 
+ },
+"110": 
+{"fullname":"New Balance - Guest St. at Life St.",
+"short":"",
+"lat":42.356975,
+"long":-71.145442,
+"hood":"-" 
+ },
+"111": 
+{"fullname":"TD Garden - Causeway at Portal Park #2",
+"short":"",
+"lat":42.366222,
+"long":-71.059914,
+"hood":"-" 
+ },
+"112": 
+{"fullname":"Franklin St. / Arch St.",
+"short":"",
+"lat":42.355402,
+"long":-71.058087,
+"hood":"-" 
+ },
+"113": 
+{"fullname":"Charles Circle - Charles St. at Cambridge St.",
+"short":"",
+"lat":42.36069,
+"long":-71.070884,
+"hood":"-" 
+ },
+"114": 
+{"fullname":"TD Garden - Causeway at Portal Park #1",
+"short":"",
+"lat":42.365942,
+"long":-71.060515,
+"hood":"-" 
+ },
+"115": 
+{"fullname":"Spaulding Rehabilitation Hospital - Charlestown Navy Yard",
+"short":"",
+"lat":42.378338,
+"long":-71.048927,
+"hood":"-" 
+ },
+"116": 
+{"fullname":"Charles St at Beacon St",
+"short":"",
+"lat":42.356052,
+"long":-71.069849,
+"hood":"-" 
+ },
+"117": 
+{"fullname":"Milk St at India St",
+"short":"",
+"lat":42.358508,
+"long":-71.052984,
+"hood":"-" 
+ },
+"118": 
+{"fullname":"Hayes Square at Vine St.",
+"short":"",
+"lat":42.377022,
+"long":-71.056605,
+"hood":"-" 
+ },
+"119": 
+{"fullname":"New Balance Store - Boylston at Dartmouth",
+"short":"",
+"lat":42.350413,
+"long":-71.07655,
+"hood":"-" 
+ },
+"120": 
+{"fullname":"JP Monument - South St at Centre St",
+"short":"",
+"lat":42.309467,
+"long":-71.115645,
+"hood":"-" 
+ },
+"121": 
+{"fullname":"JP Centre - Centre Street at Myrtle Street",
+"short":"",
+"lat":42.31309,
+"long":-71.114175,
+"hood":"-" 
+ },
+"122": 
+{"fullname":"Hyde Square at Barbara St",
+"short":"",
+"lat":42.320998,
+"long":-71.110833,
+"hood":"-" 
+ },
+"123": 
+{"fullname":"Egleston Square at Columbus Ave",
+"short":"",
+"lat":42.315692,
+"long":-71.098634,
+"hood":"-" 
+ },
+"124": 
+{"fullname":"Green St T",
+"short":"",
+"lat":42.310579,
+"long":-71.107341,
+"hood":"-" 
+ },
+"125": 
+{"fullname":"Jackson Square T at Centre St",
+"short":"",
+"lat":42.322913,
+"long":-71.100164,
+"hood":"-" 
+ },
+"126": 
+{"fullname":"Washington Square at Washington St. / Beacon St.",
+"short":"",
+"lat":42.339335,
+"long":-71.13493,
+"hood":"Brookline" 
+ },
+"127": 
+{"fullname":"JFK Crossing at Harvard St. / Thorndike St.",
+"short":"",
+"lat":42.346563,
+"long":-71.128374,
+"hood":"Brookline" 
+ },
+"128": 
+{"fullname":"Kendall T at Main St",
+"short":"",
+"lat":42.362457,
+"long":-71.08497,
+"hood":"-" 
+ },
+"129": 
+{"fullname":"Harvard University River Houses / Plympton St at Memorial Drive",
+"short":"",
+"lat":42.369832,
+"long":-71.118201,
+"hood":"-" 
+ },
+"130": 
+{"fullname":"Harvard University Gund Hall at Quincy St / Kirkland S",
+"short":"",
+"lat":42.376369,
+"long":-71.114025,
+"hood":"-" 
+ },
+"131": 
+{"fullname":"Lower Cambridgeport at Magazine St/Riverside Rd",
+"short":"",
+"lat":42.356954,
+"long":-71.113687,
+"hood":"-" 
+ },
+"132": 
+{"fullname":"Harvard University / SEAS Cruft-Pierce Halls at 29 Oxford St",
+"short":"",
+"lat":42.377945,
+"long":-71.116865,
+"hood":"-" 
+ },
+"133": 
+{"fullname":"Harvard University Radcliffe Quadrangle at Shepard St / Garden St",
+"short":"",
+"lat":42.380287,
+"long":-71.125107,
+"hood":"-" 
+ },
+"134": 
+{"fullname":"Mass Ave / Linear Park",
+"short":"",
+"lat":42.397828,
+"long":-71.130516,
+"hood":"-" 
+ },
+"135": 
+{"fullname":"359 Broadway - Broadway at Fayette Street",
+"short":"",
+"lat":42.370803,
+"long":-71.104412,
+"hood":"-" 
+ },
+"136": 
+{"fullname":"Biogen Idec - Binney St / Sixth St",
+"short":"",
+"lat":42.366095,
+"long":-71.086388,
+"hood":"-" 
+ },
+"137": 
+{"fullname":"Porter Square Station",
+"short":"",
+"lat":42.387995,
+"long":-71.119084,
+"hood":"-" 
+ },
+"138": 
+{"fullname":"Wilson Square",
+"short":"",
+"lat":42.385582,
+"long":-71.113341,
+"hood":"-" 
+ },
+"139": 
+{"fullname":"Davis Square",
+"short":"",
+"lat":42.396969,
+"long":-71.123024,
+"hood":"-" 
+ },
+"140": 
+{"fullname":"Ball Square",
+"short":"",
+"lat":42.400146,
+"long":-71.112708,
+"hood":"-" 
+ },
+"141": 
+{"fullname":"Powder House Circle",
+"short":"",
+"lat":42.400877,
+"long":-71.116772,
+"hood":"-" 
+ },
+"142": 
+{"fullname":"Packard Ave / Powderhouse Blvd",
+"short":"",
+"lat":42.40449,
+"long":-71.123413,
+"hood":"-" 
+ },
+"143": 
+{"fullname":"Somerville Hospital at Highland Ave / Crocker St",
+"short":"",
+"lat":42.39082,
+"long":-71.10942,
+"hood":"-" 
+ },
+"144": 
+{"fullname":"Teele Square at 239 Holland St",
+"short":"",
+"lat":42.402763,
+"long":-71.126908,
+"hood":"-" 
+ },
+"145": 
+{"fullname":"Summer St at Cutter St",
+"short":"",
+"lat":42.394002,
+"long":-71.120406,
+"hood":"-" 
+ }
+}
