@@ -1,11 +1,17 @@
 .content {
-    font-family: 'Lato';
     padding-top: 100px;
 }
 
-
 /*styles for scrollspy on process book page*/
+section {
+    margin-bottom: -40px;
+    padding-bottom: -0;
+    padding-top: 30px;
+}
 
+h2 {
+    color: lightgreen;
+}
 .jumbotron {
     background-color: lightgreen;
     color: gray;
