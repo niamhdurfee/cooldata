@@ -28,18 +28,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
     <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.css' rel='stylesheet' />
-    <style>
-    body {
-		padding-top: 60px;
-	}
-	#mapVis {
-		height:600px;
-	}
-
-  #filterform {
-    width:300px;
-  }
-	</style>
+    <link rel="stylesheet" href="css/custom.css" />
   </head>
 
   <body>
@@ -111,7 +100,7 @@
 	    </thead>
 	    <tbody>
 	    	<tr>
-	    		<td style="background-color:yellowgreen">OTHER THINGS?!</td>
+	    		<td><div id="timeVis"></div></td>
 	    	</tr>
 	    </tbody>
     </table>
@@ -124,6 +113,7 @@
 <script src="libs/d3.min.js"></script>
 <script src="libs/token.js"></script>
 <script src="js/mapvis.js"></script>
+<script src="js/timevis.js"></script>
 <script>
 // Create a map in the div #map
 
@@ -148,7 +138,8 @@ $(function() {
       var MyEventHandler = {};
 
       // Instantiate all Vis Objects here
-      var mapVis = new MapVis(d3.select("#mapVis"), tripData, stationData, routeData, MyEventHandler);
+      var mapVis = new MapVis(d3.select("#mapVis"), stationData, routeData, MyEventHandler); 
+      var timeVis = new TimeVis(d3.select("#timeVis"),MyEventHandler);
 
       // Bind the eventHandler to the Vis Objects
       $(MyEventHandler).bind("selectionChanged", function(event, from, to, status) {
@@ -157,27 +148,23 @@ $(function() {
     };
 
     // call this function after both files are loaded -- error should be "null" if no error
-    var dataLoaded = function(_tripData, _stationData, _routeData) {
+    var dataLoaded = function(_stationData, _routeData) {
         stationData = _stationData;
             // time: dateFormatter.parse(d.day),
-        tripData = _tripData;
+        // tripData = _tripData;
         routeData = _routeData;
         initVis();
     };
 
     var startHere = function() {
-      d3.csv("data/trips.min.csv", function(error, tripData) {
-        if (!error) {
-          d3.json("data/stations.json", function(errorStation, stationData) {
-            if (!errorStation) {
-              d3.csv("data/routes_stats.csv", function(error, routeData) {
-                  if (!error) {
-                    dataLoaded(tripData, stationData, routeData);
-                  }
+      d3.json("data/stations.json", function(errorStation, stationData) {
+        if (!errorStation) {
+          d3.csv("data/routes_stats.csv", function(error, routeData) {
+              if (!error) {
+                dataLoaded(stationData, routeData);
+              }
 
-                });
-            }
-          });
+            });
         }
       });
     };

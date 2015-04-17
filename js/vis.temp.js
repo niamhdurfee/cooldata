@@ -5,10 +5,11 @@
  * @param _metaData -- the meta-data / data description object
  * @constructor
  */
-TempVis = function(_parentElement, _data, _metaData) {
+TempVis = function(_parentElement, _data, _metaData,_eventHandler) {
   this.parentElement = _parentElement;
   this.data = _data;
   this.metaData = _metaData;
+  this.eventHandler = _eventHandler;
   this.displayData = [];
 
   // Define all "constants" here

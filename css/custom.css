@@ -1,0 +1,26 @@
+body {
+	padding-top: 60px;
+}
+#mapVis {
+	height:450px;
+}
+#filterform {
+    width:300px;
+}
+#timeVis {
+	height: 50px;
+}
+.brush{
+    fill: darkgrey;
+    fill-opacity: .5;
+    pointer-events: none;
+}
+.axis text {
+    font: 13px;
+}
+
+.axis line,
+.axis path {
+    fill: none;
+    stroke: none;
+}

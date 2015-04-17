@@ -5,15 +5,13 @@
  * @param _metaData -- the meta-data / data description object
  * @constructor
  */
-MapVis = function(_parentElement, _tripData, _stationData, _routeData, MyEventHandler) {
+MapVis = function(_parentElement,_stationData, _routeData, _eventHandler) {
   this.parentElement = _parentElement;
-  this.tripData = _tripData;
   this.stationData = _stationData;
   this.routeData = _routeData;
+  this.eventHandler = _eventHandler;
   this.displayData = [];
-  // console.log(this.tripData);
-  console.log(this.stationData);
-  // console.log(this.routeData);
+  this.disp = 0;
   // Define all "constants" here
   this.margin = {
       top: 10,
@@ -32,34 +30,30 @@ MapVis = function(_parentElement, _tripData, _stationData, _routeData, MyEventHa
  */
 MapVis.prototype.initVis = function() {
 
-  var map = L.mapbox.map('mapVis', 'niamhdurfee.lmdl8410');
+  this.map = L.mapbox.map('mapVis', 'niamhdurfee.lmdl8410');
 
-  var polyline_options = {
-    color: '#222'
-  };
-  var line_points = [[42.361285,-71.06514],[42.353412,-71.044624]];
-  var polyline = L.polyline(line_points, polyline_options).addTo(map);
-  $.each(this.stationData, function(i,d) {
-    coors = d.geometry.coordinates;
-    if (coors) {
-      L.circle([coors[1],coors[0]], 50).addTo(map);
-    }
-  });
-
-
-  // // filter, aggregate, modify data
-  // this.wrangleData(null);
+  // var line_points = [[42.361285,-71.06514],[42.353412,-71.044624]];
+  // var polyline = L.polyline(line_points).addTo(map);
 
   // // call the update method
-  // this.updateVis();
+  this.updateVis();
 };
 
-MapVis.prototype.wrangleData = function(_filterFunction) {
-  this.displayData = this.filterAndAggregate(_filterFunction);
-};
+// MapVis.prototype.wrangleData = function(_filterFunction) {
+//   this.setScale(_filterFunction);
+// };
 
 MapVis.prototype.updateVis = function() {
   var that = this;
+
+  this.areaScale = d3.scale.linear().range([0,50000]).domain([0, d3.max(that.stationData, function (d) {return (d.hourly.average.a + d.hourly.average.d)})]);
+  this.color = d3.scale.linear().range(["red","grey","lightgreen"]).domain([0.45,0.5,0.55]); 
+  this.stationData.forEach(function(dp,i) {
+      var s = dp.hourly.average.a+dp.hourly.average.d,
+          r = that.getRadius(that.areaScale(s)),
+          c = that.color(dp.hourly.average.a/s);
+      L.circle([dp.lat,dp.lng], r, {color: c, opacity: 1}).addTo(that.map);
+  });
 };
 
 /**
@@ -81,16 +75,6 @@ MapVis.prototype.onSelectionChange = function() {
  *
  * */
 
-MapVis.prototype.filterAndAggregate = function(_filter) {
-  // Set filter to a function that accepts all items
-  var filter = function() {
-    return true;
-  };
-  if (_filter !== null) {
-    filter = _filter;
-  }
-
-  var that = this;
-
-  return res;
-};
+MapVis.prototype.getRadius = function(d) {
+  return Math.sqrt(d/Math.PI)
+}
