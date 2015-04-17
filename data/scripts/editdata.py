@@ -7,7 +7,7 @@ header.remove('hubway_id')
 header.remove('bike_nr')
 header.remove('end_date')
 header[-2] = 'age'
-header.append('ID')
+header = ['ID']+ header
 
 path = "../trips.min.csv" 
 os.remove(path)
@@ -22,15 +22,15 @@ for trip in trips[1:]:
 	trip = re.split(",",trip[:-2])
 	if ((int(trip[3]) > 60) and ('' != trip[5]) and ('' != trip[7])):
 		i += 1
-		trip.append(i)
-		del trip[0:3]
-		del trip[3]
+		trip = [i]+trip
+		del trip[1:4]
 		del trip[4]
-		trip[0] = int(trip[0])/60
-		if trip[-5] == 'R':
-			if trip[-3] != '':
-				trip[-3] = str(2011 - int(trip[-3]))
+		del trip[5]
+		trip[1] = int(trip[1])/60
+		if trip[-4] == 'R':
+			if trip[-2] != '':
+				trip[-2] = str(2011 - int(trip[-2]))
 			else:
-				trip[-3] = None
+				trip[-2] = None
 		datafile.writerow(trip)
 
