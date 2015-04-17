@@ -11,9 +11,9 @@ TimeVis = function(_parentElement, _eventHandler) {
 
   // Define all "constants" here
   this.margin = {
-      top: 10,
+      top: 0,
       right: 10,
-      bottom: 20,
+      bottom: 0,
       left: 10
     },
   this.width = this.parentElement.node().clientWidth - this.margin.left - this.margin.right,
@@ -29,14 +29,14 @@ TimeVis.prototype.initVis = function() {
   var that = this;
   this.svg = this.parentElement.append("svg")
     .attr("width", this.width)
-    .attr("height", this.height+this.margin.bottom)
+    .attr("height", this.height)
     .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")")
     .append("g");
   var start = new Date(0,0,0),
       stop = new Date(0,0,1);
   this.x = d3.time.scale().range([0, this.width]).domain([start,stop]);
   this.xAxis = d3.svg.axis()
-    .scale(this.x).tickSize(5).ticks(d3.time.hour,1)
+    .scale(this.x).ticks(24).tickFormat(d3.time.format("%H"))
     .orient("bottom");
 
   this.brush = d3.svg.brush().x(this.x)
@@ -49,7 +49,6 @@ TimeVis.prototype.initVis = function() {
  // Add axes visual elements
   this.svg.append("g")
     .attr("class", "x axis")
-    .attr("transform", "translate(0," + (this.height/2) + ")")
 
   this.svg.append("g")
     .attr("class", "brush")
@@ -61,6 +60,6 @@ TimeVis.prototype.initVis = function() {
   this.svg.select(".brush")
     .call(this.brush)
     .selectAll("rect")
-    .attr("height", this.height+this.margin.bottom);
+    .attr("height", this.height);
 
 }

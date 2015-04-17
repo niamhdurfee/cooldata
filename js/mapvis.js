@@ -30,7 +30,7 @@ MapVis = function(_parentElement,_stationData, _routeData, _eventHandler) {
  */
 MapVis.prototype.initVis = function() {
 
-  this.map = L.mapbox.map('mapVis', 'niamhdurfee.lmdl8410');
+  this.map = L.mapbox.map('mapVis', 'niamhdurfee.loko84n8');
 
   // var line_points = [[42.361285,-71.06514],[42.353412,-71.044624]];
   // var polyline = L.polyline(line_points).addTo(map);
@@ -46,14 +46,26 @@ MapVis.prototype.initVis = function() {
 MapVis.prototype.updateVis = function() {
   var that = this;
 
-  this.areaScale = d3.scale.linear().range([0,50000]).domain([0, d3.max(that.stationData, function (d) {return (d.hourly.average.a + d.hourly.average.d)})]);
+  this.areaScale = d3.scale.linear().range([0,200000]).domain([0, d3.max(that.stationData, function (d) {return (d.hourly.average.a + d.hourly.average.d)})]);
   this.color = d3.scale.linear().range(["red","grey","lightgreen"]).domain([0.45,0.5,0.55]); 
   this.stationData.forEach(function(dp,i) {
       var s = dp.hourly.average.a+dp.hourly.average.d,
           r = that.getRadius(that.areaScale(s)),
-          c = that.color(dp.hourly.average.a/s);
-      L.circle([dp.lat,dp.lng], r, {color: c, opacity: 1}).addTo(that.map);
+          c = that.color(dp.hourly.average.a/s),
+          popup = L.popup().setLatLng([dp.lat,dp.lng]).setContent(dp.fullname);
+      L.circle([dp.lat,dp.lng], r, {color: c, opacity: 1, fillOpacity: 0.5, className:'node',weight:2}).addTo(that.map).bindPopup(popup);
   });
+
+  var popup = L.popup();
+
+  function onMapClick(e) {
+    console.log(e);
+    popup.setLatLng(e.latlng)
+        .setContent("You clicked the map at " + e.latlng.toString())
+        .openOn(that.map);
+  }
+
+  that.map.on('hover', onMapClick);
 };
 
 /**

@@ -56,7 +56,7 @@ lines = [re.split(",",line) for line in lines[1:]]
 path ="../stations.json"
 os.remove(path)
 f = open(path,"a")
-f.write('{')
+f.write('[')
 for station in stations:
 	f.write('{"id":'+station[0]+',\n')
 	f.write('"fullname":"'+station[1]+'",\n')
@@ -66,5 +66,5 @@ for station in stations:
 	f.write('"hood":"'+station[5]+'",\n')
 	f.write('"hourly":'+strtemp[str(station[0])] +  ',\n')
 	f.write('"routes":'+routes[str(station[0])]+'\n },\n')
-f.write("}")
+f.write("]")
 f.close()		

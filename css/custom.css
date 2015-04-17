@@ -9,15 +9,17 @@ body {
     width:300px;
 }
 #timeVis {
-	height: 50px;
+	height: 40px;
 }
 .brush{
-    fill: darkgrey;
+    fill: black;
     fill-opacity: .5;
     pointer-events: none;
 }
-.axis text {
-    font: 13px;
+.x.axis text {
+    font-size: 28px;
+    color: blue;
+    font-weight: bold;
 }
 
 .axis line,
@@ -25,3 +27,16 @@ body {
     fill: none;
     stroke: none;
 }
+.leaflet-popup-content-wrapper {
+  background:rgba(0,0,0,0.8);
+  color:#fff;
+  font-size:12px;
+  line-height:12px;
+  }
+.leaflet-popup-content-wrapper a {
+  color:rgba(255,255,255,0.5);
+  }
+.leaflet-popup-tip-container {
+  width:0px;
+  height:0px;
+  }
