@@ -51,9 +51,21 @@ MapVis.prototype.updateVis = function() {
   this.stationData.forEach(function(dp,i) {
       var s = dp.hourly.average.a+dp.hourly.average.d,
           r = that.getRadius(that.areaScale(s)),
-          c = that.color(dp.hourly.average.a/s);
-      L.circle([dp.lat,dp.lng], r, {color: c, opacity: 1}).addTo(that.map);
+          c = that.color(dp.hourly.average.a/s),
+          popup = L.popup().setLatLng([dp.lat,dp.lng]).setContent(dp.fullname);
+      L.circle([dp.lat,dp.lng], r, {color: c, opacity: 1, fillOpacity: 0.7, className:'node'}).addTo(that.map).bindPopup(popup);
   });
+
+  var popup = L.popup();
+
+  function onMapClick(e) {
+    console.log(e);
+    popup.setLatLng(e.latlng)
+        .setContent("You clicked the map at " + e.latlng.toString())
+        .openOn(that.map);
+  }
+
+  that.map.on('hover', onMapClick);
 };
 
 /**

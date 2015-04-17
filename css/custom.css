@@ -24,3 +24,16 @@ body {
     fill: none;
     stroke: none;
 }
+.leaflet-popup-content-wrapper {
+  background:rgba(0,0,0,0.8);
+  color:#fff;
+  font-size:12px;
+  line-height:12px;
+  }
+.leaflet-popup-content-wrapper a {
+  color:rgba(255,255,255,0.5);
+  }
+.leaflet-popup-tip-container {
+  width:0px;
+  height:0px;
+  }
