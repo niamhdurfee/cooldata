@@ -53,7 +53,7 @@ MapVis.prototype.updateVis = function() {
           r = that.getRadius(that.areaScale(s)),
           c = that.color(dp.hourly.average.a/s),
           popup = L.popup().setLatLng([dp.lat,dp.lng]).setContent(dp.fullname);
-      L.circle([dp.lat,dp.lng], r, {color: c, opacity: 1, fillOpacity: 0.7, className:'node'}).addTo(that.map).bindPopup(popup);
+      L.circle([dp.lat,dp.lng], r, {color: c, opacity: 1, fillOpacity: 0.5, className:'node',weight:2}).addTo(that.map).bindPopup(popup);
   });
 
   var popup = L.popup();
