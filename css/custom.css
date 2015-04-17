@@ -11,7 +11,7 @@ body {
 	height: 50px;
 }
 .brush{
-    fill: darkgrey;
+    fill: black;
     fill-opacity: .5;
     pointer-events: none;
 }
