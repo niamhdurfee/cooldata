@@ -10,9 +10,9 @@ for station in temp:
 trips = [re.split(',', trip[:-2]) for trip in open('possibletrips.csv')]
 trips = trips[1:]
 
-# # Lexi uncomment these
-# trips = trips[7380:] 
-# i = 7380
+# Lexi uncomment these
+trips = trips[7380:] 
+i = 7380
 
 # # Dayne these ones! 
 # trips = trips[4879:]
@@ -43,9 +43,9 @@ for trip in trips:
 	time.sleep(.1)
 	i += 1
 
-# # Lexi's
-# pathNotWorking = "notworkingLexi.csv"
-# pathFile = "trip_stats_7380.csv"
+# Lexi's
+pathNotWorking = "notworkingLexi.csv"
+pathFile = "trip_stats_7380.csv"
 
 # # Dayne's
 # pathFile = "trip_stats_4879.csv"

@@ -12,21 +12,20 @@ ForceVis = function (_parentElement, _data, _metaData) {
   this.displayData = [];
   this.matrix = [];
 
-for (var i=0; i<this.data.length; i++)
-{
-    this.matrix[i] = [];
-    for (var j =0; j<this.data[i].length; j++)
-        this.matrix[i][j] = this.data[i][j];
-}
+    for (var i=0; i<this.data.length; i++)
+    {
+        this.matrix[i] = [];
+        for (var j =0; j<this.data[i].length; j++)
+            this.matrix[i][j] = this.data[i][j];
+    }
 
 
     
-this.stations = [];
-for (var i=0; i<this.metaData.features.length; i++)
-    this.stations[this.metaData.features[i].properties.id] = this.metaData.features[i].properties.station;
+    this.stations = [];
+    for (var i=0; i<this.metaData.features.length; i++)
+        this.stations[this.metaData.features[i].properties.id] = this.metaData.features[i].properties.station;
+
     
-    
-//    console.log(this.stations);
   // Define all "constants" here
   this.margin = {
       top: 10,
@@ -35,27 +34,29 @@ for (var i=0; i<this.metaData.features.length; i++)
       left: 10
     },
   this.width = this.parentElement.node().clientWidth - this.margin.left - this.margin.right,
-  this.height = this.parentElement.node().clientHeight - this.margin.top - this.margin.bottom,
-  this.outerRadius = Math.min(this.width, this.height) / 2 - 50,
-  this.innerRadius = this.outerRadius - 24,
-  this.center = (this.height)/2 - 200;
+  this.height = this.parentElement.node().clientHeight - this.margin.top - this.margin.bottom;
 
+  
+    this.outerRadius = Math.min(this.width, this.height) / 2 - 10,
+    this.innerRadius = this.outerRadius - 24;
     
-  this.initVis();
+    
+    this.initVis();
 }
 
 /**
  * Method that sets up the SVG and the variables
  */
 ForceVis.prototype.initVis = function() {
-    console.log("initvis");
 
     var that = this; // read about the this
 
     // constructs SVG layout
     this.svg = this.parentElement.append("svg")
-        .attr("width", this.width + this.margin.left + this.margin.right)
-        .attr("height", this.height + this.margin.top + this.margin.bottom)
+        .attr("width", this.width)
+        .attr("height", this.height)
+//        .attr("width", this.width + this.margin.left + this.margin.right)
+//        .attr("height", this.height + this.margin.top + this.margin.bottom)
       .append("g")
         .attr("transform", "translate(" + 400 + "," + 300 + ")");
  
@@ -76,75 +77,70 @@ ForceVis.prototype.wrangleData = function(_filterFunction) {
 }
 
 ForceVis.prototype.updateVis = function() {
-//  var that = this;
-//    
-//  var arc = d3.svg.arc()
-//    .innerRadius(this.innerRadius)
-//    .outerRadius(this.outerRadius);
-// 
-//  var layout = d3.layout.chord()
-//    .padding(.04)
-//    .sortSubgroups(d3.descending)
-//    .sortChords(d3.ascending);
-//    
-//  var path = d3.svg.chord()
-//    .radius(this.innerRadius);
-//    
-//  layout.matrix(this.data);
     
-    var fill = d3.scale.category10();
-
-        // Use the helper function and transform the data
-    
+        
         var that = this;
-        var data = that.data;
     
- console.log(data);
+
+        var fill = d3.scale.ordinal()
+            .domain(d3.range(4))
+            .range(["#000000", "#FFDD89", "#957244", "#F26223"]);
+
         // Visualize
         var chord = d3.layout.chord()
-            .padding(.05)
+            .padding(Math.PI * 2. / (that.matrix).length)
             .sortSubgroups(d3.descending)
-            .matrix(that.matrix);
-//            .matrix([   [11975,  5871, 8916, 2868],
-//                        [ 1951, 10048, 2060, 6171],
-//                        [ 8010, 16145, 8090, 8045],
-//                        [ 1013,   990,  940, 6907] ]);
-    
+            .matrix ([  [12, 152, 194, 184], 
+                        [400, 300, 250, 225], 
+                        [225, 123, 124, 209], 
+                        [12, 152, 194, 184]  ])
+//            .matrix(that.matrix);
 
 
-        that.svg.append("g").selectAll("path")
+        
+        
+
+        that.svg.append("g").selectAll(".arc")
             .data(chord.groups)
             .enter().append("path")
             .attr("class", "arc")
             .style("fill", function(d) {
                 return d.index < 4 ? '#444444' : fill(d.index);
             })
-            .attr("d", d3.svg.arc().innerRadius(this.innerRadius).outerRadius(this.outerRadius))
+            .style("stroke", function(d) {
+                return fill(d.index);
+            })
+            .attr("d", d3.svg.arc()
+                  .innerRadius(that.innerRadius - 200)
+                  .outerRadius(that.outerRadius-200))
             .on("mouseover", fade(.1))
-            .on("mouseout", fade(.7));
-
-        that.svg.append("g")
-            .attr("class", "chord")
-            .selectAll("path")
-            .data(chord.chords)
-            .enter().append("path")
-            .attr("d", d3.svg.chord().radius(this.innerRadius))
-            .style("opacity", 0.7);
-
+            .on("mouseout", fade(.7))    
+         
         that.svg.append("g").selectAll(".arc")
             .data(chord.groups)
             .enter().append("svg:text")
             .attr("dy", ".35em")
-            .attr("text-anchor", function(d) { return ((d.startAngle + d.endAngle) / 2) > Math.PI ? "end" : null; })
+            .attr("text-anchor", function(d) { 
+                return (((d.startAngle + d.endAngle) / 2) > Math.PI ? "end" : null)
+            })
             .attr("transform", function(d) {
               return "rotate(" + (((d.startAngle + d.endAngle) / 2) * 180 / Math.PI - 90) + ")"
-                  + "translate(" + (that.center - 15) + ")"
+                  + "translate(" + (200) + ")"
                   + (((d.startAngle + d.endAngle) / 2) > Math.PI ? "rotate(180)" : "");
             })
             .text(function(d) {
                 return that.stations[d.index];
             })
             .style("font-size","10px");
+    
+        that.svg.append("g")
+            .attr("class", "chord")
+            .selectAll("path")
+            .data(chord.chords)
+            .enter().append("path")
+            .attr("d", that.matrix)
+            .style("opacity", 0.7);
+    
 
         // Returns an event handler for fading a given chord group.
         function fade(opacity) {
