@@ -12,20 +12,20 @@ ForceVis = function (_parentElement, _data, _metaData) {
   this.displayData = [];
   this.matrix = [];
 
-    for (var i=0; i<this.data.length; i++)
-    {
-        this.matrix[i] = [];
-        for (var j =0; j<this.data[i].length; j++)
-            this.matrix[i][j] = this.data[i][j];
-    }
+for (var i=0; i<this.data.length; i++)
+{
+    this.matrix[i] = [];
+    for (var j =0; j<this.data[i].length; j++)
+        this.matrix[i][j] = this.data[i][j];
+}
 
 
     
-    this.stations = [];
-    for (var i=0; i<this.metaData.features.length; i++)
-        this.stations[this.metaData.features[i].properties.id] = this.metaData.features[i].properties.station;
-
-    
+//    this.stations = [];
+//    for (var i=0; i<(this.metaData.features.length; i++)
+//        this.stations[this.metaData.features[i].properties.id] = this.metaData.features[i].properties.station;
+//
+//    
   // Define all "constants" here
   this.margin = {
       top: 10,
@@ -90,11 +90,11 @@ ForceVis.prototype.updateVis = function() {
         var chord = d3.layout.chord()
             .padding(Math.PI * 2. / (that.matrix).length)
             .sortSubgroups(d3.descending)
-            .matrix ([  [12, 152, 194, 184], 
-                        [400, 300, 250, 225], 
-                        [225, 123, 124, 209], 
-                        [12, 152, 194, 184]  ])
-//            .matrix(that.matrix);
+//            .matrix ([  [12, 152, 194, 184], 
+//                        [400, 300, 250, 225], 
+//                        [225, 123, 124, 209], 
+//                        [12, 152, 194, 184]  ])
+            .matrix(that.matrix);
 
 
         
