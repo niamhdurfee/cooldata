@@ -31,7 +31,7 @@ MapVis = function(_parentElement,_stationData, _routeData, _eventHandler) {
 MapVis.prototype.initVis = function() {
 
   this.map = L.mapbox.map('mapVis', 'niamhdurfee.loko84n8');
-
+  // fromEncoded(encoded).addto(map);
   // var line_points = [[42.361285,-71.06514],[42.353412,-71.044624]];
   // var polyline = L.polyline(line_points).addTo(map);
 
