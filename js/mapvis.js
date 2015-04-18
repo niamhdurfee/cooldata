@@ -45,15 +45,28 @@ MapVis.prototype.initVis = function() {
 
 MapVis.prototype.updateVis = function() {
   var that = this;
-
+  var polyline_options = {
+      weight: '2',
+      title: 'line'
+    };
   this.areaScale = d3.scale.linear().range([0,200000]).domain([0, d3.max(that.stationData, function (d) {return (d.hourly.average.a + d.hourly.average.d)})]);
-  this.color = d3.scale.linear().range(["red","grey","lightgreen"]).domain([0.45,0.5,0.55]); 
+  this.color = d3.scale.linear().range(["red","grey","lightgreen"]).domain([0.45,0.5,0.55]);
   this.stationData.forEach(function(dp,i) {
       var s = dp.hourly.average.a+dp.hourly.average.d,
           r = that.getRadius(that.areaScale(s)),
           c = that.color(dp.hourly.average.a/s),
           popup = L.popup().setLatLng([dp.lat,dp.lng]).setContent(dp.fullname);
       L.circle([dp.lat,dp.lng], r, {color: c, opacity: 1, fillOpacity: 0.5, className:'node',weight:2}).addTo(that.map).bindPopup(popup);
+      for (var route in dp.routes) {
+        if (route < 142 && dp.routes[route] > 500) {
+          line = L.polyline([[dp.lat,dp.lng],[that.stationData[route].lat, that.stationData[route].lng]], polyline_options).addTo(that.map);
+          line.bindPopup(dp.routes[route] + ' Trips on this route from ' + dp.fullname + ' to ' + that.stationData[route].fullname);
+          line.on('mouseover', function(e) {
+            e.target.openPopup();
+          })
+        }
+      }
+
   });
 
   var popup = L.popup();
