@@ -14,10 +14,10 @@ We are Team Datahub, and we are on a mission to visualize this bike sharing plat
 The Hubway Visualization Challenge has already come to a close and awards were given out to visualizations in a few categories: Overall Best Visualization, Best Analysis, Best Data Narrative, Best Data Exploration Tool, People's Choice, and Honorable Mention. Despite these being available, we made it a point not to look at the winner's examples. We were intent on not allowing other designs to fixate our own focus. However, there is a possibility we were slightly influenced by some of the winners--since we were able to see the narrow screenshot of each winner, as shown below.
 
 
-**** ADD IMAGE HERE ****
+![Image of Challenge Winners](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/img/challengewinners.png)
 
 
-We also decided to look at some inspiration from a different mode of transportation--taxis. There are a couple visualizations recently about the travel of taxis throughout New York City. Therefore, we took a look at a visualizations tackling this problem. These are available here and here.
+We also decided to look at some inspiration from a different mode of transportation--taxis. There are a couple visualizations recently about the travel of taxis throughout New York City. Therefore, we took a look at a visualizations tackling this problem. These are available [a taxi example](http://www.nytimes.com/interactive/2010/04/02/nyregion/taxi-map.html?_r=0 "here") and [another taxi example](http://chriswhong.com/data-visualization/taxitechblog1/ "here").
 
 # Questions
 We set out with three main questions that we hoped our visualization would solve. These three main questions guided our visualization in the way we structured our data, the way we designed our visualization, and the ways in which we hoped viewers would interact with our visualization. We wanted to make sure our visualization would allow viewers to ask these same questions for themselves, discover answers on their own, and make new and interesting conclusions. Without further ado, here are the three questions Team Datahub set out to answer.
@@ -49,7 +49,7 @@ In 2012, Hubway and the Metropolitan Area Planning Council announced a challenge
 
 *Zip Code + Birthdate + Gender* For trips taken by registered users, the dataset has some additional data points. First, the zip code given for a registered user. Since Hubway is limited to the Boston area and there are zip codes outside of the Boston area, we know that zip codes don't represent where the rider is at the time, but rather where the rider is originally from (most likely from credit zip code). We are able to use this zip code to determine which riders are visitors and which riders live in the city. Furthermore, we are able to use the birthdate given to get a better sense of rider's age. Lastly, we are able to use the gender to determine whether riders are female or male.
 
-This data is available for download in a CSV file at the Hubway Data Visualization Challenge. We immediately ran into two main issues with the dataset. First, the dataset was a large file at more than 17MB. Second, we needed to manipulate the data such that they were in the correct layout for our visualization. To do this, Niamh wrote a number of python scripts to both cut down the size of the data as well as to derive additional values. As a result, we have a number of CSV files with data for different purposes.
+This data is available for download in a CSV file at the [Hubway Data Visualization Challenge](http://hubwaydatachallenge.org/trip-history-data/ "Hubway Data Visualization Challenge"). We immediately ran into two main issues with the dataset. First, the dataset was a large file at more than 17MB. Second, we needed to manipulate the data such that they were in the correct layout for our visualization. To do this, Niamh wrote a number of python scripts to both cut down the size of the data as well as to derive additional values. As a result, we have a number of CSV files with data for different purposes.
 
 To summarize, here are the data files that were derived. There are now data files for filtering by registered/unregistered or by gender. There is now one stations data file that includes coordinates, name, neighborhoods, and all other stations traveled to from that station. Furthermore, we used the Google API to calculate the distance of each possible route. This was necessary in order to compute leisure vs. commuting rides. For each possible trip, the actual biking distance was calculated, as well as the recommended biking time from Google maps. This data was then used to specify whether or not a trip is considered commuting or leisure.
 
@@ -62,19 +62,19 @@ What are the different visualizations you considered? Justify the design decisio
 
 From the beginning, we had a rather clear idea of what types of visualizations we wanted to implement. We wanted multiple views, with the option to explore with filters, ranges, and brushes. The initial sketches of our visualization concepts are displayed below.
 
-**** ADD IMAGE HERE ****
+![Image of Figure 1](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/map.jpg)
 
 Figure 1: Map visualization by Hubway station
 
-**** ADD IMAGE HERE ****
+![Image of Figure 2](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/maptrips.jpg)
 
 Figure 2: Map visualization of Hubway trips
 
-**** ADD IMAGE HERE ****
+![Image of Figure 3](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/stationdetails.jpg)
 
 Figure 3: In Depth View of Hubway Stations
 
-**** ADD IMAGE HERE ****
+![Image of Figure 4](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/databreakdown.jpg)
 
 Figure 4: In-depth view of stations + users
 
@@ -84,38 +84,39 @@ We decided on these four main visualizations since they could answer our main qu
 
 A week into the project, we decided that we should be working on a backup view in case we were unable to implement the map view exactly as we wanted to. We decided upon a chord layout that would depict the relationship between separate neighborhoods. This new view is shown in the figure below. The main screen shows the relationship of trips between the four cities--Cambridge, Brooklin, Boston and Somerville. The chords can be toggled to represent three different aspects--volume of trips, speed of the average trip, and average duration of the trip. Furthermore, any chord can be examined further to see additional user, station and trip information (as we also had in our initial design). Second, there is the option to select one particular city and look within that city. Therefore, if we selected Cambridge, we would then transition to a similar chord layout that displays all the neighborhoods of Cambridge (i.e. Porter, Central, Kendall, and Harvard Squares). We would be able to see the names of individual stations at this point. Like the previous design, this design encompasses all three of our main questions and gives the user the ability to explore.
 
-**** ADD IMAGE HERE ****
+
+![Image of Figure 5](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/design2.jpg)
 
 Figure 5: Chord layout design
 
 By the time the design studio came around, it seemed that both layouts were each doable, but we would not be able to do both views. Therefore, we used the design studio to get feedback from another group whether to pursue the map or the chord layout. While the other team informed us that they did like the chord layout, it was clear that the map design was more intuitive and preferable for better exploring. Therefore, we decided to focus our efforts on the map layout moving forward.
 
 # Implementation
-Describe the intent and functionality of the interactive visualizations you implemented. Provide clear and well-referenced images showing the key design and interaction elements.
 
-Our first step was deciding how to create a map view. After some research and experimentation, we decided upon using Leaflet and MapBox. More about these libraries can be found here and here. From here, we were able to create a map view, as shown in Figure 6. The nodes in the figure are sized in area according to the average trip volume per hour for that hub. Furthermore, the color of the nodes represent the proportion of average trip volume that is arriving. That means if more than 50% of trips are arriving, the nodes are green; if less than 50% of trips are arriving, the nodes are red; and if 50% of trips are arriving and departing, the nodes are grey. Both color and size of the trips are determined on a scale. Since all nodes fell between the 40%-60% range for arrivals, the scale for color is in a range from .45 to .55. In addition, we created a hovering option for routes that quick displays the two stations as well as the volume of trips.
 
-**** ADD IMAGE HERE ****
+Our first step was deciding how to create a map view. After some research and experimentation, we decided upon using Leaflet and MapBox. More about these libraries can be found [Leaflet](http://leafletjs.com/features.html "here") and [Mapbox](https://www.mapbox.com/mapbox.js/api/v2.1.8/ "here"). From here, we were able to create a map view, as shown in Figure 6. The nodes in the figure are sized in area according to the average trip volume per hour for that hub. Furthermore, the color of the nodes represent the proportion of average trip volume that is arriving. That means if more than 50% of trips are arriving, the nodes are green; if less than 50% of trips are arriving, the nodes are red; and if 50% of trips are arriving and departing, the nodes are grey. Both color and size of the trips are determined on a scale. Since all nodes fell between the 40%-60% range for arrivals, the scale for color is in a range from .45 to .55. In addition, we created a hovering option for routes that quick displays the two stations as well as the volume of trips.
+
+![Image of Figure 6](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/map_view.png)
 
 Figure 6: Map View
 
 When it came to drawing the routes between stations, we ran into a problem. There were so many trips between stations that the map became essentially impossible to see. Therefore, at this point, we decided to show only routes with a minimum number of trips. Below, we have included views that include ALL routes (Figure 7), routes with more than 200 trips (Figure 8) and routes with more than 500 trips (Figure 9).
 
-**** ADD IMAGE HERE ****
+![Image of Figure 7](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/all.png)
 
 Figure 7: All Routes
 
-**** ADD IMAGE HERE ****
+![Image of Figure 8](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/200.png)
 
 Figure 8: Routes with 200+ Trips
 
-**** ADD IMAGE HERE ****
+![Image of Figure 9](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/500.png)
 
 Figure 9: Routes with 500+ Trips
 
 Lastly, we have begun to create the filtering process. As shown below, we have decided to create a brush for time of the day.
 
-**** ADD IMAGE HERE ****
+![Image of Figure 10](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/brush.png)
 
 Figure 10: Brush of time
 
