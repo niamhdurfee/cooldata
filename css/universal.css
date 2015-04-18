@@ -12,6 +12,16 @@
 {
     color: #217D1C;
 }
+img {  
+    float: center;
+    width: 50%;
+}
+
+.center {
+    text-align: center;
+    float: center;
+}
+
 
 /*styles for scrollspy on process book page*/
 section {

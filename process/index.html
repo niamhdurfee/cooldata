@@ -21,6 +21,7 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="../img/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
+      
 
     <title>datahub</title>
 
@@ -50,57 +51,58 @@
     <div class="content">
     
     <div class="container">
+<!--
         <div class="jumbotron">
             <h1>Process Book</h1>
         </div>
         
+-->
         <div class="row">
             <div class="col-xs-3" id="myScrollspy">
                 <ul class="nav nav-tabs nav-stacked affix-top" data-spy="affix" data-offset-top="125">
-                    <li class="active"><a href="#section-1">Overview and Motivation</a></li>
-                    <li><a href="#section-2">Related Work</a></li>
-                    <li><a href="#section-3">Questions</a></li>
-                    <li><a href="#section-4">Data</a></li>
-                    <li><a href="#section-5">Exploratory Data Analysis</a></li>
-                    <li><a href="#section-6">Design Evolution</a></li>
-                    <li><a href="#section-7">Implementation</a></li>
-                    <li><a href="#section-8">Evaluation</a></li>
+                    <li class="active"><a href="#overview">Overview and Motivation</a></li>
+                    <li><a href="#related">Related Work</a></li>
+                    <li><a href="#questions">Questions</a></li>
+                    <li><a href="#data">Data</a></li>
+                    <li><a href="#exploration">Exploratory Data Analysis</a></li>
+                    <li><a href="#evolution">Design Evolution</a></li>
+                    <li><a href="#implementation">Implementation</a></li>
+                    <li><a href="#evaluation">Evaluation</a></li>
 
                 </ul>
             </div>
             <div class="col-xs-9">
                 
-                <section id="section-1">
+                <section id="overview">
                     <h2>Overview and Motivation</h2>
                     <p><h5>About Hubway</h5>Hubway is a bicycle sharying system in the Boston area.  Launched at the end of July in 2011, Hubway started with 61 stations throughout the city and 600 bicycles.  In the time afterwards, Hubway expanded to the neighboring cities of Cambridge, Somerville, and Brookline.  Since its launch in 2011, Hubway has grown to more than 140 stations and more than 1300 bikes.</p>
-                    <p>In 2013, Hubway in partnership with the Metropolitan Area Planning Council, released data from more than XXXXXXX trips that were taken on Hubway bikes between its launch on July 28, 2011 until the end of September 2012.  Their mission?  Ask the public to put together a visualization of all the trip history.  While  </p>
+                    <p>In 2013, Hubway in partnership with the Metropolitan Area Planning Council, released data from more than a half million trips that were taken on Hubway bikes between its launch on July 28, 2011 until the end of September 2012.  Their mission?  Ask the public to put together a visualization of all the trip history.  While the challenge itself has officially closed, we decided to take on the Hubway and MAPC visualization challenge.  </p>
                 
-                    
-                    <p>We are Team Datahub, and we are on a mission to bring the Hubway data to viewers.  </p>
-                    
-                    
-                    <p>Hubway is a bicycle sharing system in the Boston, Massachusetts metro area, operated by Motivate using Bixi bikes and docking stations. The bike share program officially launched on July 28, 2011 with 61 stations and 600 bicycles. Expansions were already being planned for in the spring of 2012, adding more stations in Boston as well as the neighboring cities and towns of Brookline, Cambridge, and Somerville. As of September 2014, the system has deployed 140 stations with a fleet of over 1,300 bikes.</p>
-                    <p>As students, we make use of many forms of alternative transportation to explore and commute around Boston.  In particular, bikes are a popular, affordable method of transportation for students and professionalsalike.  </p><p>We want to understand who uses bikes and how to get around Boston.  One of the most readily available datasets that gives an idea of the prevalence of bikes is that provided b Hubway, a bike sharing/renting program in the Boston and Cambridge area.</p>   
-                    <p>Hubway is Boston's very own bike sharing system.  </p>
+                    <h5>The Team Datahub Way</h5>
+                    <p> <i>We are Team Datahub, and we are on a mission to visualize this bike sharing platform.</i>  As students, we make use of many forms of alternative transporation to explore and commute around Boston.  In particular, bikes are a popular, affordable method of transportation for students, professionals, and tourists alike.  <b>We want to understand more about who uses bikes and for what purpose, as well as how people get around Boston.</b>  Our goal is to find answers to these questions for ourselves, and create a visualization for others to discover the answers as well.   </p>
+                     
                 </section>
                 
                 
-                <section id="section-2"><hr>
+                <section id="related"><hr>
                 
-                    <h2>Related Work</h2>
-                    <p>Nullam hendrerit justo non leo aliquet imperdiet. Etiam in sagittis lectus. Suspendisse ultrices placerat accumsan. Mauris quis dapibus orci. In dapibus velit blandit pharetra tincidunt. Quisque non sapien nec lacus condimentum facilisis ut iaculis enim. Sed viverra interdum bibendum. Donec ac sollicitudin dolor. Sed fringilla vitae lacus at rutrum. Phasellus congue vestibulum ligula sed consequat.</p><p>Vestibulum consectetur scelerisque lacus, ac fermentum lorem convallis sed. Nam odio tortor, dictum quis malesuada at, pellentesque vitae orci. Vivamus elementum, felis eu auctor lobortis, diam velit egestas lacus, quis fermentum metus ante quis urna. Sed at facilisis libero. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum bibendum blandit dolor. Nunc orci dolor, molestie nec nibh in, hendrerit tincidunt ante. Vivamus sem augue, hendrerit non sapien in, mollis ornare augue.</p>
+                    <h2>Related Work</h2><h5>Anything that inspired you, such as a paper, a web site, visualizations we discussed in class, etc.</h5>
+                    <p>The Hubway Visualization Challenge has already come to a close and awards were given out to visualizations in a few categories:  Overall Best Visualization, Best Analysis, Best Data Narrative, Best Data Exploration Tool, People's Choice, and Honorable Mention.  Despite these being available, we made it a point not to look at the winner's examples.  We were intent on not allowing other designs to fixate our own focus.  However, there is a possibility we were slightly influenced by some of the winners--since we were able to see the narrow screenshot of each winner, as shown below.   </p>
                     
+                    <div class="center"><img src="../img/challengewinners.png"></div>
+                    
+                    <p>  We also decided to look at some inspiration from a different mode of transportation--taxis.  There are a couple visualizations recently about the travel of taxis throughout New York City.  Therefore, we took a look at a visualizations tackling this problem.  These are available <a href="http://www.nytimes.com/interactive/2010/04/02/nyregion/taxi-map.html?_r=0">here </a> and <a href="http://chriswhong.com/data-visualization/taxitechblog1/">here.</a></p>
                 </section>
-                <section id="section-3"><hr>
+                <section id="questions"><hr>
                     <h2>Questions</h2>
-                    <p>We set out with three main questions that we hoped our visualization would solve.  These three main questions guided our visualization in the way we structured our data, the way we designed our visualization, and the ways in which we hoped viewers would interact with our visualization.  We wanted to make sure our visualization would allow viewers to ask these same questions for themselves and </p>
+                    <p>We set out with three main questions that we hoped our visualization would solve.  These three main questions guided our visualization in the way we structured our data, the way we designed our visualization, and the ways in which we hoped viewers would interact with our visualization.  We wanted to make sure our visualization would allow viewers to ask these same questions for themselves, discover answers on their own, and make new and interesting conclusions.  Without further ado, here are the three questions Team Datahub set out to answer.</p>
                         
-                        <h5>#1 Why do people use Hubway?</h5> 
-                    <h5>#2 Who is using Hubway?</h5>  
-                    <h5>#3 Where's everyone going?</h5>
+                    <h5>#1 Why do people use Hubway?</h5> <p>When people use Hubway, what are they doing?  Are they rushing to work during commuting hours?  Are they visitors using bikes to get around the city more easily?  Are they taking a leisurely stroll on the weekend?  We wanted to help our viewers find and explore the answers to these questions and hopefully, get a better idea of the use cases of Hubway trips.  </p>
+                    <h5>#2 Who is using Hubway?</h5>  <p>We wanted to find out more about the riders themselves.  Are they visitors or live here in Boston?  Are they male or female?  Are they old or young?  Are they commuters or leisure riders?  In answering these questions, we are able to get a better understanding of the people on the bike. </p>
+                    <h5>#3 Where's everyone going?</h5><p>  We wanted to discover the Hubway hot spots--the places people use bikes most often.  This includes finding out which stations see the most traffic, but also which routes see the most traffic.  Are there stations that act as the Hubs of all activity?  Are there stations that see more incoming than outgoing traffic? Are there certain routes that are extremely popular?  Are there certain routes that have never been taken on a Hubway bike?  We decided to create a visualization that would answer these specific questions, and in result, allow our viewer to see where everyone is going.</p>
                 
                 </section>
-                <section id="section-4"><hr>
+                <section id="data"><hr>
                     <h2>Data</h2>
                     <p>In 2012, Hubway and the Metropolitan Area Planning Council announced a challenge: they wanted the public to visualize the data from more than 5 million Hubway trips over the course of 13 months.  To do so, Hubway released the data of their trip history.  This means that anytime a rider checked out a bike from any one of the now 140 Hubway stations, the system recorded some basic information about that trip.  </p>
                     
@@ -116,32 +118,65 @@
                         <li> <b>Member Type </b> On Hubway, there are two types of users: both registered and casual users.  Registered users have signed up for a Hubway subscription.  At this point in time, Hubway subscriptions are $85 annually or $20 monthly.  Casual users have signed up for a shorter subscription--either 72 or 24 hours.  In both cases, any ride under 30 minutes is free.  However, rides that takes 31-60 minutes cost an additional $2 and rides that take 61-90 minutes cost an additional $4.  Beyond that, every additional half hour costs another $8.  </li></br>
     
     
-                        <li> <b> Zip Code, Birthdate, Gender </b>For trips taken by registered users, the dataset has some additional data points.  First, the zip code in which the   </li></br>
+                        <li> <b> Zip Code + Birthdate + Gender </b>For trips taken by registered users, the dataset has some additional data points.  First, the zip code given for a registered user.  Since Hubway is limited to the Boston area and there are zip codes outside of the Boston area, we know that zip codes don't represent where the rider is at the time, but rather where the rider is originally from (most likely from credit zip code).    We are able to use this zip code to determine which riders are visitors and which riders live in the city.  Furthermore, we are able to use the birthdate given to get a better sense of rider's age.  Lastly, we are able to use the gender to determine whether riders are female or male.     </li></br>
 
-                        <li> <b> Birthdate </b>Again, this is a data point that is only available for registered riders.  We can use their birthdate to determine ages of all Hubway registered users.</li></br>
-                        <li> <b> Gender </b> While gender is not specificed for casual riders (like Zip Code and Birthdate), we are able to get a better idea of what gender Hubway riders are.</li>
 
                     </ul>
                     
-                <p>This data is available for download in a CSV file at the <a href="http://hubwaydatachallenge.org/trip-history-data/">Hubway Data Visualization Challenge</a>.  We immediately ran into two main issues with the dataset.  First, the dataset was a very large file at more than 17MB</p>
+                <p>This data is available for download in a CSV file at the <a href="http://hubwaydatachallenge.org/trip-history-data/">Hubway Data Visualization Challenge</a>.  We immediately ran into two main issues with the dataset.  First, the dataset was a large file at more than 17MB.  Second, we needed to manipulate the data such that they were in the correct layout for our visualization.  To do this, Niamh wrote a number of python scripts to both cut down the size of the data as well as to derive additional values.  As a result, we have a number of CSV files with data for different purposes.</p>
                 </section>
-                <section id="section-5"><hr>
-                    <h2>Exploratory Data Analysis</h2>
+                <section id="exploration"><hr>
+                    <h2>Exploratory Data Analysis</h2> <h5>What visualizations did you use to initially look at your data? What insights did you gain? How did these insights inform your design?</h5>
                     <p>Most of our exploration with the data happened during the process in which we fine-tuned and manipulated the data into the </p>
     
                 </section>
-                <section id="section-6"><hr>
-                    <h2>Design Evolution</h2>
-                    <p>Suspendisse a orci facilisis, dignissim tortor vitae, ultrices mi. Vestibulum a iaculis lacus. Phasellus vitae convallis ligula, nec volutpat tellus. Vivamus scelerisque mollis nisl, nec vehicula elit egestas a. Sed luctus metus id mi gravida, faucibus convallis neque pretium. Maecenas quis sapien ut leo fringilla tempor vitae sit amet leo. Donec imperdiet tempus placerat. Pellentesque pulvinar ultrices nunc sed ultrices. Morbi vel mi pretium, fermentum lacus et, viverra tellus. Phasellus sodales libero nec dui convallis, sit amet fermentum sapien auctor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed eu elementum nibh, quis varius libero.</p><p>Vestibulum quis quam ut magna consequat faucibus. Pellentesque eget nisi a mi suscipit tincidunt. Ut tempus dictum risus. Pellentesque viverra sagittis quam at mattis. Suspendisse potenti. Aliquam sit amet gravida nibh, facilisis gravida odio. Phasellus auctor velit at lacus blandit, commodo iaculis justo viverra. Etiam vitae est arcu. Mauris vel congue dolor. Aliquam eget mi mi. Fusce quam tortor, commodo ac dui quis, bibendum viverra erat. Maecenas mattis lectus enim, quis tincidunt dui molestie euismod. Curabitur et diam tristique, accumsan nunc eu, hendrerit tellus.</p><p>Phasellus fermentum, neque sit amet sodales tempor, enim ante interdum eros, eget luctus ipsum eros ut ligula. Nunc ornare erat quis faucibus molestie. Proin malesuada consequat commodo. Mauris iaculis, eros ut dapibus luctus, massa enim elementum purus, sit amet tristique purus purus nec felis. Morbi vestibulum sapien eget porta pulvinar. Nam at quam diam. Proin rhoncus, felis elementum accumsan dictum, felis nisi vestibulum tellus, et ultrices risus felis in orci. Quisque vestibulum sem nisl, vel congue leo dictum nec. Cras eget est at velit sagittis ullamcorper vel et lectus. In hac habitasse platea dictumst. Etiam interdum iaculis velit, vel sollicitudin lorem feugiat sit amet. Etiam luctus, quam sed sodales aliquam, lorem libero hendrerit urna, faucibus rhoncus massa nibh at felis. Curabitur ac tempus nulla, ut semper erat. Vivamus porta ullamcorper sem, ornare egestas mauris facilisis id.</p><p>Ut ut risus nisl. Fusce porttitor eros at magna luctus, non congue nulla eleifend. Aenean porttitor feugiat dolor sit amet facilisis. Pellentesque venenatis magna et risus commodo, a commodo turpis gravida. Nam mollis massa dapibus urna aliquet, quis iaculis elit sodales. Sed eget ornare orci, eu malesuada justo. Nunc lacus augue, dictum quis dui id, lacinia congue quam. Nulla sem sem, aliquam nec dolor ac, tempus convallis nunc. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla suscipit convallis iaculis. Quisque eget commodo ligula. Praesent leo dui, facilisis quis eleifend in, aliquet vitae nunc. Suspendisse fermentum odio ac massa ultricies pellentesque. Fusce eu suscipit massa.</p>
-                </section>
-                <section id="section-7"><hr>
-                    <h2>Implementation</h2>
-                    <p>Suspendisse a orci facilisis, dignissim tortor vitae, ultrices mi. Vestibulum a iaculis lacus. Phasellus vitae convallis ligula, nec volutpat tellus. Vivamus scelerisque mollis nisl, nec vehicula elit egestas a. Sed luctus metus id mi gravida, faucibus convallis neque pretium. Maecenas quis sapien ut leo fringilla tempor vitae sit amet leo. Donec imperdiet tempus placerat. Pellentesque pulvinar ultrices nunc sed ultrices. Morbi vel mi pretium, fermentum lacus et, viverra tellus. Phasellus sodales libero nec dui convallis, sit amet fermentum sapien auctor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed eu elementum nibh, quis varius libero.</p><p>Vestibulum quis quam ut magna consequat faucibus. Pellentesque eget nisi a mi suscipit tincidunt. Ut tempus dictum risus. Pellentesque viverra sagittis quam at mattis. Suspendisse potenti. Aliquam sit amet gravida nibh, facilisis gravida odio. Phasellus auctor velit at lacus blandit, commodo iaculis justo viverra. Etiam vitae est arcu. Mauris vel congue dolor. Aliquam eget mi mi. Fusce quam tortor, commodo ac dui quis, bibendum viverra erat. Maecenas mattis lectus enim, quis tincidunt dui molestie euismod. Curabitur et diam tristique, accumsan nunc eu, hendrerit tellus.</p>
+                <section id="evolution"><hr>
+                    <h2>Design Evolution</h2><h5>What are the different visualizations you considered? Justify the design decisions you made using the perceptual and design principles you learned in the course.</h5>
+                    <p>From the beginning, we had a rather clear idea of what types of visualizations we wanted to implement.  We wanted multiple views, with the option to explore with filters, ranges, and brushes.  The initial sketches of our visualization concepts are displayed below.</p>
+                    
+                  <div class="center"><img src="../design/img/map.jpg"></br> Figure 1: Map visualization by Hubway station<br/><br/></div>
+                    <div class="center"><img src="../design/img/maptrips.JPG"></br> Figure 2: Map visualization of Hubway trips<br/><br/></div>
+                
+                    <div class="center"><img src="../design/img/stationdetails.jpg"></br> Figure 3: In Depth View of Hubway Stations<br/><br/></div>
+
+  <div class="center"><img src="../design/img/databreakdown.jpg"></br> Figure 4: In-depth view of stations + users<br/><br/></div>
+
+                    <p>Our main view will be a map of the Boston, Cambridge, Somerville, & Brookline area. There will be two visualizations that you can switch between that are overlayed on the map. Figure 1 shows nodes at the station locations.  Each node will vary in size depending on how a particular station is. You will be able to add filters for the time of day, gender, age, etc. that will modify the nodes. Figure 2 will be lines connecting the stations that will show the popularity of the route based on color. You will be able to apply the same filters from Figure 1 to this visualization. Also, hovering over a route can show more details of that route such as the average trip length, average speed, gender, and age of the rider. We also plan on having two more visualizations that will show other stats of the routes, stations, and the average user of Hubway (Figures 3 & 4). We plan on switching to these views by either clicking on a station or route. Each of these visualizations will also have some filters and a time slider to allow the user to see how they change over time.</p>
+
+                <p>We decided on these four main visualizations since they could answer our main questions.  As a reminder, we wanted to know why do people use Hubway, who is using Hubway, and where they are going.  Using the four visualizations outlined above, we are able to show where they're going on a map view.  Also, it allows viewers to explore more about who is using Hubway in certain respects.  Furthermore, it allows them to draw their own conclusions about why people are using Hubway.</p>
+
+                <p>A week into the project, we decided that we should be working on a backup view in case we were unable to implement the map view exactly as we wanted to.  We decided upon a chord layout that would depict the relationship between separate neighborhoods.  This new view is shown in the figure below.  The main screen shows the relationship of trips between the four cities--Cambridge, Brooklin, Boston and Somerville.  The chords can be toggled to represent three different aspects--volume of trips, speed of the average trip, and average duration of the trip.  Furthermore, any chord can be examined further to see additional user, station and trip information (as we also had in our initial design).  Second, there is the option to select one particular city and look within that city.  Therefore, if we selected Cambridge, we would then transition to a similar chord layout that displays all the neighborhoods of Cambridge (i.e. Porter, Central, Kendall, and Harvard Squares).  We would be able to see the names of individual stations at this point.  Like the previous design, this design encompasses all three of our main questions and gives the user the ability to explore.</p>
+
+  <div class="center"><img src="../design/img/design2.jpg"></br> Figure 5: Chord layout design<br/><br/></div>
+
+
+         <p>By the time the design studio came around, it seemed that both layouts were each doable, but we would not be able to do both views.  Therefore, we used the design studio to get feedback from another group whether to pursue the map or the chord layout.  While the other team informed us that they did like the chord layout, it was clear that the map design was more intuitive and preferable for better exploring.  Therefore, we decided to focus our efforts on the map layout moving forward.</p>
+
 
                 </section>
-                <section id="section-8"><hr>
+                <section id="implementation"><hr>
+                    <h2>Implementation</h2><h5>Describe the intent and functionality of the interactive visualizations you implemented. Provide clear and well-referenced images showing the key design and interaction elements.</h5>
+                    
+                    <p>Our first step was deciding how to create a map view.  After some research and experimentation, we decided upon using Leaflet and MapBox.  More about these libraries can be found <a href="http://leafletjs.com/features.html">here</a> and <a href="https://www.mapbox.com/mapbox.js/api/v2.1.8/">here</a>.  From here, we were able to create a map view, as shown in Figure 6.  The nodes in the figure are sized in area according to the average trip volume per hour for that hub.  Furthermore, the color of the nodes represent the proportion of average trip volume that is arriving.  That means if more than 50% of trips are arriving, the nodes are green; if less than 50% of trips are arriving, the nodes are red; and if 50% of trips are arriving and departing, the nodes are grey.    Both color and size of the trips are determined on a scale.  Since all nodes fell between the 40%-60% range for arrivals, the scale for color is in a range from .45 to .55.  In addition, we created a hovering option for routes that quick displays the two stations as well as the volume of trips.</p>
+                    
+         <div class="center"><img src="../design/img/map_view.png"></br> Figure 6: Map View<br/><br/></div>
+
+<p>When it came to drawing the routes between stations, we ran into a problem.  There were so many trips between stations that the map became essentially impossible to see.  Therefore, at this point, we decided to show only routes with a minimum number of trips.  Below, we have included views that include ALL routes (Figure 7), routes with more than 200 trips (Figure 8) and routes with more than 500 trips (Figure 9). </p>
+
+         <div class="center"><img src="../design/img/ALL.png"></br> Figure 7: All Routes<br/><br/></div>
+         <div class="center"><img src="../design/img/200.png"></br> Figure 8: Routes with 200+ Trips<br/><br/></div>
+         <div class="center"><img src="../design/img/500.png"></br> Figure 9: Routes with 500+ Trips<br/><br/></div>
+
+<p>Lastly, we have begun to create the filtering process.  As shown below, we have decided to create a brush for time of the day. </p>
+
+         <div class="center"><img src="../design/img/brush.png"></br> Figure 10: Brush of time<br/><br/></div>
+         
+                    <p></p>
+
+                </section>
+                <section id="evaluation"><hr>
                     <h2>Evaluation</h2>
-                    <p>Nam eget purus nec est consectetur vehicula. Nullam ultrices nisl risus, in viverra libero egestas sit amet. Etiam porttitor dolor non eros pulvinar malesuada. Vestibulum sit amet est mollis nulla tempus aliquet. Praesent luctus hendrerit arcu non laoreet. Morbi consequat placerat magna, ac ornare odio sagittis sed. Donec vitae ullamcorper purus. Vivamus non metus ac justo porta volutpat.</p><p>Morbi sed fermentum ipsum. Morbi a orci vulputate tortor ornare blandit a quis orci. Donec aliquam sodales gravida. In ut ullamcorper nisi, ac pretium velit. Vestibulum vitae lectus volutpat, consequat lorem sit amet, pulvinar tellus. In tincidunt vel leo eget pulvinar. Curabitur a eros non lacus malesuada aliquam. Praesent et tempus odio. Integer a quam nunc. In hac habitasse platea dictumst. Aliquam porta nibh nulla, et mattis turpis placerat eget. Pellentesque dui diam, pellentesque vel gravida id, accumsan eu magna. Sed a semper arcu, ut dignissim leo.</p><p>Sed vitae lobortis diam, id molestie magna. Aliquam consequat ipsum quis est dictum ultrices. Aenean nibh velit, fringilla in diam id, blandit hendrerit lacus. Donec vehicula rutrum tellus eget fermentum. Pellentesque ac erat et arcu ornare tincidunt. Aliquam erat volutpat. Vivamus lobortis urna quis gravida semper. In condimentum, est a faucibus luctus, mi dolor cursus mi, id vehicula arcu risus a nibh. Pellentesque blandit sapien lacus, vel vehicula nunc feugiat sit amet.</p>
+                    <p>To be completed when nearing project's end...</p>
                 </section>
             </div>
         </div>

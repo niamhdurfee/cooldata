@@ -1,1 +1,1 @@
-The process book outline is also available at 
+The process book is available at /process.
