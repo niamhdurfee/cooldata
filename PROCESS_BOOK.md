@@ -14,7 +14,7 @@ In 2013, Hubway in partnership with the Metropolitan Area Planning Council, rele
 The Hubway Visualization Challenge has already come to a close and awards were given out to visualizations in a few categories: Overall Best Visualization, Best Analysis, Best Data Narrative, Best Data Exploration Tool, People's Choice, and Honorable Mention. Despite these being available, we made it a point not to look at the winner's examples. We were intent on not allowing other designs to fixate our own focus. However, there is a possibility we were slightly influenced by some of the winners--since we were able to see the narrow screenshot of each winner, as shown below.
 
 
-->![Image of Challenge Winners](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/img/challengewinners.png)<-
+![Image of Challenge Winners](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/img/challengewinners.png)
 
 We also decided to look at some inspiration from a different mode of transportation--taxis. There are a couple visualizations recently about the travel of taxis throughout New York City. Therefore, we took a look at a visualizations tackling this problem. These are available [here](http://www.nytimes.com/interactive/2010/04/02/nyregion/taxi-map.html?_r=0 "here") and [here](http://chriswhong.com/data-visualization/taxitechblog1/ "here").
 
@@ -60,21 +60,21 @@ Most of our exploration with the data happened during the process in which we fi
 
 From the beginning, we had a rather clear idea of what types of visualizations we wanted to implement. We wanted multiple views, with the option to explore with filters, ranges, and brushes. The initial sketches of our visualization concepts are displayed below.
 
-->![Image of Figure 1](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/map.jpg)<-
+![Image of Figure 1](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/map.jpg)
 
-->Figure 1: Map visualization by Hubway station<-
+Figure 1: Map visualization by Hubway station
 
-->![Image of Figure 2](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/maptrips.JPG)<-
+![Image of Figure 2](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/maptrips.JPG)
 
-->Figure 2: Map visualization of Hubway trips<-
+Figure 2: Map visualization of Hubway trips
 
-->![Image of Figure 3](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/stationdetails.jpg)<-
+![Image of Figure 3](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/stationdetails.jpg)
 
-->Figure 3: In Depth View of Hubway Stations<-
+Figure 3: In Depth View of Hubway Stations
 
-->![Image of Figure 4](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/databreakdown.jpg)<-
+![Image of Figure 4](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/databreakdown.jpg)
 
-->Figure 4: In-depth view of stations + users<-
+Figure 4: In-depth view of stations + users
 
 Our main view will be a map of the Boston, Cambridge, Somerville, & Brookline area. There will be two visualizations that you can switch between that are overlayed on the map. Figure 1 shows nodes at the station locations. Each node will vary in size depending on how a particular station is. You will be able to add filters for the time of day, gender, age, etc. that will modify the nodes. Figure 2 will be lines connecting the stations that will show the popularity of the route based on color. You will be able to apply the same filters from Figure 1 to this visualization. Also, hovering over a route can show more details of that route such as the average trip length, average speed, gender, and age of the rider. We also plan on having two more visualizations that will show other stats of the routes, stations, and the average user of Hubway (Figures 3 & 4). We plan on switching to these views by either clicking on a station or route. Each of these visualizations will also have some filters and a time slider to allow the user to see how they change over time.
 
@@ -83,9 +83,9 @@ We decided on these four main visualizations since they could answer our main qu
 A week into the project, we decided that we should be working on a backup view in case we were unable to implement the map view exactly as we wanted to. We decided upon a chord layout that would depict the relationship between separate neighborhoods. This new view is shown in the figure below. The main screen shows the relationship of trips between the four cities--Cambridge, Brooklin, Boston and Somerville. The chords can be toggled to represent three different aspects--volume of trips, speed of the average trip, and average duration of the trip. Furthermore, any chord can be examined further to see additional user, station and trip information (as we also had in our initial design). Second, there is the option to select one particular city and look within that city. Therefore, if we selected Cambridge, we would then transition to a similar chord layout that displays all the neighborhoods of Cambridge (i.e. Porter, Central, Kendall, and Harvard Squares). We would be able to see the names of individual stations at this point. Like the previous design, this design encompasses all three of our main questions and gives the user the ability to explore.
 
 
-->![Image of Figure 5](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/design2.JPG)<-
+![Image of Figure 5](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/design2.JPG)
 
-->Figure 5: Chord layout design<-
+Figure 5: Chord layout design
 
 By the time the design studio came around, it seemed that both layouts were each doable, but we would not be able to do both views. Therefore, we used the design studio to get feedback from another group whether to pursue the map or the chord layout. While the other team informed us that they did like the chord layout, it was clear that the map design was more intuitive and preferable for better exploring. Therefore, we decided to focus our efforts on the map layout moving forward.
 
@@ -93,29 +93,29 @@ By the time the design studio came around, it seemed that both layouts were each
 
 Our first step was deciding how to create a map view. After some research and experimentation, we decided upon using Leaflet and MapBox. More about these libraries can be found [here](http://leafletjs.com/features.html "here") and [here](https://www.mapbox.com/mapbox.js/api/v2.1.8/ "here"). From here, we were able to create a map view, as shown in Figure 6. The nodes in the figure are sized in area according to the average trip volume per hour for that hub. Furthermore, the color of the nodes represent the proportion of average trip volume that is arriving. That means if more than 50% of trips are arriving, the nodes are green; if less than 50% of trips are arriving, the nodes are red; and if 50% of trips are arriving and departing, the nodes are grey. Both color and size of the trips are determined on a scale. Since all nodes fell between the 40%-60% range for arrivals, the scale for color is in a range from .45 to .55. In addition, we created a hovering option for routes that quick displays the two stations as well as the volume of trips.
 
-->![Image of Figure 6](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/map_view.png)<-
+![Image of Figure 6](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/map_view.png)
 
-->Figure 6: Map View<-
+Figure 6: Map View
 
 When it came to drawing the routes between stations, we ran into a problem. There were so many trips between stations that the map became essentially impossible to see. Therefore, at this point, we decided to show only routes with a minimum number of trips. Below, we have included views that include ALL routes (Figure 7), routes with more than 200 trips (Figure 8) and routes with more than 500 trips (Figure 9).
 
-->![Image of Figure 7](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/ALL.png)<-
+![Image of Figure 7](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/ALL.png)
 
-->Figure 7: All Routes<-
+Figure 7: All Routes
 
-->![Image of Figure 8](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/200.png)<-
+![Image of Figure 8](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/200.png)
 
-->Figure 8: Routes with 200+ Trips<-
+Figure 8: Routes with 200+ Trips
 
-->![Image of Figure 9](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/500.png)<-
+![Image of Figure 9](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/500.png)
 
-->Figure 9: Routes with 500+ Trips<-
+Figure 9: Routes with 500+ Trips
 
 Lastly, we have begun to create the filtering process. As shown below, we have decided to create a brush for time of the day.
 
-->![Image of Figure 10](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/brush.png)<-
+![Image of Figure 10](https://github.com/niamhdurfee/cs171-pr-datahub/blob/master/design/img/brush.png)
 
-->Figure 10: Brush of time<-
+Figure 10: Brush of time
 
 # Evaluation
 To be completed when nearing project's end...
