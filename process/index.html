@@ -124,6 +124,9 @@
                     </ul>
                     
                 <p>This data is available for download in a CSV file at the <a href="http://hubwaydatachallenge.org/trip-history-data/">Hubway Data Visualization Challenge</a>.  We immediately ran into two main issues with the dataset.  First, the dataset was a large file at more than 17MB.  Second, we needed to manipulate the data such that they were in the correct layout for our visualization.  To do this, Niamh wrote a number of python scripts to both cut down the size of the data as well as to derive additional values.  As a result, we have a number of CSV files with data for different purposes.</p>
+
+<p>To summarize, here are the data files that were derived.  There are now data files for filtering by registered/unregistered or by gender.  There is now one stations data file that includes coordinates, name, neighborhoods, and all other stations traveled to from that station.  Furthermore, we used the Google API to calculate the distance of each possible route.  This was necessary in order to compute leisure vs. commuting rides.  For each possible trip, the actual biking distance was calculated, as well as the recommended biking time from Google maps.  This data was then used to specify whether or not a trip is considered commuting or leisure.</p>
+
                 </section>
                 <section id="exploration"><hr>
                     <h2>Exploratory Data Analysis</h2> <h5>What visualizations did you use to initially look at your data? What insights did you gain? How did these insights inform your design?</h5>
