@@ -59,20 +59,21 @@ MapVis.prototype.updateVis = function() {
           dests = d3.keys(orig.routes);
       dests.forEach(function (dest) {
         if (orig.routes[dest] > 500) {     
-          line = L.polyline([[orig.lat,orig.lng],[that.stationData[dest].lat,that.stationData[dest].lng]], polyline_options).addTo(that.map);
+          var line = L.polyline([[orig.lat,orig.lng],[that.stationData[dest].lat,that.stationData[dest].lng]], polyline_options).addTo(that.map);
           line.bindPopup(orig.routes[dest] + ' trips from ' + orig.fullname + ' to ' + that.stationData[dest].fullname);
           line.on('mouseover', function(e) {
             e.target.openPopup();
           })
         }
       });
-      var s = orig.hourly.average.a+orig.hourly.average.d,
+    });
+    stations.forEach(function (o) {
+       var orig = that.stationData[o],
+          s = orig.hourly.average.a+orig.hourly.average.d,
           r = that.getRadius(that.areaScale(s)),
           c = that.color(orig.hourly.average.a/s);
-      console.log([orig.lat,orig.lng])
-      //L.circle([orig.lat,orig.lng], r, {color: c, opacity: 1, fillOpacity: 0.5, className:'node',weight:2}).addTo(that.map).bindPopup(orig.fullname);
-
-  });
+        var circle = L.circle([orig.lat,orig.lng], r, {color: c, opacity: 1, fillOpacity: 0.5, className:'node',weight:2}).addTo(that.map).bindPopup(orig.fullname);
+    })
 };
 
 /**
