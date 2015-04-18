@@ -1,10 +1,6 @@
 body {
 	padding-top: 60px;
 }
-
-#mapVis {
-	height:450px;
-}
 #filterform {
     width:300px;
 }
@@ -18,10 +14,11 @@ body {
 }
 .x.axis text {
     font-size: 28px;
-    color: blue;
     font-weight: bold;
 }
-
+#mapVis {
+  height:450px;
+}
 .axis line,
 .axis path {
     fill: none;
