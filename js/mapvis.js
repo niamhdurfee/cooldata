@@ -48,18 +48,17 @@ MapVis.prototype.updateVis = function() {
   var polyline_options = {
       weight: 2,
       className: 'line',
-      color: '#000',
-      opacity: 0.4
+      color: 'grey'
     };
-  this.areaScale = d3.scale.linear().range([0,200000]).domain([0, d3.max(that.stationData, function (d) {return (d.hourly.average.a + d.hourly.average.d)})]);
-  this.color = d3.scale.linear().range(["red","grey","lightgreen"]).domain([0.45,0.5,0.55]);
   var stations = d3.keys(this.stationData);
+  this.areaScale = d3.scale.linear().range([0,200000]).domain([0, d3.max(stations, function (ea) {return (that.stationData[ea].hourly.average.a + that.stationData[ea].hourly.average.d)})]);
+  this.color = d3.scale.linear().range(["red","grey","lightgreen"]).domain([0.45,0.5,0.55]);
   stations.forEach(function(o) {
       var orig = that.stationData[o],
           dests = d3.keys(orig.routes);
       dests.forEach(function (dest) {
         if (orig.routes[dest] > 500) {     
-          var line = L.polyline([[orig.lat,orig.lng],[that.stationData[dest].lat,that.stationData[dest].lng]], polyline_options).addTo(that.map);
+          var line = L.polyline([orig.loc,that.stationData[dest].loc], polyline_options).addTo(that.map);
           line.bindPopup(orig.routes[dest] + ' trips from ' + orig.fullname + ' to ' + that.stationData[dest].fullname);
           line.on('mouseover', function(e) {
             e.target.openPopup();
@@ -69,10 +68,10 @@ MapVis.prototype.updateVis = function() {
     });
     stations.forEach(function (o) {
        var orig = that.stationData[o],
-          s = orig.hourly.average.a+orig.hourly.average.d,
-          r = that.getRadius(that.areaScale(s)),
-          c = that.color(orig.hourly.average.a/s);
-        var circle = L.circle([orig.lat,orig.lng], r, {color: c, opacity: 1, fillOpacity: 0.5, className:'node',weight:2}).addTo(that.map).bindPopup(orig.fullname);
+           s = orig.hourly.average.a+orig.hourly.average.d,
+           r = that.getRadius(that.areaScale(s)),
+           c = that.color(orig.hourly.average.a/s);
+        var circle = L.circle(orig.loc, r, {color: c, opacity: 1, fillOpacity: 0.5, className:'station',weight:2}).addTo(that.map).bindPopup(orig.fullname);
     })
 };
 
@@ -96,5 +95,5 @@ MapVis.prototype.onSelectionChange = function() {
  * */
 
 MapVis.prototype.getRadius = function(d) {
-  return Math.sqrt(d/Math.PI)
+  return Math.sqrt(parseFloat(d)/Math.PI)
 }
