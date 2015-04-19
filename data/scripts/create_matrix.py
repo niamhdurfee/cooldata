@@ -1,20 +1,15 @@
 import csv
 import re
 import os
-trips =  open('../trips.min.csv','r').readlines()
-header = re.split(',',trips[0][:-2])
-
-path = "../matrix.csv" 
-os.remove(path)
-datafile = csv.writer(open(path,'a'))
-# datafile.writerow(header)
-
+trips =  [re.split(',',line[:-2]) for line in open('../trips.min.csv','r')]
+header = trips.pop(0)
+path = "../matrix.js" 
+datafile = open(path,'a')
+datafile.write("_matrixData = ")
 
 Matrix = [[0 for x in range(146)] for x in range(146)] 
 
-for trip in trips[1:]:
-	trip = re.split(",",trip[:-2])
-	Matrix[int(trip[2])][int(trip[3])] += 1;
-
-datafile.writerows(Matrix)
-
+for trip in trips:
+	Matrix[int(trip[3])][int(trip[4])] += 1;
+datafile.write(str(Matrix))
+datafile.close()

@@ -5,7 +5,10 @@ body {
     width:300px;
 }
 #timeVis {
-	height: 40px;
+  height: 40px;
+}
+#chordVis {
+  height: 800px;
 }
 .brush{
     fill: black;

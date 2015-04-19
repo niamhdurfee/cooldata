@@ -1,31 +1,16 @@
 /**
- * ForceVis
+ * ChordVis
  * @param _parentElement -- the HTML or SVG element (D3 node) to which to attach the vis
  * @param _data -- the data array
  * @param _metaData -- the meta-data / data description object
  * @constructor
  */
-ForceVis = function (_parentElement, _data, _metaData) {
+ChordVis = function (_parentElement, _metaData, _eventHandler) {
   this.parentElement = _parentElement;
-  this.data = _data;
-  this.metaData = _metaData;
-  this.displayData = [];
-  this.matrix = [];
+  this.matrix = _matrixData;
+  this.stationData = _metaData;
+  this.eventHandler = _eventHandler;
 
-for (var i=0; i<this.data.length; i++)
-{
-    this.matrix[i] = [];
-    for (var j =0; j<this.data[i].length; j++)
-        this.matrix[i][j] = this.data[i][j];
-}
-
-
-    
-//    this.stations = [];
-//    for (var i=0; i<(this.metaData.features.length; i++)
-//        this.stations[this.metaData.features[i].properties.id] = this.metaData.features[i].properties.station;
-//
-//    
   // Define all "constants" here
   this.margin = {
       top: 10,
@@ -36,21 +21,18 @@ for (var i=0; i<this.data.length; i++)
   this.width = this.parentElement.node().clientWidth - this.margin.left - this.margin.right,
   this.height = this.parentElement.node().clientHeight - this.margin.top - this.margin.bottom;
 
+  this.outerRadius = Math.min(this.width, this.height) / 2 - 10,
+  this.innerRadius = this.outerRadius - 24;
   
-    this.outerRadius = Math.min(this.width, this.height) / 2 - 10,
-    this.innerRadius = this.outerRadius - 24;
-    
-    
-    this.initVis();
+  this.initVis();
 }
 
 /**
  * Method that sets up the SVG and the variables
  */
-ForceVis.prototype.initVis = function() {
+ChordVis.prototype.initVis = function() {
 
     var that = this; // read about the this
-
     // constructs SVG layout
     this.svg = this.parentElement.append("svg")
         .attr("width", this.width)
@@ -62,7 +44,7 @@ ForceVis.prototype.initVis = function() {
  
     
     // filter, aggregate, modify data
-    this.wrangleData();
+   // this.wrangleData();
 
     // call the update method
     this.updateVis();
@@ -70,31 +52,31 @@ ForceVis.prototype.initVis = function() {
     
 }
 
-ForceVis.prototype.wrangleData = function(_filterFunction) {
+ChordVis.prototype.wrangleData = function(_filterFunction) {
     this.displayData = this.filterAndAggregate(_filterFunction);
     
  
 }
 
-ForceVis.prototype.updateVis = function() {
+ChordVis.prototype.updateVis = function() {
     
-        
-        var that = this;
-    
+  var that = this;
 
-        var fill = d3.scale.ordinal()
-            .domain(d3.range(4))
-            .range(["#000000", "#FFDD89", "#957244", "#F26223"]);
+  var stations = d3.keys(that.stationData);
 
-        // Visualize
-        var chord = d3.layout.chord()
-            .padding(Math.PI * 2. / (that.matrix).length)
-            .sortSubgroups(d3.descending)
+  var fill = d3.scale.ordinal()
+      .domain(d3.range(4))
+      .range(["#000000", "#FFDD89", "#957244", "#F26223"]);
+
+  // Visualize
+  var chord = d3.layout.chord()
+      .padding(Math.PI * 2. / (that.matrix).length)
+      .sortSubgroups(d3.descending)
 //            .matrix ([  [12, 152, 194, 184], 
 //                        [400, 300, 250, 225], 
 //                        [225, 123, 124, 209], 
 //                        [12, 152, 194, 184]  ])
-            .matrix(that.matrix);
+      .matrix(that.matrix);
 
 
         
@@ -128,8 +110,8 @@ ForceVis.prototype.updateVis = function() {
                   + "translate(" + (200) + ")"
                   + (((d.startAngle + d.endAngle) / 2) > Math.PI ? "rotate(180)" : "");
             })
-            .text(function(d) {
-                return that.stations[d.index];
+            .text(function(d,i) {
+                return that.stationData[i];
             })
             .style("font-size","10px");
     
@@ -160,7 +142,7 @@ ForceVis.prototype.updateVis = function() {
  * be defined here.
  * @param selection
  */
-ForceVis.prototype.onSelectionChange = function() {
+ChordVis.prototype.onSelectionChange = function() {
 
   this.updateVis();
 }
@@ -173,7 +155,7 @@ ForceVis.prototype.onSelectionChange = function() {
  *
  * */
 
-ForceVis.prototype.filterAndAggregate = function(_filter) {
+ChordVis.prototype.filterAndAggregate = function(_filter) {
   // Set filter to a function that accepts all items
   var filter = function() {
     return true;
