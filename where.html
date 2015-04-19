@@ -63,7 +63,7 @@
 <script src="libs/d3.min.js"></script>
 <script src="libs/Polyline.encoded.js"></script>
 <script src="libs/token.js"></script>
-<script src="js/forcevis.js"></script>
+<script src="js/chordvis.js"></script>
 <script src="js/timevis.js"></script>
 <script src="data/matrix.js"></script>
 <script>
@@ -89,7 +89,7 @@ $(function() {
       var MyEventHandler = {};
 
       // Instantiate all Vis Objects here
-      var chordVis = new ChordVis(d3.select("#chordVis"),stationData, MyEventHandler); 
+      var chordVis = new ChordVis(d3.select("#chordVis"),stationData,hoodData, MyEventHandler); 
      // var timeVis = new TimeVis(d3.select("#timeVis"),MyEventHandler);
 
       // Bind the eventHandler to the Vis Objects
@@ -99,15 +99,20 @@ $(function() {
     };
 
     // call this function after both files are loaded -- error should be "null" if no error
-    var dataLoaded = function(_stationData) {
+    var dataLoaded = function(_stationData,_hoodData) {
         stationData = _stationData;
+        hoodData = _hoodData;
         initVis();
     };
 
     var startHere = function() {
       d3.json("data/stations.json", function(errorStation, stationData) {
         if (!errorStation) {
-            dataLoaded(stationData);
+          d3.csv("data/neighborhoods.csv", function(errorHood, neighborhoods) {
+            if (!errorHood) {
+              dataLoaded(stationData, neighborhoods);
+            }
+          }) 
         }
       });
     };

@@ -5,10 +5,11 @@
  * @param _metaData -- the meta-data / data description object
  * @constructor
  */
-ChordVis = function (_parentElement, _metaData, _eventHandler) {
+ChordVis = function (_parentElement, _data,_metaData, _eventHandler) {
   this.parentElement = _parentElement;
   this.matrix = _matrixData;
-  this.stationData = _metaData;
+  this.stationData = _data;
+  this.neighborhoods = _metaData;
   this.eventHandler = _eventHandler;
 
   // Define all "constants" here
@@ -19,11 +20,10 @@ ChordVis = function (_parentElement, _metaData, _eventHandler) {
       left: 10
     },
   this.width = this.parentElement.node().clientWidth - this.margin.left - this.margin.right,
-  this.height = this.parentElement.node().clientHeight - this.margin.top - this.margin.bottom;
-
+  this.height = this.parentElement.node().clientHeight - this.margin.top - this.margin.bottom,
   this.outerRadius = Math.min(this.width, this.height) / 2 - 10,
   this.innerRadius = this.outerRadius - 24;
-  
+
   this.initVis();
 }
 
@@ -32,19 +32,33 @@ ChordVis = function (_parentElement, _metaData, _eventHandler) {
  */
 ChordVis.prototype.initVis = function() {
 
-    var that = this; // read about the this
-    // constructs SVG layout
-    this.svg = this.parentElement.append("svg")
-        .attr("width", this.width)
-        .attr("height", this.height)
-//        .attr("width", this.width + this.margin.left + this.margin.right)
-//        .attr("height", this.height + this.margin.top + this.margin.bottom)
-      .append("g")
-        .attr("transform", "translate(" + 400 + "," + 300 + ")");
+    var that = this;
+
+
+this.arc = d3.svg.arc()
+.innerRadius(this.innerRadius)
+.outerRadius(this.outerRadius);
  
+this.layout = d3.layout.chord()
+.padding(.04)
+.sortSubgroups(d3.descending)
+.sortChords(d3.ascending);
+ 
+this.path = d3.svg.chord()
+.radius(this.innerRadius);
+ 
+this.svg = this.parentElement.append("svg")
+.attr("width", this.width)
+.attr("height", this.height)
+.append("g")
+.attr("id", "circle").attr("fill","none")
+.attr("transform", "translate(" + (this.width / 2) + "," + (this.height / 2) + ")");
+ 
+this.svg.append("circle")
+.attr("r", this.outerRadius);
     
     // filter, aggregate, modify data
-   // this.wrangleData();
+    // this.wrangleData();
 
     // call the update method
     this.updateVis();
@@ -59,81 +73,75 @@ ChordVis.prototype.wrangleData = function(_filterFunction) {
 }
 
 ChordVis.prototype.updateVis = function() {
-    
   var that = this;
+  var color = d3.scale.category20();
 
-  var stations = d3.keys(that.stationData);
+var formatPercent = d3.format(".1%");
+ 
+ 
+// Compute the chord layout.
+this.layout.matrix(_matrixData);
+ 
+// Add a group per neighborhood.
+var group = this.svg.selectAll(".group")
+.data(this.layout.groups)
+.enter().append("g")
+.attr("class", "group")
+.on("mouseover", mouseover)
+.on("mouseout", mouseout);
+ 
+// Add a mouseover title.
+group.append("title").text(function(d, i) {
+return that.neighborhoods[i].name + ": " + formatPercent(d.value) + " of origins";
+});
+ 
+// Add the group arc.
+var groupPath = group.append("path")
+.attr("id", function(d, i) { return "group" + i; })
+.attr("d", this.arc)
+.style("fill", function(d, i) { return that.neighborhoods[i].color; });
+ 
+// Add a text label.
+var groupText = group.append("text")
+.attr("x", 6)
+.attr("dy", 15);
+ 
+groupText.append("textPath")
+.attr("xlink:href", function(d, i) { return "#group" + i; })
+.text(function(d, i) { return that.neighborhoods[i].name; });
+ 
+// Remove the labels that don't fit. :(
+groupText.filter(function(d, i) { return groupPath[0][i].getTotalLength() / 2 - 16 < this.getComputedTextLength(); })
+.remove();
+ 
+// Add the chords.
+var chord = this.svg.selectAll(".chord")
+.data(this.layout.chords)
+.enter().append("path")
+.attr("class", "chord")
+.style("fill", function(d) { return that.neighborhoods[d.source.index].color; })
+.attr("d", this.path);
+ 
+// Add an elaborate mouseover title for each chord.
+ chord.append("title").text(function(d) {
+ return that.neighborhoods[d.source.index].name
+ + " → " + that.neighborhoods[d.target.index].name
+ + ": " + formatPercent(d.source.value)
+ + "\n" + that.neighborhoods[d.target.index].name
+ + " → " + that.neighborhoods[d.source.index].name
+ + ": " + formatPercent(d.target.value);
+ });
+ 
+function mouseover(d, i) {
+chord.classed("fade", function(p) {
+return p.source.index != i
+&& p.target.index != i;
+});
+}
+function mouseout(d, i) {
+chord.classed("fade", function(p) { return 0});
+}
 
-  var fill = d3.scale.ordinal()
-      .domain(d3.range(4))
-      .range(["#000000", "#FFDD89", "#957244", "#F26223"]);
-
-  // Visualize
-  var chord = d3.layout.chord()
-      .padding(Math.PI * 2. / (that.matrix).length)
-      .sortSubgroups(d3.descending)
-//            .matrix ([  [12, 152, 194, 184], 
-//                        [400, 300, 250, 225], 
-//                        [225, 123, 124, 209], 
-//                        [12, 152, 194, 184]  ])
-      .matrix(that.matrix);
-
-
-        
-        
-
-        that.svg.append("g").selectAll(".arc")
-            .data(chord.groups)
-            .enter().append("path")
-            .attr("class", "arc")
-            .style("fill", function(d) {
-                return d.index < 4 ? '#444444' : fill(d.index);
-            })
-            .style("stroke", function(d) {
-                return fill(d.index);
-            })
-            .attr("d", d3.svg.arc()
-                  .innerRadius(that.innerRadius - 200)
-                  .outerRadius(that.outerRadius-200))
-            .on("mouseover", fade(.1))
-            .on("mouseout", fade(.7))    
-         
-        that.svg.append("g").selectAll(".arc")
-            .data(chord.groups)
-            .enter().append("svg:text")
-            .attr("dy", ".35em")
-            .attr("text-anchor", function(d) { 
-                return (((d.startAngle + d.endAngle) / 2) > Math.PI ? "end" : null)
-            })
-            .attr("transform", function(d) {
-              return "rotate(" + (((d.startAngle + d.endAngle) / 2) * 180 / Math.PI - 90) + ")"
-                  + "translate(" + (200) + ")"
-                  + (((d.startAngle + d.endAngle) / 2) > Math.PI ? "rotate(180)" : "");
-            })
-            .text(function(d,i) {
-                return that.stationData[i];
-            })
-            .style("font-size","10px");
-    
-        that.svg.append("g")
-            .attr("class", "chord")
-            .selectAll("path")
-            .data(chord.chords)
-            .enter().append("path")
-            .attr("d", that.matrix)
-            .style("opacity", 0.7);
-    
-
-        // Returns an event handler for fading a given chord group.
-        function fade(opacity) {
-            return function(g, i) {
-            svg.selectAll(".chord path")
-                .filter(function(d) { return d.source.index != i && d.target.index != i; })
-                .transition()
-                .style("opacity", opacity);
-            };
-        }
-    
 }
 
 /**

@@ -152,7 +152,7 @@ $(function() {
     };
 
     var startHere = function() {
-      d3.json("data/stations.json", function(errorStation, stationData) {
+      d3.json("data/stations_keyed.json", function(errorStation, stationData) {
         if (!errorStation) {
           d3.csv("data/routes_stats.csv", function(error, routeData) {
               if (!error) {
