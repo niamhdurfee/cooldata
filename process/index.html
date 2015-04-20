@@ -134,7 +134,8 @@
     
                 </section>
                 <section id="evolution"><hr>
-                    <h2>Design Evolution</h2><h5>What are the different visualizations you considered? Justify the design decisions you made using the perceptual and design principles you learned in the course.</h5>
+                    <h2>Design Evolution</h2>
+                    
                     <p>From the beginning, we had a rather clear idea of what types of visualizations we wanted to implement.  We wanted multiple views, with the option to explore with filters, ranges, and brushes.  The initial sketches of our visualization concepts are displayed below.</p>
                     
                     <div class="center"><img src="../design/img/map.jpg"></br> Figure 1: Map visualization by Hubway station<br/><br/></div>
@@ -156,7 +157,7 @@
 
                 </section>
                 <section id="implementation"><hr>
-                    <h2>Implementation</h2><h5>Describe the intent and functionality of the interactive visualizations you implemented. Provide clear and well-referenced images showing the key design and interaction elements.</h5>
+                    <h2>Implementation</h2>
                     
                     <p>Our first step was deciding how to create a map view.  After some research and experimentation, we decided upon using Leaflet and MapBox.  More about these libraries can be found <a href="http://leafletjs.com/features.html">here</a> and <a href="https://www.mapbox.com/mapbox.js/api/v2.1.8/">here</a>.  From here, we were able to create a map view, as shown in Figure 6.  The nodes in the figure are sized in area according to the average trip volume per hour for that hub.  Furthermore, the color of the nodes represent the proportion of average trip volume that is arriving.  That means if more than 50% of trips are arriving, the nodes are green; if less than 50% of trips are arriving, the nodes are red; and if 50% of trips are arriving and departing, the nodes are grey.    Both color and size of the trips are determined on a scale.  Since all nodes fell between the 40%-60% range for arrivals, the scale for color is in a range from .45 to .55.  In addition, we created a hovering option for routes that quick displays the two stations as well as the volume of trips.</p>
                     
