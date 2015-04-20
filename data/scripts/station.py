@@ -53,12 +53,12 @@ for station in stations:
 
 lines = [re.sub("\r\n","",line) for line in open("../stations.csv")]
 lines = [re.split(",",line) for line in lines[1:]]
-path ="../stations.json"
+path ="../stations_keyed.json"
 os.remove(path)
 f = open(path,"a")
 f.write('{')
 for station in stations:
-	f.write('"'+station[0]+'": {\n')
+	f.write('"'+station[0]+'":{\n')
 	f.write('"fullname":"'+station[1]+'",\n')
 	f.write('"short":"'+station[2]+'",\n')
 	f.write('"loc":['+station[3]+','+station[4]+'],\n')

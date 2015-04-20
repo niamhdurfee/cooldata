@@ -1,15 +1,14 @@
 body {
 	padding-top: 60px;
 }
-
-#mapVis {
-	height:450px;
-}
 #filterform {
     width:300px;
 }
 #timeVis {
-	height: 40px;
+  height: 40px;
+}
+#chordVis {
+  height: 800px;
 }
 .brush{
     fill: black;
@@ -18,10 +17,11 @@ body {
 }
 .x.axis text {
     font-size: 28px;
-    color: blue;
     font-weight: bold;
 }
-
+#mapVis {
+  height:450px;
+}
 .axis line,
 .axis path {
     fill: none;
