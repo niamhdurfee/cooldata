@@ -18,6 +18,8 @@
   <link rel="icon" type="image/png" sizes="96x96" href="img/favicon-96x96.png">
   <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
   <link rel="manifest" href="img/manifest.json">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
   <meta name="msapplication-TileColor" content="#ffffff">
   <meta name="msapplication-TileImage" content="img/ms-icon-144x144.png">
   <meta name="theme-color" content="#ffffff">
@@ -69,13 +71,17 @@
          <div class="btn-group btn-group-sm" role="group"><h5>Gender</h5>
             <button type="button" class="btn btn-default">Male</button>
             <button type="button" class="btn btn-default">Female</button>
-         </div>
+         </div><br/>
          <div class="btn-group btn-group-sm" role="group"><h5>Zip Code</h5>
             <button type="button" class="btn btn-default">Boston Resident</button>
             <button type="button" class="btn btn-default">Visitor</button>
-         </div>
-        <div class="btn-group btn-group-sm" role="group">
-            
+         </div><br/>
+        <div class="btn-group btn-group-sm" role="group"><h5>Age Range</h5>
+                <p>
+                  <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                </p>
+
+                <div id="slider-range"></div>
          </div>          
                     
          </p><p>
@@ -112,6 +118,8 @@
 
     </div><!-- /.container -->
 <script src="libs/jquery-2.1.3.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
 <script src="libs/bootstrap.min.js"></script>
 <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
 <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.js'></script>
@@ -175,6 +183,20 @@ $(function() {
 
     startHere();
   });
+      $(function() {
+    $( "#slider-range" ).slider({
+      range: true,
+      min: 0,
+      max: 500,
+      values: [ 75, 300 ],
+      slide: function( event, ui ) {
+        $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+      }
+    });
+    $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
+      " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+  });
+
 </script>
 
   </body>
