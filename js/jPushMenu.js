@@ -18,6 +18,7 @@
         $(this).click(function(e) {
             
             $('#mapVis').width(.8 * window.innerWidth);
+//            $('#mapVis').height(.95 * (window.innerHeight-100));
 
             e.stopPropagation();
 
@@ -59,28 +60,32 @@
 
         var jPushMenu = {
             close: function (o) {
-                alert("closing");
 
                 $('#mapVis').width('100%');
+                $('#mapVis').height((window.innerHeight-100));
 
                 $('.jPushMenuBtn,body,.cbp-spmenu')
                     .removeClass('disabled ' + o.activeClass + ' ' + o.menuOpenClass + ' ' + o.pushBodyClass + '-toleft ' + o.pushBodyClass + '-toright');
             }
         }
+        
+            $('#close-menu').click(function() {
+                jPushMenu.close(o);
+             });     
 
         // Close menu on clicking outside menu
-        if (o.closeOnClickOutside) {
-             $(document).click(function() {
-                jPushMenu.close(o);
-             });
-         }
+//        if (o.closeOnClickOutside) {
+//             $(document).click(function() {
+//                jPushMenu.close(o);
+//             });
+//         }
 
-        // Close menu on clicking menu link
-        if (o.closeOnClickLink) {
-            $('.cbp-spmenu a').on('click',function() {
-                jPushMenu.close(o);
-            });
-        }
+//        // Close menu on clicking menu link
+//        if (o.closeOnClickLink) {
+//            $('.cbp-spmenu a').on('click',function() {
+//                jPushMenu.close(o);
+//            });
+//        }
     };
 
    /*

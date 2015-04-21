@@ -110,6 +110,13 @@
     bottom: 0px;
 }
 
+#close-menu
+{
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
 /* Push classes applied to the body */
 .push-body {
     overflow-x: hidden;
