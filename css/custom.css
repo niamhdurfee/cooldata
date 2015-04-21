@@ -19,9 +19,29 @@ body {
     font-size: 28px;
     font-weight: bold;
 }
+/*
 #mapVis {
-  height:450px;
+  min-height:800px;
 }
+*/
+
+#explore-button
+{
+    width:7em;
+    -webkit-transform: rotate(-90deg); 
+    -moz-transform: rotate(-90deg); 
+/*    font-size:1.5em;*/
+    border:0 none;
+    background:none;
+    position: fixed;
+    top: 50%;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    z-index: 1000;
+}
+
+
 .axis line,
 .axis path {
     fill: none;

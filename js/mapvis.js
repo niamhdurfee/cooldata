@@ -12,6 +12,7 @@ MapVis = function(_parentElement,_stationData, _routeData, _eventHandler) {
   this.eventHandler = _eventHandler;
   this.displayData = [];
   this.disp = 0;
+    
   // Define all "constants" here
   this.margin = {
       top: 10,
@@ -20,8 +21,13 @@ MapVis = function(_parentElement,_stationData, _routeData, _eventHandler) {
       left: 10
     },
   this.width = this.parentElement.node().clientWidth - this.margin.left - this.margin.right,
-  this.height = this.parentElement.node().clientHeight - this.margin.top - this.margin.bottom;
+  this.height = this.parentElement.node().clientWidth - this.margin.top - this.margin.bottom,
+  this.header_height = 60 + this.margin.bottom;
     
+  // set width of outer div to height of window
+  $('#mapVis').height(window.innerHeight - this.header_height);
+
+  // set up SVG
   this.initVis();
 };
 
@@ -109,13 +115,17 @@ MapVis.prototype.updateVis = function() {
       className: 'line',
       color: 'grey'
     };
+    
   var stations = d3.keys(this.stationData);
+    
   this.areaScale = d3.scale.linear().range([0,200000]).domain([0, d3.max(stations, function (ea) {return (that.stationData[ea].hourly.average.a + that.stationData[ea].hourly.average.d)})]);
+    
   this.color = d3.scale.linear().range(["red","grey","lightgreen"]).domain([0.45,0.5,0.55]);
+    
   stations.forEach(function(o) {
       var orig = that.stationData[o],
           dests = d3.keys(orig.routes);
-      dests.forEach(function (dest) {
+        dests.forEach(function (dest) {
         if (orig.routes[dest] > 500) {     
           var line = L.polyline([orig.loc,that.stationData[dest].loc], polyline_options).addTo(that.map);
           line.bindPopup(orig.routes[dest] + ' trips from ' + orig.fullname + ' to ' + that.stationData[dest].fullname);
@@ -125,6 +135,7 @@ MapVis.prototype.updateVis = function() {
         }
       });
     });
+    
     stations.forEach(function (o) {
        var orig = that.stationData[o],
            s = orig.hourly.average.a+orig.hourly.average.d,
@@ -143,6 +154,7 @@ MapVis.prototype.updateVis = function() {
 MapVis.prototype.onSelectionChange = function() {
 
   this.updateVis();
+    
 };
 
 /*
