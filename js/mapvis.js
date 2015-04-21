@@ -21,7 +21,7 @@ MapVis = function(_parentElement,_stationData, _routeData, _eventHandler) {
     },
   this.width = this.parentElement.node().clientWidth - this.margin.left - this.margin.right,
   this.height = this.parentElement.node().clientHeight - this.margin.top - this.margin.bottom;
-
+    
   this.initVis();
 };
 
@@ -45,6 +45,65 @@ MapVis.prototype.initVis = function() {
 
 MapVis.prototype.updateVis = function() {
   var that = this;
+    
+    console.log(this.routeData);
+        
+    //create min/max values for sliders
+    
+    var dist_max = Math.max.apply(Math,this.routeData.map(function(o){return o.dist;}));
+    var dist_min = Math.min.apply(Math,this.routeData.map(function(o){return o.dist;}));
+
+    var time_max = Math.max.apply(Math,this.routeData.map(function(o){return o.time;}));
+    var time_min = Math.min.apply(Math,this.routeData.map(function(o){return o.time;}));
+    
+    $( "#slider-age" ).slider({
+      range: true,
+      min: 0,
+      max: 500,
+      values: [ 75, 300 ],
+      slide: function( event, ui ) {
+        $( "#age-amount" ).val( "" + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+      }
+    });
+
+    $( "#age-amount" ).val( "" + $( "#slider-age" ).slider( "values", 0 ) +
+      " - " + $( "#slider-age" ).slider( "values", 1 ) );
+    
+    
+    $( "#slider-distance" ).slider({
+      range: true,
+      min: dist_min,
+      max: dist_max,
+      values: [ dist_min, dist_max ],
+      slide: function( event, ui ) {
+        $( "#distance-amount" ).val( "" + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+      }
+    });
+    
+    $( "#distance-amount" ).val( "" + $( "#slider-distance" ).slider( "values", 0 ) +
+      " - " + $( "#slider-distance" ).slider( "values", 1 ) );
+
+
+    $( "#slider-time" ).slider({
+      range: true,
+      min: time_min,
+      max: time_max,
+      values: [ time_min, time_max ],
+      slide: function( event, ui ) {
+        $( "#time-amount" ).val( "" + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+      }
+    });
+    
+    $( "#time-amount" ).val( "" + $( "#slider-time" ).slider( "values", 0 ) +
+      " - " + $( "#slider-time" ).slider( "values", 1 ) );
+
+    
+    
+    
+    
+    
+    
+    
   var polyline_options = {
       weight: 2,
       className: 'line',

@@ -54,67 +54,74 @@
 
     <div class="container-fluid">
     <table>
-	    <thead>
-	    	<tr>
-          <th width="50%"></th>
-          <th width="35%"></th>
-	    		<th width="15%"></th>
-	    	</tr>
-	    </thead>
-	    <tbody>
-	    	<tr>
-          <td><div id="mapVis"></div></td>
-          <td><div id="details"></div></td>
-	    		<td><div><h2></h2><form class="form" id="filterform">
-          <p>
-              <h4>Filter by Population</h4>
-         <div class="btn-group btn-group-sm" role="group"><h5>Gender</h5>
-            <button type="button" class="btn btn-default">Male</button>
-            <button type="button" class="btn btn-default">Female</button>
-         </div><br/>
-         <div class="btn-group btn-group-sm" role="group"><h5>Zip Code</h5>
-            <button type="button" class="btn btn-default">Boston Resident</button>
-            <button type="button" class="btn btn-default">Visitor</button>
-         </div><br/>
-        <div class="btn-group btn-group-sm" role="group"><h5>Age Range</h5>
-                <p>
-                  <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
-                </p>
-
-                <div id="slider-range"></div>
-         </div>          
-                    
-         </p><p>
-         <div class="btn-group btn-group-sm" role="group">
-            <button type="button" class="btn btn-default">Outgoing</button>
-            <button type="button" class="btn btn-default">Incoming</button>
-         </div>
-         <p>
-         <div><svg id="triptime" height="50"></svg></div>
-         <div><svg id="tripdist" height="50"></svg></div>
-         <div><svg id="age" height="50"></svg></div>
-         <div><svg id="timeofday" height="50"></svg></div>
-         <div class="btn-group btn-group-sm" role="group">
-            <button type="button" class="btn btn-default">Su</button>
-            <button type="button" class="btn btn-default">M</button>
-            <button type="button" class="btn btn-default">Tu</button>
-            <button type="button" class="btn btn-default">W</button>
-            <button type="button" class="btn btn-default">Th</button>
-            <button type="button" class="btn btn-default">F</button>
-            <button type="button" class="btn btn-default">Sa</button>
-         </div>
-          </form></div></td>
-          
-	    	</tr>
-        <tr>
-          <td colspan='2'><div id="timeVis"></div></td>
-          <td>
+        
+        
+        <row>
+            <div class="col-md-6">
+                <div id="mapVis">
+                </div>
+                
+            </div>
             
-          </td>
-        </tr>
+            
+            <div class="col-md-3 col-md-offset-3">
+              
+<!--                <h3>Who?</h3>-->
+                
+                <div class="btn-group btn-group-sm" role="group"><h5>Gender</h5>
+                    <button type="button" class="btn btn-default">Male</button>
+                    <button type="button" class="btn btn-default">Female</button>
+                </div><br/><br/>
+                
+                <div class="btn-group btn-group-sm" role="group"><h5>Age Range</h5>
+                    <p>TO-DO:** <input type="text" id="age-amount" readonly style="border:0; color:#217D1C; font-weight:bold;"></p>
+                    <div id="slider-age"></div>
+                </div><br/><br/>
+                    
+                    
+<!--                <h3>Where?</h3>-->
 
-	    </tbody>
-    </table>
+    
+                <div class="btn-group btn-group-sm" role="group"><h5>Direction</h5>
+                    <button type="button" class="btn btn-default">Outgoing</button>
+                    <button type="button" class="btn btn-default">Incoming</button>
+                 </div><br/><br/>
+                
+                <div class="btn-group btn-group-sm" role="group"><h5>Distance</h5>
+                    <p><input type="text" id="distance-amount" readonly style="border:0; color:#217D1C; font-weight:bold;"></p>
+                    <div id="slider-distance"></div>
+                </div><br/><br/>  
+                
+                <div class="btn-group btn-group-sm" role="group"><h5>Time</h5>
+                    <p><input type="text" id="time-amount" readonly style="border:0; color:#217D1C; font-weight:bold;"></p>
+                    <div id="slider-time"></div>
+                </div><br/><br/>    
+                    
+                
+<!--                <h3>When?</h3>-->
+
+                <div class="btn-group btn-group-sm" role="group"><h5>Day</h5>
+                    <div class="btn-group btn-group-sm" role="group">
+                        <button type="button" class="btn btn-default">Su</button>
+                        <button type="button" class="btn btn-default">M</button>
+                        <button type="button" class="btn btn-default">Tu</button>
+                        <button type="button" class="btn btn-default">W</button>
+                        <button type="button" class="btn btn-default">Th</button>
+                        <button type="button" class="btn btn-default">F</button>
+                        <button type="button" class="btn btn-default">Sa</button>
+                    </div>
+                </div><br/><br/>  
+        
+            </div>
+        </row>
+	    
+        
+        <div class="row">
+            <div class="col-md-9">
+            <div id="timeVis"></div></div>
+        </div>
+        
+             
 
     </div><!-- /.container -->
 <script src="libs/jquery-2.1.3.min.js"></script>
@@ -183,19 +190,52 @@ $(function() {
 
     startHere();
   });
-      $(function() {
-    $( "#slider-range" ).slider({
-      range: true,
-      min: 0,
-      max: 500,
-      values: [ 75, 300 ],
-      slide: function( event, ui ) {
-        $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-      }
-    });
-    $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
-      " - $" + $( "#slider-range" ).slider( "values", 1 ) );
-  });
+    
+    
+//    
+//    // for slider
+//    $(function() {
+//    $( "#slider-range" ).slider({
+//      range: true,
+//      min: 0,
+//      max: 500,
+//      values: [ 75, 300 ],
+//      slide: function( event, ui ) {
+//        $( "#amount" ).val( "" + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+//      }
+//    });
+//    $( "#amount" ).val( "" + $( "#slider-range" ).slider( "values", 0 ) +
+//      " - " + $( "#slider-range" ).slider( "values", 1 ) );
+//  });
+//        // for slider
+//    $(function() {
+//    $( "#slider-range2" ).slider({
+//      range: true,
+//      min: 0,
+//      max: 500,
+//      values: [ 75, 300 ],
+//      slide: function( event, ui ) {
+//        $( "#amount2" ).val( "" + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+//      }
+//    });
+//    $( "#amount2" ).val( "" + $( "#slider-range2" ).slider( "values", 0 ) +
+//      " - " + $( "#slider-range2" ).slider( "values", 1 ) );
+//  });
+//
+//    $(function() {
+//    $( "#slider-range3" ).slider({
+//      range: true,
+//      min: 0,
+//      max: 500,
+//      values: [ 3, 360 ],
+//      slide: function( event, ui ) {
+//        $( "#amount3" ).val( "" + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+//      }
+//    });
+//    $( "#amount3" ).val( "" + $( "#slider-range3" ).slider( "values", 0 ) +
+//      " - " + $( "#slider-range3" ).slider( "values", 1 ) );
+//  });
+
 
 </script>
 
