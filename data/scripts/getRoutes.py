@@ -7,7 +7,7 @@ for station in temp:
 	stations[station[0]] = station[1:]
 trips = [re.split(',', trip[:-2]) for trip in open('../routes.csv')]
 trips = trips[1:]
-trips = trips[4721:]
+trips = trips[7861:]
 path = 'temp1.csv'
 os.remove(path)
 f = csv.writer(open(path,'a'))
