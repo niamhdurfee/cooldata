@@ -18,6 +18,8 @@
         $(this).click(function(e) {
             
             $('#mapVis').width(.8 * window.innerWidth);
+            $('#explore-button').hide();
+
 //            $('#mapVis').height(.95 * (window.innerHeight-100));
 
             e.stopPropagation();
@@ -60,6 +62,7 @@
 
         var jPushMenu = {
             close: function (o) {
+                $('#explore-button').show();
 
                 $('#mapVis').width('100%');
                 $('#mapVis').height((window.innerHeight-100));

@@ -37,7 +37,8 @@
 
   <body>
 
-                              <button id="explore-button" class="toggle-menu menu-left push-body">Explore More</button>
+      <div id="explore-button" class="toggle-menu menu-left push-body"><span id="expand" class="icon icon-right"></span></div>
+<!--    <button id="explore-button" class="toggle-menu menu-left push-body"></button>-->
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
@@ -162,16 +163,21 @@
 <script src="libs/token.js"></script>
 <script src="js/mapvis.js"></script>
 <!--<script src="js/timevis.js"></script>-->
-
+<script src="js/jquery.pulse.min.js"></script>
 <script src="js/jPushMenu.js"></script>
 
 <!--call jPushMenu, required-->
 <script>
-jQuery(document).ready(function($) {
-	$('.toggle-menu').jPushMenu();
-});
+    jQuery(document).ready(function($) {
+        $('.toggle-menu').jPushMenu();
+    });
 </script>
-      
+<script>
+
+
+    $('#expand').pulse({color: '#eee' }, { duration : 2000, pulses : -1 });
+
+</script>
       
 <script>
 // Create a map in the div #map
@@ -230,50 +236,6 @@ $(function() {
   });
     
     
-//    
-//    // for slider
-//    $(function() {
-//    $( "#slider-range" ).slider({
-//      range: true,
-//      min: 0,
-//      max: 500,
-//      values: [ 75, 300 ],
-//      slide: function( event, ui ) {
-//        $( "#amount" ).val( "" + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-//      }
-//    });
-//    $( "#amount" ).val( "" + $( "#slider-range" ).slider( "values", 0 ) +
-//      " - " + $( "#slider-range" ).slider( "values", 1 ) );
-//  });
-//        // for slider
-//    $(function() {
-//    $( "#slider-range2" ).slider({
-//      range: true,
-//      min: 0,
-//      max: 500,
-//      values: [ 75, 300 ],
-//      slide: function( event, ui ) {
-//        $( "#amount2" ).val( "" + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-//      }
-//    });
-//    $( "#amount2" ).val( "" + $( "#slider-range2" ).slider( "values", 0 ) +
-//      " - " + $( "#slider-range2" ).slider( "values", 1 ) );
-//  });
-//
-//    $(function() {
-//    $( "#slider-range3" ).slider({
-//      range: true,
-//      min: 0,
-//      max: 500,
-//      values: [ 3, 360 ],
-//      slide: function( event, ui ) {
-//        $( "#amount3" ).val( "" + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-//      }
-//    });
-//    $( "#amount3" ).val( "" + $( "#slider-range3" ).slider( "values", 0 ) +
-//      " - " + $( "#slider-range3" ).slider( "values", 1 ) );
-//  });
-
 
 </script>
 

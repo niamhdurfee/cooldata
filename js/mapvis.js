@@ -18,7 +18,7 @@ MapVis = function(_parentElement,_stationData, _routeData, _eventHandler) {
       top: 10,
       right: 10,
       bottom: 10,
-      left: 10
+      left: 100
     },
   this.width = this.parentElement.node().clientWidth - this.margin.left - this.margin.right,
   this.height = this.parentElement.node().clientWidth - this.margin.top - this.margin.bottom,
