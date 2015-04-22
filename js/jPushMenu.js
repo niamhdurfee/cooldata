@@ -8,6 +8,7 @@
 
 (function($) {
     $.fn.jPushMenu = function(customOptions) {
+        console.log(this);
         var o = $.extend({}, $.fn.jPushMenu.defaultOptions, customOptions);
 
         $('body').addClass(o.pushBodyClass);
@@ -17,8 +18,16 @@
 
         $(this).click(function(e) {
             
-            $('#mapVis').width(.8 * window.innerWidth);
+//          console.log($('#mapVis').width());
+
+            var prev_width = $('#mapVis').width();
+            $('#mapVis').width(prev_width - 240);
+//            $('#mapVis').style("right", "0px");
+
             $('#explore-button').hide();
+            
+//                        console.log($('#mapVis').width());
+
 
 //            $('#mapVis').height(.95 * (window.innerHeight-100));
 

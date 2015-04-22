@@ -141,7 +141,15 @@ MapVis.prototype.updateVis = function() {
            s = orig.hourly.average.a+orig.hourly.average.d,
            r = that.getRadius(that.areaScale(s)),
            c = that.color(orig.hourly.average.a/s);
-        var circle = L.circle(orig.loc, r, {color: c, opacity: 1, fillOpacity: 0.5, className:'station',weight:2}).addTo(that.map).bindPopup(orig.fullname);
+        var circle = L.circle(orig.loc, r, {color: c, opacity: 1, fillOpacity: 0.5, className:'station',weight:2}).addTo(that.map).bindPopup(orig.fullname)
+        .on('click', function() {
+//            EVENT HANDLER GOES HERE
+            
+            display_station_info(o);
+            
+            console.log(o);
+            console.log(that.stationData[o]);
+        });
     })
 };
 
@@ -167,4 +175,18 @@ MapVis.prototype.onSelectionChange = function() {
 
 MapVis.prototype.getRadius = function(d) {
   return Math.sqrt(parseFloat(d)/Math.PI)
+}
+
+
+function display_station_info(id)
+{
+//    slide out menu from right if not already slid out
+    $('#station-info').click();
+    
+    
+    $('#station-name').html(this.stationData[id]);
+
+    
+//    use transition to display data
+    
 }
