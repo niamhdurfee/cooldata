@@ -1,22 +1,22 @@
 /**
- * WhoOneVis
+ * StackedVis
  * @param _parentElement -- the HTML or SVG element (D3 node) to which to attach the vis
  * @param _data -- the data array
  * @param _metaData -- the meta-data / data description object
  * @constructor
  */
-WhoOneVis = function(_parentElement, _data, _eventHandler) {
+StackedVis = function(_parentElement, _data, _eventHandler) {
   this.parentElement = _parentElement;
   this.data = _data;
   this.eventHandler = _eventHandler;
   this.displayData = [];
-  this.dom = ["registered","casual"];
+  this.dom = ["female","male"];
   // Define all "constants" here
   this.margin = {
-      top: 50,
-      right: 50,
-      bottom: 50,
-      left: 50
+      top: 5,
+      right: 5,
+      bottom: 20,
+      left: 40
     },
   this.width = this.parentElement.node().clientWidth - this.margin.left - this.margin.right,
   this.height =  this.parentElement.node().clientHeight- this.margin.top - this.margin.bottom;
@@ -26,19 +26,19 @@ WhoOneVis = function(_parentElement, _data, _eventHandler) {
 /**
  * Method that sets up the SVG and the variables
  */
-WhoOneVis.prototype.initVis = function() {
+StackedVis.prototype.initVis = function() {
   var that = this;
 
   var colorDomain = ['registered','casual','female','male','commuter','leisure','visitor','local'];
-  var colorRange = ['lightgreen','grey','pink','lightblue','red','coral','orange','purple'];
+  var colorRange = ['#04B431','#848484','#B40486','#2ECCFA','#4B088A','#848484','#848484','#B40431'];
 
   this.color = d3.scale.ordinal().domain(colorDomain).range(colorRange);
 
   this.x = d3.time.scale()
-    .range([0, this.width]);
+    .range([this.margin.left, this.width]);
 
   this.y = d3.scale.linear()
-    .range([that.height, 0]);
+    .range([that.height, that.margin.bottom]);
 
 
   this.xAxis = d3.svg.axis()
@@ -64,6 +64,15 @@ WhoOneVis.prototype.initVis = function() {
     .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
 
 
+  this.svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0,"+this.height+")");
+
+  this.svg.append("g")
+      .attr("class", "y axis")
+      .attr("transform", "translate("+this.margin.left+",0)");
+
+
   // // filter, aggregate, modify data
   this.wrangleData(null);
 
@@ -71,42 +80,35 @@ WhoOneVis.prototype.initVis = function() {
   this.updateVis();
 }
 
-WhoOneVis.prototype.wrangleData = function(_filterFunction) {
+StackedVis.prototype.wrangleData = function(_filterFunction) {
   this.displayData = this.filterAndAggregate(_filterFunction);
 }
 
-WhoOneVis.prototype.updateVis = function() {
+StackedVis.prototype.updateVis = function() {
+
   var that = this;
 
   var users = that.stack(that.displayData);
   this.x.domain(d3.extent(that.displayData[0].values, function(d) { return d.date; }));
   this.y.domain([0,d3.max(that.displayData, function (d) { return d3.max(d.values, function (a) {return a.y+a.y0})})]);
-  console.log(d3.extent(that.displayData, function (d) { return d3.max(d.values, function (a) { return a.y+a.y0})}))
-  var browser = this.svg.selectAll(".user")
-      .data(users)
-      .enter().append("g")
-      .attr("class", "user");
+  
+  this.svg.select(".y.axis")
+    .call(this.yAxis);
 
-  browser.append("path")
+  this.svg.select(".x.axis")
+    .call(this.xAxis);
+
+  var user = this.svg.selectAll(".user")
+      .data(users)
+
+  user.enter().append("g")
+      .attr("class", "user")
+      .append("path")
       .attr("class", "area")
       .attr("d", function(d) { return that.area(d.values); })
       .style("fill", function(d) { return that.color(d.type); });
 
-  // browser.append("text")
-  //     .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
-  //     .attr("transform", function(d) { return "translate(" + that.x(d.value.date) + "," + that.y(d.value.y0 + d.value.y / 2) + ")"; })
-  //     .attr("x", -6)
-  //     .attr("dy", ".35em")
-  //     .text(function(d) { return d.name; });
-
-  this.svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + this.height + ")")
-      .call(this.xAxis);
-
-  this.svg.append("g")
-      .attr("class", "y axis")
-      .call(this.yAxis);
+  user.exit().remove();
 }
 
 /**
@@ -115,7 +117,7 @@ WhoOneVis.prototype.updateVis = function() {
  * be defined here.
  * @param selection
  */
-WhoOneVis.prototype.onSelectionChange = function() {
+StackedVis.prototype.onSelectionChange = function() {
 
   this.updateVis();
 }
@@ -128,7 +130,7 @@ WhoOneVis.prototype.onSelectionChange = function() {
  *
  * */
 
-WhoOneVis.prototype.filterAndAggregate = function(_filter) {
+StackedVis.prototype.filterAndAggregate = function(_filter) {
   // Set filter to a function that accepts all items
   var filter = function() {
     return true;
@@ -139,7 +141,6 @@ WhoOneVis.prototype.filterAndAggregate = function(_filter) {
 
   var that = this;
   var res = this.data.filter(filter);
-  console.log(that.dom)
   res = that.dom.map(function (t) {
     return {
       type: t,

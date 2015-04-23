@@ -48,13 +48,13 @@ TimeVis.prototype.initVis = function() {
 
  // Add axes visual elements
   this.svg.append("g")
-    .attr("class", "x axis")
+    .attr("class", "timeaxis")
 
   this.svg.append("g")
     .attr("class", "brush")
 
  // updates axis
-  this.svg.select(".x.axis")
+  this.svg.select("timeaxis")
     .call(this.xAxis);
 
   this.svg.select(".brush")

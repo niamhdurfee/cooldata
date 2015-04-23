@@ -1,10 +1,13 @@
 import re,os,csv
 
-days = [re.split(',',line[:-1])[:7] for line in open("../weather.csv")]
+days = [re.split(',',line[:-1])[:9] for line in open("../weather.csv")]
+os.remove("weather.csv")
 datafile = csv.writer(open('weather.csv','a'))
 datafile.writerow(days[0])
 
 for day in days[1:]:
+	del day[0]
+	del day[0]
 	day[0] = str(int(day[0][4:6]))+'/'+str(int(day[0][-2:]))+'/'+day[0][:4]
 	if (day[1] != '-9999'):
 		day[1] = float(day[1]) / 10.0

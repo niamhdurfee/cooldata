@@ -10,14 +10,35 @@ body {
 #chordVis {
   height: 800px;
 }
+.pievis {
+  height: 300px;
+  width: 300px;
+}
+#stackedVis {
+  height: 400px;
+  width: 800px;
+}
+.arc path {
+  stroke: #fff;
+}
 .brush{
     fill: black;
     fill-opacity: .5;
     pointer-events: none;
 }
-.x.axis text {
+.timeaxis text {
     font-size: 28px;
     font-weight: bold;
+}
+.axis text {
+    font: 10px sans-serif;
+}
+
+.axis line,
+.axis path {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
 }
 /*
 #mapVis {
@@ -39,13 +60,6 @@ body {
     margin: 0;
     padding: 0;
     z-index: 1000;
-}
-
-
-.axis line,
-.axis path {
-    fill: none;
-    stroke: none;
 }
 .leaflet-popup-content-wrapper {
   background:rgba(0,0,0,0.8);
@@ -150,4 +164,35 @@ body {
 }
 .range input[type="range"] {
     outline: none;
+}
+
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  text-align: center;
+
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 12px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
 }
