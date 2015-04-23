@@ -31,7 +31,7 @@ WhoPieVis.prototype.initVis = function() {
   var that = this;
 
   var colorDomain = ['registered','casual','female','male','commuter','leisure','visitor','local'];
-  var colorRange = ['#04B431','#848484','#B40486','#2ECCFA','#4B088A','#848484','#848484','#B40431'];
+  var colorRange = ['yellowgreen','lightgrey','#B40486','#2ECCFA','blue','lightgrey','lightgrey','orangered'];
   var formatPercent = d3.format("%");
   var formatNum = d3.format(",")
 
