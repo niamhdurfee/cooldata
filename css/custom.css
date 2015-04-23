@@ -11,12 +11,22 @@ body {
   height: 800px;
 }
 .pievis {
-  height: 300px;
-  width: 300px;
+  height: 200px;
+}
+.time {
+  height: 80px;
+  width: 800px;
+}
+.year.axis path, line
+ {
+    display: none;
+}
+.year.axis text
+ {
+    font: 13px;
 }
 #stackedVis {
   height: 400px;
-  width: 800px;
 }
 .arc path {
   stroke: #fff;

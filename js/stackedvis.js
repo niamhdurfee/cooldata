@@ -104,8 +104,9 @@ StackedVis.prototype.updateVis = function() {
   user.enter().append("g")
       .attr("class", "user")
       .append("path")
-      .attr("class", "area")
-      .attr("d", function(d) { return that.area(d.values); })
+      .attr("class", "area");
+
+  user.select('.area').attr("d", function(d) { return that.area(d.values); })
       .style("fill", function(d) { return that.color(d.type); });
 
   user.exit().remove();
@@ -117,8 +118,14 @@ StackedVis.prototype.updateVis = function() {
  * be defined here.
  * @param selection
  */
-StackedVis.prototype.onSelectionChange = function() {
-
+StackedVis.prototype.onSelectionChange = function(from,to,status) {
+  if (status) {
+    this.wrangleData(null)
+  } else {
+    this.wrangleData(function(d) {
+      return ((d.date >= from) && (d.date <= to))
+    });
+  };
   this.updateVis();
 }
 

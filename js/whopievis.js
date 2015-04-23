@@ -5,12 +5,12 @@
  * @param _metaData -- the meta-data / data description object
  * @constructor
  */
-WhoPieVis = function(_parentElement, _data, _eventHandler) {
+WhoPieVis = function(_parentElement, _data, _dom, _eventHandler) {
   this.parentElement = _parentElement;
   this.data = _data;
   this.eventHandler = _eventHandler;
   this.displayData = [];
-  this.dom = ["registered","casual"];
+  this.dom = _dom;
   // Define all "constants" here
   this.margin = {
       top: 10,
@@ -77,17 +77,22 @@ WhoPieVis.prototype.updateVis = function() {
 
   var g = this.svg.selectAll(".arc")
       .data(this.pie(this.displayData))
-      .enter().append("g")
-      .attr("class", "arc");
 
-  g.append("path")
+  g.enter().append("g")
+      .attr("class", "arc")
+      .append("path")
+
+  g.select("path")
       .attr("d", this.arc)
       .attr("transform","translate("+this.width/2+","+this.height/2+")")
       .style("fill", function(d) { return that.color(d.data.type); })
       .on('mouseover', this.tip.show)
       .on('mouseout', this.tip.hide);
 
-  g.append("text")
+  var gText = g.selectAll("text")
+      .data(this.pie(this.displayData))
+
+  gText.enter().append("text")
       .attr("transform", function(d) { return "translate("+(that.arc.centroid(d)[0]+that.width/2)+","+(that.arc.centroid(d)[1]+that.height/2)+")"; })
       .attr("dy", ".35em")
       .style("text-anchor", "middle")
@@ -95,6 +100,9 @@ WhoPieVis.prototype.updateVis = function() {
       .style("font-size", "14px")
       .style("font-weight", "bold")
       .text(function(d) { return d.data.type; });
+
+  g.exit().remove()
+  gText.exit().remove()
 
 }
 
@@ -104,8 +112,14 @@ WhoPieVis.prototype.updateVis = function() {
  * be defined here.
  * @param selection
  */
-WhoPieVis.prototype.onSelectionChange = function() {
-
+WhoPieVis.prototype.onSelectionChange = function(from,to,status) {
+  if (status) {
+    this.wrangleData(null)
+  } else {
+    this.wrangleData(function(d) {
+      return ((d.date >= from) && (d.date <= to))
+    });
+  };
   this.updateVis();
 }
 

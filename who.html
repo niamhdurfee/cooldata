@@ -52,10 +52,26 @@
 
     <div class="container-fluid">
     
-    <table>
-    <div id="stackedVis"></div>
-    <div id="whoPieVis" class="pievis"></div>
+    <table width="100%">
+    <thead>
+      <tr>
+        <th width="50%"></th>
+        <th width="25%"></th>
+        <th width="25%"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td><div id="stackedVis"></div></td>
+        <td><div id="pieVis1" class="pievis"></div>
+        <div id="pieVis2" class="pievis"></div></td>
+        <td><div id="pieVis3" class="pievis"></div><div id="pieVis4" class="pievis"></div></td>
+
+      </tr>
+    </tbody>
     </table>
+        <div id="yearBrush" class="time"></div>
 
     </div><!-- /.container -->
 <script src="libs/jquery-2.1.3.min.js"></script>
@@ -68,6 +84,7 @@
 <script src="libs/token.js"></script>
 <script src="js/stackedvis.js"></script>
 <script src="js/whopievis.js"></script>
+<script src="js/yearbrush.js"></script>
 <script>
 // Create a map in the div #map
 
@@ -84,18 +101,26 @@ $(function() {
 
     // variables keeping global knowledge of the data
     var dateData;
+    var brushData;
 
     // call this function after Data is loaded, reformatted and bound to the variables
     var initVis = function() {
       var MyEventHandler = {};
-
       // Instantiate all Vis Objects here
       var stackedVis = new StackedVis(d3.select("#stackedVis"), dateData, MyEventHandler); 
-      var whoPieVis = new WhoPieVis(d3.select("#whoPieVis"), dateData, MyEventHandler); 
+      var yearBrush = new YearBrush(d3.select("#yearBrush"), brushData, MyEventHandler); 
+      var pieVisRegistered = new WhoPieVis(d3.select("#pieVis1"), dateData, ["registered","casual"],MyEventHandler); 
+      var pieVisType = new WhoPieVis(d3.select("#pieVis2"), dateData, ["commuter","leisure"], MyEventHandler); 
+      var pieVisGender = new WhoPieVis(d3.select("#pieVis3"), dateData, ["female","male"], MyEventHandler); 
+      var pieVisLocal = new WhoPieVis(d3.select("#pieVis4"), dateData, ["local","visitor"], MyEventHandler); 
 
       // Bind the eventHandler to the Vis Objects
       $(MyEventHandler).bind("selectionChanged", function(event, from, to, status) {
-        // age_vis.onSelectionChange(from, to, status);
+          stackedVis.onSelectionChange(from,to,status);
+          pieVisLocal.onSelectionChange(from,to,status);
+          pieVisType.onSelectionChange(from,to,status);
+          pieVisGender.onSelectionChange(from,to,status);
+          pieVisRegistered.onSelectionChange(from,to,status);
       });
     };
 
@@ -121,6 +146,7 @@ $(function() {
             total: parseInt(d.total)
           }
         });
+        brushData = dateData.map(function (d) { return d.date });
         initVis();
     };
 
