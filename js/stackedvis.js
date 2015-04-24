@@ -10,7 +10,7 @@ StackedVis = function(_parentElement, _data, _eventHandler) {
   this.data = _data;
   this.eventHandler = _eventHandler;
   this.displayData = [];
-  this.dom = ["female","male"];
+  this.dom = ["registered","casual"];
   // Define all "constants" here
   this.margin = {
       top: 5,
@@ -20,6 +20,7 @@ StackedVis = function(_parentElement, _data, _eventHandler) {
     },
   this.width = this.parentElement.node().clientWidth - this.margin.left - this.margin.right,
   this.height =  this.parentElement.node().clientHeight- this.margin.top - this.margin.bottom;
+  this.filter = null;
   this.initVis();
 }
 
@@ -30,7 +31,7 @@ StackedVis.prototype.initVis = function() {
   var that = this;
 
   var colorDomain = ['registered','casual','female','male','commuter','leisure','visitor','local'];
-  var colorRange = ['#04B431','#848484','#B40486','#2ECCFA','#4B088A','#848484','#848484','#B40431'];
+  var colorRange = ['yellowgreen','lightgrey','#B40486','#2ECCFA','blue','lightgrey','lightgrey','orangered'];
 
   this.color = d3.scale.ordinal().domain(colorDomain).range(colorRange);
 
@@ -74,7 +75,7 @@ StackedVis.prototype.initVis = function() {
 
 
   // // filter, aggregate, modify data
-  this.wrangleData(null);
+  this.wrangleData(this.filter);
 
   // // call the update method
   this.updateVis();
@@ -99,15 +100,18 @@ StackedVis.prototype.updateVis = function() {
     .call(this.xAxis);
 
   var user = this.svg.selectAll(".user")
-      .data(users)
+      .data(users);
 
   user.enter().append("g")
       .attr("class", "user")
       .append("path")
       .attr("class", "area");
 
-  user.select('.area').attr("d", function(d) { return that.area(d.values); })
-      .style("fill", function(d) { return that.color(d.type); });
+  user
+      .select('.area').attr("d", function(d) { return that.area(d.values); })
+      .transition()
+      .style("fill", function(d) { return that.color(d.type); })
+
 
   user.exit().remove();
 }
@@ -128,7 +132,14 @@ StackedVis.prototype.onSelectionChange = function(from,to,status) {
   };
   this.updateVis();
 }
-
+StackedVis.prototype.onTypeChange = function(_dom) {
+  console.log(_dom);
+  if (this.dom != _dom) {
+  	this.dom = _dom;
+  	this.wrangleData(this.filter);
+  	this.updateVis();
+  }
+}
 /*
  *
  * ==================================
@@ -143,11 +154,14 @@ StackedVis.prototype.filterAndAggregate = function(_filter) {
     return true;
   }
   if (_filter != null) {
-    filter = _filter;
+    this.filter = _filter;
+  } else {
+  	this.filter = filter;
   }
+  console.log("Filter function: ",_filter, this.filter)
 
   var that = this;
-  var res = this.data.filter(filter);
+  var res = this.data.filter(this.filter);
   res = that.dom.map(function (t) {
     return {
       type: t,
@@ -156,6 +170,6 @@ StackedVis.prototype.filterAndAggregate = function(_filter) {
       })
     }
   });
-
+  console.log(res);
   return res;
 }

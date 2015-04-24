@@ -122,6 +122,10 @@ $(function() {
           pieVisGender.onSelectionChange(from,to,status);
           pieVisRegistered.onSelectionChange(from,to,status);
       });
+
+      $(MyEventHandler).bind("typeChanged", function(event, dom1, dom2) {
+          stackedVis.onTypeChange([dom1, dom2]);
+      });
     };
 
     // call this function after both files are loaded -- error should be "null" if no error

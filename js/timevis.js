@@ -41,7 +41,6 @@ TimeVis.prototype.initVis = function() {
 
   this.brush = d3.svg.brush().x(this.x)
     .on("brush", function() {
-      console.log(that.brush.extent()[0].getHours(), that.brush.extent()[1].getHours(), that.brush.empty())
       // Trigger selectionChanged event. You'd need to account for filtering by time AND type
       $(that.eventHandler).trigger("selectionChanged", [that.brush.extent()[0].getHours(), that.brush.extent()[1].getHours(), that.brush.empty()])
     });

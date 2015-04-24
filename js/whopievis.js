@@ -87,7 +87,11 @@ WhoPieVis.prototype.updateVis = function() {
       .attr("transform","translate("+this.width/2+","+this.height/2+")")
       .style("fill", function(d) { return that.color(d.data.type); })
       .on('mouseover', this.tip.show)
-      .on('mouseout', this.tip.hide);
+      .on('mouseout', this.tip.hide)
+      .on('click', function(d) {
+      	console.log(that.dom)
+      // Trigger selectionChanged event. You'd need to account for filtering by time AND type
+      $(that.eventHandler).trigger("typeChanged", that.dom)});
 
   var gText = g.selectAll("text")
       .data(this.pie(this.displayData))
@@ -156,6 +160,5 @@ WhoPieVis.prototype.filterAndAggregate = function(_filter) {
       total: t
     }
   });
-  console.log(res)
   return res;
 }
