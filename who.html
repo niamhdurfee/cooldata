@@ -52,7 +52,26 @@
 
     <div class="container-fluid">
     
-    <table></table>
+    <table width="100%">
+    <thead>
+      <tr>
+        <th width="50%"></th>
+        <th width="25%"></th>
+        <th width="25%"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td><div id="stackedVis"></div></td>
+        <td><div id="pieVis1" class="pievis"></div>
+        <div id="pieVis2" class="pievis"></div></td>
+        <td><div id="pieVis3" class="pievis"></div><div id="pieVis4" class="pievis"></div></td>
+
+      </tr>
+    </tbody>
+    </table>
+        <div id="yearBrush" class="time"></div>
 
     </div><!-- /.container -->
 <script src="libs/jquery-2.1.3.min.js"></script>
@@ -60,10 +79,12 @@
 <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
 <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.js'></script>
 <script src="libs/d3.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 <script src="libs/Polyline.encoded.js"></script>
 <script src="libs/token.js"></script>
-<script src="js/mapvis.js"></script>
-<script src="js/timevis.js"></script>
+<script src="js/stackedvis.js"></script>
+<script src="js/whopievis.js"></script>
+<script src="js/yearbrush.js"></script>
 <script>
 // Create a map in the div #map
 
@@ -72,52 +93,72 @@ $(function() {
     // this function can convert Date objects to a string
     // it can also convert strings to Date objects
     // see: https://github.com/mbostock/d3/wiki/Time-Formatting
-    var dateFormatter = d3.time.format("%Y-%m-%d");
+    var parseDate = d3.time.format("%_m/%_d/%Y").parse;
 
     //==========================================
     //--- HERE IS WHERE ALL THE MAGIC STARTS --
     //==========================================
 
     // variables keeping global knowledge of the data
-    var tripData = [];
-    var routeData = [];
-    var stationData = {};
+    var dateData;
+    var brushData;
 
     // call this function after Data is loaded, reformatted and bound to the variables
     var initVis = function() {
       var MyEventHandler = {};
-
       // Instantiate all Vis Objects here
-      var mapVis = new MapVis(d3.select("#mapVis"), stationData, routeData, MyEventHandler); 
-      var timeVis = new TimeVis(d3.select("#timeVis"),MyEventHandler);
+      var stackedVis = new StackedVis(d3.select("#stackedVis"), dateData, MyEventHandler); 
+      var yearBrush = new YearBrush(d3.select("#yearBrush"), brushData, MyEventHandler); 
+      var pieVisRegistered = new WhoPieVis(d3.select("#pieVis1"), dateData, ["registered","casual"],MyEventHandler); 
+      var pieVisType = new WhoPieVis(d3.select("#pieVis2"), dateData, ["commuter","leisure"], MyEventHandler); 
+      var pieVisGender = new WhoPieVis(d3.select("#pieVis3"), dateData, ["female","male"], MyEventHandler); 
+      var pieVisLocal = new WhoPieVis(d3.select("#pieVis4"), dateData, ["local","visitor"], MyEventHandler); 
 
       // Bind the eventHandler to the Vis Objects
       $(MyEventHandler).bind("selectionChanged", function(event, from, to, status) {
-        // age_vis.onSelectionChange(from, to, status);
+          stackedVis.onSelectionChange(from,to,status);
+          pieVisLocal.onSelectionChange(from,to,status);
+          pieVisType.onSelectionChange(from,to,status);
+          pieVisGender.onSelectionChange(from,to,status);
+          pieVisRegistered.onSelectionChange(from,to,status);
       });
     };
 
     // call this function after both files are loaded -- error should be "null" if no error
-    var dataLoaded = function(_stationData, _routeData) {
-        stationData = _stationData;
-        routeData = _routeData;
+    var dataLoaded = function(_data) {
+        dateData = _data.map(function (d) { 
+          return {
+            AWND: parseFloat(d.AWND),
+            PRCP: parseFloat(d.PRCP),
+            SNOW: parseFloat(d.SNOW),
+            TMAX: parseFloat(d.TMAX),
+            TMIN: parseFloat(d.TMIN),
+            date: parseDate(d.date),
+            female: parseInt(d.females),
+            male: parseInt(d.registered) - parseInt(d.females),
+            leisure: parseInt(d.leisure),
+            commuter: parseInt(d.total) - parseInt(d.leisure),
+            local: parseInt(d.locals),
+            visitor: parseInt(d.registered) - parseInt(d.locals),
+            note: d.note,
+            registered: parseInt(d.registered),
+            casual: parseInt(d.total) - parseInt(d.registered),
+            total: parseInt(d.total)
+          }
+        });
+        brushData = dateData.map(function (d) { return d.date });
         initVis();
     };
 
     var startHere = function() {
-      d3.json("data/stations.json", function(errorStation, stationData) {
-        if (!errorStation) {
-          d3.csv("data/routes_stats.csv", function(error, routeData) {
-              if (!error) {
-                dataLoaded(stationData, routeData);
-              }
-
-            });
+      d3.csv("data/breakdown.csv", function(error, data) {
+        if (!error) {
+          dataLoaded(data);
         }
       });
     };
 
-    //startHere();
+    startHere();
   });
 </script>
 

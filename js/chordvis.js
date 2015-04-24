@@ -21,7 +21,7 @@ ChordVis = function (_parentElement, _data,_metaData, _eventHandler) {
     },
   this.width = this.parentElement.node().clientWidth - this.margin.left - this.margin.right,
   this.height = this.parentElement.node().clientHeight - this.margin.top - this.margin.bottom,
-  this.outerRadius = Math.min(this.width, this.height) / 2 - 10,
+  this.outerRadius = Math.min(this.width, this.height) / 2 - 80,
   this.innerRadius = this.outerRadius - 24;
 
   this.initVis();
@@ -100,13 +100,13 @@ ChordVis.prototype.updateVis = function() {
         .attr("text-anchor", function(d) { console.log(d); return ((d.startAngle + d.endAngle) / 2) > Math.PI ? "end" : null; })
         .attr("transform", function(d) {
         return "rotate(" + (((d.startAngle + d.endAngle) / 2) * 180 / Math.PI - 90) + ")"
-            + "translate(" + that.height/2. + ( - 15) + ")"
+            + "translate(" + (that.outerRadius +5) + ")"
             + (((d.startAngle + d.endAngle) / 2) > Math.PI ? "rotate(180)" : "");
         })
         .text(function(d,i) {
             return that.neighborhoods[i].name;
         })
-        .style("font-size","10px")
+        .style("font-size","14px")
         .style("fill", "black")
         .style("z-index", "10000")
 
