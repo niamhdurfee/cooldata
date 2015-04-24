@@ -103,13 +103,7 @@ MapVis.prototype.updateVis = function() {
     $( "#time-amount" ).val( "" + $( "#slider-time" ).slider( "values", 0 ) +
       " - " + $( "#slider-time" ).slider( "values", 1 ) );
 
-    
-    
-    
-    
-    
-    
-    
+
   var polyline_options = {
       weight: 2,
       className: 'line',
@@ -118,7 +112,7 @@ MapVis.prototype.updateVis = function() {
     
   var stations = d3.keys(this.stationData);
     
-  this.areaScale = d3.scale.linear().range([0,200000]).domain([0, d3.max(stations, function (ea) {return (that.stationData[ea].hourly.average.a + that.stationData[ea].hourly.average.d)})]);
+  this.areaScale = d3.scale.linear().range([0,200000]).domain([0, d3.max(stations, function (ea) {return (that.stationData[ea].overall.average.a + that.stationData[ea].overall.average.d)})]);
     
   this.color = d3.scale.linear().range(["red","grey","lightgreen"]).domain([0.45,0.5,0.55]);
     
@@ -138,17 +132,14 @@ MapVis.prototype.updateVis = function() {
     
     stations.forEach(function (o) {
        var orig = that.stationData[o],
-           s = orig.hourly.average.a+orig.hourly.average.d,
+           s = orig.overall.average.a+orig.overall.average.d,
            r = that.getRadius(that.areaScale(s)),
-           c = that.color(orig.hourly.average.a/s);
+           c = that.color(orig.overall.average.a/s);
         var circle = L.circle(orig.loc, r, {color: c, opacity: 1, fillOpacity: 0.5, className:'station',weight:2}).addTo(that.map).bindPopup(orig.fullname)
         .on('click', function() {
 //            EVENT HANDLER GOES HERE
             
-            display_station_info(o);
-            
-            console.log(o);
-            console.log(that.stationData[o]);
+            that.display_station_info(o);
         });
     })
 };
@@ -178,13 +169,14 @@ MapVis.prototype.getRadius = function(d) {
 }
 
 
-function display_station_info(id)
+MapVis.prototype.display_station_info = function(id)
 {
+    var that = this;
 //    slide out menu from right if not already slid out
+
     $('#station-info').click();
     
-    
-    $('#station-name').html(this.stationData[id]);
+    $('#station-name').html(that.stationData[id].toString());
 
     
 //    use transition to display data
