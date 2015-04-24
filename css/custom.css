@@ -40,22 +40,16 @@ body {
     font-size: 28px;
     font-weight: bold;
 }
-.axis text {
-    font: 10px sans-serif;
-}
-
 .axis line,
 .axis path {
     fill: none;
     stroke: #000;
-    shape-rendering: crispEdges;
+    stroke-width: 1px;
 }
-/*
-#mapVis {
-  min-height:800px;
+.line {
+  fill: none;
+  stroke-width:2px;
 }
-*/
-
 #explore-button
 {
     position: absolute;
@@ -64,7 +58,6 @@ body {
     z-index: 1000;
     padding: 1px 1px 1px 1px;
 }
-<<<<<<< HEAD
 
 .icon-right 
 {
@@ -80,13 +73,6 @@ body {
     box-shadow: 0px 0px 2px #888;
 }
 
-.axis line,
-.axis path {
-    fill: none;
-    stroke: none;
-}
-=======
->>>>>>> origin/master
 .leaflet-popup-content-wrapper {
   background:rgba(0,0,0,0.8);
   color:#fff;

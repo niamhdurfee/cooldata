@@ -31,7 +31,7 @@ StackedVis.prototype.initVis = function() {
   var that = this;
 
   var colorDomain = ['registered','casual','female','male','commuter','leisure','visitor','local'];
-  var colorRange = ['yellowgreen','lightgrey','#B40486','#2ECCFA','blue','lightgrey','lightgrey','orangered'];
+  var colorRange = ['yellowgreen','grey','#B40486','#2ECCFA','blue','grey','grey','orangered'];
 
   this.color = d3.scale.ordinal().domain(colorDomain).range(colorRange);
 
@@ -51,12 +51,15 @@ StackedVis.prototype.initVis = function() {
     .orient("left");
 
   this.area = d3.svg.area()
-    .x(function(d) { return this.x(d.date); })
-    .y0(function(d) { return this.y(d.y0); })
-    .y1(function(d) { return this.y(d.y0 + d.y); });
+    .interpolate("basis")
+    .x(function(d) { return that.x(d.date); })
+    .y0(function(d) { return that.y(0); })
+    .y1(function(d) { return that.y(d.value); });
 
-  this.stack = d3.layout.stack()
-    .values(function(d) { return d.values; });
+  this.line = d3.svg.line()
+  	.interpolate("basis")
+    .x(function(d) { return that.x(d.date); })
+    .y(function(d) { return that.y(d.value); })
 
   this.svg = this.parentElement.append("svg")
     .attr("width", this.width + this.margin.left + this.margin.right)
@@ -89,9 +92,8 @@ StackedVis.prototype.updateVis = function() {
 
   var that = this;
 
-  var users = that.stack(that.displayData);
   this.x.domain(d3.extent(that.displayData[0].values, function(d) { return d.date; }));
-  this.y.domain([0,d3.max(that.displayData, function (d) { return d3.max(d.values, function (a) {return a.y+a.y0})})]);
+  this.y.domain([0,d3.max(that.displayData, function (d) { return d3.max(d.values, function (a) {return a.value})})]);
   
   this.svg.select(".y.axis")
     .call(this.yAxis);
@@ -100,20 +102,36 @@ StackedVis.prototype.updateVis = function() {
     .call(this.xAxis);
 
   var user = this.svg.selectAll(".user")
-      .data(users);
+      .data(that.displayData);
 
   user.enter().append("g")
       .attr("class", "user")
       .append("path")
       .attr("class", "area");
 
-  user
-      .select('.area').attr("d", function(d) { return that.area(d.values); })
+  user.select('.area').attr("d", function(d) { return that.area(d.values); })
       .transition()
       .style("fill", function(d) { return that.color(d.type); })
+      .style("opacity", 0.5);
 
+  user.select('.area')
+      .on("mouseover", this.mouseover)
+  	  .on("mouseout", this.mouseout);
+
+  var line = this.svg.selectAll(".userline")
+  	  .data(this.displayData);
+
+  line.enter().append("g")
+  	  .attr("class","userline")
+  	  .append("path")
+	  .attr("class","line");
+
+  line.select(".line")
+  	  .attr("d",function (d) { return that.line(d.values)})
+  	  .style("stroke", function (d) {return that.color(d.type)});
 
   user.exit().remove();
+  line.exit().remove();
 }
 
 /**
@@ -132,8 +150,8 @@ StackedVis.prototype.onSelectionChange = function(from,to,status) {
   };
   this.updateVis();
 }
+
 StackedVis.prototype.onTypeChange = function(_dom) {
-  console.log(_dom);
   if (this.dom != _dom) {
   	this.dom = _dom;
   	this.wrangleData(this.filter);
@@ -158,18 +176,25 @@ StackedVis.prototype.filterAndAggregate = function(_filter) {
   } else {
   	this.filter = filter;
   }
-  console.log("Filter function: ",_filter, this.filter)
-
   var that = this;
   var res = this.data.filter(this.filter);
   res = that.dom.map(function (t) {
     return {
       type: t,
       values: res.map(function (d) {
-        return {date: d.date, y: d[t]}
+        return {date: d.date, value: d[t]}
       })
     }
   });
-  console.log(res);
   return res;
+}
+
+StackedVis.prototype.mouseover = function() {
+  d3.selectAll(".area").style("opacity",0.3);
+  d3.selectAll(".line").style("stroke","2px");
+  d3.select(d3.event.target).style("opacity",0.8).style("stroke","5px");
+}
+StackedVis.prototype.mouseout = function() {
+  d3.selectAll(".area").style("opacity",0.6)
+  d3.selectAll(".line").style("stroke","2px")
 }

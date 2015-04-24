@@ -110,8 +110,8 @@ $(function() {
       var stackedVis = new StackedVis(d3.select("#stackedVis"), dateData, MyEventHandler); 
       var yearBrush = new YearBrush(d3.select("#yearBrush"), brushData, MyEventHandler); 
       var pieVisRegistered = new WhoPieVis(d3.select("#pieVis1"), dateData, ["registered","casual"],MyEventHandler); 
-      var pieVisType = new WhoPieVis(d3.select("#pieVis2"), dateData, ["commuter","leisure"], MyEventHandler); 
-      var pieVisGender = new WhoPieVis(d3.select("#pieVis3"), dateData, ["female","male"], MyEventHandler); 
+      var pieVisType = new WhoPieVis(d3.select("#pieVis2"), dateData, ["leisure","commuter"], MyEventHandler); 
+      var pieVisGender = new WhoPieVis(d3.select("#pieVis3"), dateData, ["male","female"], MyEventHandler); 
       var pieVisLocal = new WhoPieVis(d3.select("#pieVis4"), dateData, ["local","visitor"], MyEventHandler); 
 
       // Bind the eventHandler to the Vis Objects
