@@ -10,13 +10,13 @@ StackedVis = function(_parentElement, _data, _eventHandler) {
   this.data = _data;
   this.eventHandler = _eventHandler;
   this.displayData = [];
-  this.dom = ["registered","casual"];
+  this.dom = ["total"];
   // Define all "constants" here
   this.margin = {
-      top: 5,
-      right: 5,
-      bottom: 20,
-      left: 40
+      top: 10,
+      right: 10,
+      bottom: 30,
+      left: 30
     },
   this.width = this.parentElement.node().clientWidth - this.margin.left - this.margin.right,
   this.height =  this.parentElement.node().clientHeight- this.margin.top - this.margin.bottom;
@@ -30,8 +30,8 @@ StackedVis = function(_parentElement, _data, _eventHandler) {
 StackedVis.prototype.initVis = function() {
   var that = this;
 
-  var colorDomain = ['registered','casual','female','male','commuter','leisure','visitor','local'];
-  var colorRange = ['yellowgreen','grey','#B40486','#2ECCFA','blue','grey','grey','orangered'];
+  var colorDomain = ['total','registered','casual','female','male','commuter','leisure','visitor','local'];
+  var colorRange = ['darkgrey','yellowgreen','grey','#B40486','#2ECCFA','blue','grey','grey','orangered'];
 
   this.color = d3.scale.ordinal().domain(colorDomain).range(colorRange);
 

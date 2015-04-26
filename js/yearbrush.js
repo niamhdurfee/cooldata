@@ -35,7 +35,7 @@ YearBrush.prototype.initVis = function() {
     .append("g");
   this.x = d3.time.scale().range([0, this.width]).domain(d3.extent(this.data));
   this.xAxis = d3.svg.axis()
-    .scale(this.x).ticks(24)//.tickFormat(d3.time.format("%H"))
+    .scale(this.x).ticks(25)//.tickFormat(d3.time.format("%H"))
     .orient("bottom");
 
   this.brush = d3.svg.brush().x(this.x)

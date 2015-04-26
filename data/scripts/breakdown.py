@@ -5,7 +5,6 @@ def isLocal(s):
 		return "local"
 	else:
 		return "visit"
-
 trips = [re.split(',',line[:-2]) for line in open('../trips.min.csv')]
 
 trips = trips[1:]
@@ -22,11 +21,21 @@ for trip in trips:
 			dates[d]['fem'] +=1
 	if (trip[-2] == 'L'):
 		dates[d]['lei'] +=1
-header = [['date','total','females','registered','leisure','locals']]
-for date in dates:
-	t = dates[date]
-	row = [date, t['total'], t['fem'], t['reg'], t['lei'], t['local']]
-	header.append(row)
 
+weather = [re.split(',', line[:-2]) for line in open("../weather.csv")]
+hw = weather.pop(0)[3:]
+imp = [re.split(',', line[:-2]) for line in open('../importantdates.csv')]
+imp = {line[0]:line[1:] for line in imp[1:]}
+header = ['date','total','females','registered','leisure','locals'] + hw + ['notes']
+header = [header]
+for w in weather:
+	date = w[0]
+	try:
+		t = dates[date]
+		row = [date, t['total'], t['fem'], t['reg'], t['lei'], t['local']] + w[1:] + imp[date] 
+		header.append(row)
+	except:
+		row = [date, 0,0,0,0,0] + w + imp[date] 
+		header.append(row)
 datafile = csv.writer(open('../breakdown.csv','w'))
 datafile.writerows(header)

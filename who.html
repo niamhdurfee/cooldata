@@ -55,19 +55,18 @@
     <table width="100%">
     <thead>
       <tr>
-        <th width="50%"></th>
-        <th width="25%"></th>
-        <th width="25%"></th>
+        <th width="45%"></th>
+        <th width="45%"></th>
+        <th width="10%"></th>
       </tr>
     </thead>
 
     <tbody>
       <tr>
         <td><div id="stackedVis"></div></td>
+        <td><div id="weatherVis"></div></td>
         <td><div id="pieVis1" class="pievis"></div>
-        <div id="pieVis2" class="pievis"></div></td>
-        <td><div id="pieVis3" class="pievis"></div><div id="pieVis4" class="pievis"></div></td>
-
+        <div id="pieVis2" class="pievis"></div><div id="pieVis3" class="pievis"></div><div id="pieVis4" class="pievis"></div></td>
       </tr>
     </tbody>
     </table>
@@ -83,6 +82,7 @@
 <script src="libs/Polyline.encoded.js"></script>
 <script src="libs/token.js"></script>
 <script src="js/weathervis.js"></script>
+<script src="js/stackedvis.js"></script>
 <script src="js/whopievis.js"></script>
 <script src="js/yearbrush.js"></script>
 <script>
@@ -105,18 +105,21 @@ $(function() {
 
     // call this function after Data is loaded, reformatted and bound to the variables
     var initVis = function() {
+      console.log(dateData);
       var MyEventHandler = {};
       // Instantiate all Vis Objects here
-      var stackedVis = new WeatherVis(d3.select("#stackedVis"), dateData, MyEventHandler); 
+      var weatherVis = new WeatherVis(d3.select("#weatherVis"), dateData, MyEventHandler); 
+      var stackedVis = new StackedVis(d3.select("#stackedVis"), dateData, MyEventHandler); 
       var yearBrush = new YearBrush(d3.select("#yearBrush"), brushData, MyEventHandler); 
       var pieVisRegistered = new WhoPieVis(d3.select("#pieVis1"), dateData, ["registered","casual"],MyEventHandler); 
-      var pieVisType = new WhoPieVis(d3.select("#pieVis2"), dateData, ["leisure","commuter"], MyEventHandler); 
+      var pieVisType = new WhoPieVis(d3.select("#pieVis2"), dateData, ["commuter","leisure"], MyEventHandler); 
       var pieVisGender = new WhoPieVis(d3.select("#pieVis3"), dateData, ["male","female"], MyEventHandler); 
       var pieVisLocal = new WhoPieVis(d3.select("#pieVis4"), dateData, ["local","visitor"], MyEventHandler); 
 
       // Bind the eventHandler to the Vis Objects
       $(MyEventHandler).bind("selectionChanged", function(event, from, to, status) {
           stackedVis.onSelectionChange(from,to,status);
+          weatherVis.onSelectionChange(from,to,status);
           pieVisLocal.onSelectionChange(from,to,status);
           pieVisType.onSelectionChange(from,to,status);
           pieVisGender.onSelectionChange(from,to,status);
@@ -125,6 +128,7 @@ $(function() {
 
       $(MyEventHandler).bind("typeChanged", function(event, dom1, dom2) {
           stackedVis.onTypeChange([dom1, dom2]);
+          weatherVis.onTypeChange([dom1, dom2]);
       });
     };
 

@@ -5,15 +5,13 @@
  * @param _metaData -- the meta-data / data description object
  * @constructor
  */
-WeatherVis = function(_parentElement, _data, _metaData,_eventHandler) {
+WeatherVis = function(_parentElement, _data,_eventHandler) {
   this.parentElement = _parentElement;
   this.data = _data;
-  this.metaData = _metaData;
   this.eventHandler = _eventHandler;
   this.displayData = [];
   this.dom = ["total"];
   this.filter = null;
-
   // Define all "constants" here
   this.margin = {
       top: 10,
@@ -41,10 +39,10 @@ WeatherVis.prototype.initVis = function() {
     .range([this.margin.left, this.width]);
 
   this.y = d3.scale.pow()
-    .range([that.height, that.margin.bottom]).exponent(.25);
+    .range([that.height, that.margin.bottom]).exponent(.2);
 
   this.r = d3.scale.linear()
-    .range([0, 50]);
+    .range([0, 30]);
 
   this.xAxis = d3.svg.axis()
     .scale(this.x)

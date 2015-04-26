@@ -7,7 +7,7 @@ for station in temp:
 	stations[station[0]] = station[1:]
 trips = [re.split(',', trip[:-2]) for trip in open('../routes.csv')]
 trips = trips[1:]
-trips = trips[7861:]
+trips = trips[7891:]
 path = 'temp1.csv'
 os.remove(path)
 f = csv.writer(open(path,'a'))
@@ -27,5 +27,5 @@ for trip in trips:
 	trip.append(res)
 	f.writerow(trip)
 	print trip[0], result['status']
-	time.sleep(0.35)
+	time.sleep(0.5)
 
