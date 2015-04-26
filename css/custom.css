@@ -58,6 +58,12 @@ body {
     z-index: 1000;
     padding: 1px 1px 1px 1px;
 }
+.circle {
+  opacity: 0.5;
+  stroke-width: 3px;
+  stroke: black;
+  fill: lightgrey;
+}
 
 .icon-right 
 {

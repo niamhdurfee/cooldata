@@ -82,7 +82,7 @@
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 <script src="libs/Polyline.encoded.js"></script>
 <script src="libs/token.js"></script>
-<script src="js/stackedvis.js"></script>
+<script src="js/weathervis.js"></script>
 <script src="js/whopievis.js"></script>
 <script src="js/yearbrush.js"></script>
 <script>
@@ -107,7 +107,7 @@ $(function() {
     var initVis = function() {
       var MyEventHandler = {};
       // Instantiate all Vis Objects here
-      var stackedVis = new StackedVis(d3.select("#stackedVis"), dateData, MyEventHandler); 
+      var stackedVis = new WeatherVis(d3.select("#stackedVis"), dateData, MyEventHandler); 
       var yearBrush = new YearBrush(d3.select("#yearBrush"), brushData, MyEventHandler); 
       var pieVisRegistered = new WhoPieVis(d3.select("#pieVis1"), dateData, ["registered","casual"],MyEventHandler); 
       var pieVisType = new WhoPieVis(d3.select("#pieVis2"), dateData, ["leisure","commuter"], MyEventHandler); 
