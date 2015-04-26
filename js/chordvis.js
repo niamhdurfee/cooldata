@@ -17,11 +17,12 @@ ChordVis = function (_parentElement, _data,_metaData, _eventHandler) {
       top: 10,
       right: 10,
       bottom: 10,
-      left: 10
+      left: 10,
+      padding: 60
     },
-  this.width = this.parentElement.node().clientWidth - this.margin.left - this.margin.right,
-  this.height = this.parentElement.node().clientHeight - this.margin.top - this.margin.bottom,
-  this.outerRadius = Math.min(this.width, this.height) / 2 - 80,
+  this.width = window.innerWidth - this.margin.left - this.margin.right - this.margin.padding,
+  this.height = window.innerHeight - this.margin.top - this.margin.bottom - this.margin.padding,
+  this.outerRadius = Math.min(this.width, this.height) / 2 - 100,
   this.innerRadius = this.outerRadius - 24;
 
   this.initVis();
@@ -97,7 +98,7 @@ ChordVis.prototype.updateVis = function() {
     
     group.append("svg:text")
         .attr("dy", ".35em")
-        .attr("text-anchor", function(d) { console.log(d); return ((d.startAngle + d.endAngle) / 2) > Math.PI ? "end" : null; })
+        .attr("text-anchor", function(d) {return ((d.startAngle + d.endAngle) / 2) > Math.PI ? "end" : null; })
         .attr("transform", function(d) {
         return "rotate(" + (((d.startAngle + d.endAngle) / 2) * 180 / Math.PI - 90) + ")"
             + "translate(" + (that.outerRadius +5) + ")"

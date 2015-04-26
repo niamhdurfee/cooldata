@@ -52,7 +52,6 @@ MapVis.prototype.initVis = function() {
 MapVis.prototype.updateVis = function() {
   var that = this;
     
-    console.log(this.routeData);
         
     //create min/max values for sliders
     

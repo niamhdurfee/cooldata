@@ -55,22 +55,29 @@
     <table width="100%">
     <thead>
       <tr>
-        <th width="45%"></th>
-        <th width="45%"></th>
-        <th width="10%"></th>
+        <th width="25%"></th>
+        <th width="25%"></th>
+        <th width="25%"></th>
+        <th width="25%"></th>
       </tr>
     </thead>
 
     <tbody>
       <tr>
-        <td><div id="stackedVis"></div></td>
-        <td><div id="weatherVis"></div></td>
-        <td><div id="pieVis1" class="pievis"></div>
-        <div id="pieVis2" class="pievis"></div><div id="pieVis3" class="pievis"></div><div id="pieVis4" class="pievis"></div></td>
+        <td colspan='2'><div id="stackedVis"></div></td>
+        <td colspan='2'><div id="weatherVis"></div></td>
+      </tr>
+      <tr>
+        <td><div id="pieVis1" class="pievis"></div></td>
+        <td><div id="pieVis2" class="pievis"></div></td>
+        <td><div id="pieVis3" class="pievis"></div></td>
+        <td><div id="pieVis4" class="pievis"></div></td>
+      </tr>
+      <tr><td colspan='4'><div id="yearBrush" class="time"></div></td>
       </tr>
     </tbody>
     </table>
-        <div id="yearBrush" class="time"></div>
+        
 
     </div><!-- /.container -->
 <script src="libs/jquery-2.1.3.min.js"></script>
@@ -105,7 +112,6 @@ $(function() {
 
     // call this function after Data is loaded, reformatted and bound to the variables
     var initVis = function() {
-      console.log(dateData);
       var MyEventHandler = {};
       // Instantiate all Vis Objects here
       var weatherVis = new WeatherVis(d3.select("#weatherVis"), dateData, MyEventHandler); 
@@ -136,11 +142,11 @@ $(function() {
     var dataLoaded = function(_data) {
         dateData = _data.map(function (d) { 
           return {
-            AWND: parseFloat(d.AWND),
+            AWND: parseFloat(d.AWND)*0.223694,
             PRCP: parseFloat(d.PRCP),
             SNOW: parseFloat(d.SNOW),
-            TMAX: parseFloat(d.TMAX),
-            TMIN: parseFloat(d.TMIN),
+            TMAX: parseFloat(d.TMAX)*1.8+32,
+            TMIN: parseFloat(d.TMIN)*1.8+32,
             date: parseDate(d.date),
             female: parseInt(d.females),
             male: parseInt(d.registered) - parseInt(d.females),

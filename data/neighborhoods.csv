@@ -1,22 +1,21 @@
 name,color
-Allston,#FF41E6
-Kendall,#FCB749
-Fenway/Kenmore,#003BFF
-Cambridge,#233884
-Fenway,#97D3C9
-South Boston,#CA3A28
-South End,#05E1FF
-Central Square,#2DA9E1
-Seaport,#7CB5D6
-Downtown,#A01C40
-Charlestown,#B0D256
-Brookline,#71BE45
-East Cambridge,#387195
-West End,#723390
-Dudley Square,#DEC0CA
-North Cambridge,#E8168B
-Back Bay,#13C498
-Harvard Square,#641DCC
-Somerville,#C014E2
-Porter Square,#F39926
-Medford,#FFE502
+Allston,greenyellow
+Kendall,gold
+Fenway/Kenmore,crimson
+Cambridge,orangered
+Fenway,tomato
+South Boston,violet
+South End,slateblue
+Central Square,skyblue
+Seaport,dodgerblue
+Downtown,darkorchid
+Charlestown,fuchsia
+Brookline,blue
+West End,lightseagreen
+Dudley Square,mediumseagreen
+Beacon Hill,navy
+Back Bay,blue
+Harvard Square,orange
+Somerville,indigo
+Porter Square,springgreen
+Medford,yellowgreen

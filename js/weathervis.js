@@ -15,7 +15,7 @@ WeatherVis = function(_parentElement, _data,_eventHandler) {
   // Define all "constants" here
   this.margin = {
       top: 10,
-      right: 10,
+      right: 30,
       bottom: 30,
       left: 30
     },
@@ -31,7 +31,7 @@ WeatherVis = function(_parentElement, _data,_eventHandler) {
 WeatherVis.prototype.initVis = function() {
   var that = this;
   var colorDomain = ['total','registered','casual','female','male','commuter','leisure','visitor','local'];
-  var colorRange = ['darkgrey','yellowgreen','grey','#B40486','#2ECCFA','blue','grey','grey','orangered'];
+  var colorRange = ['black','yellowgreen','grey','#B40486','#2ECCFA','blue','grey','grey','orangered'];
 
   this.color = d3.scale.ordinal().domain(colorDomain).range(colorRange);
 
@@ -97,13 +97,13 @@ WeatherVis.prototype.updateVis = function() {
       .append("circle")
       .attr("class","circle");
 
-  this.svg.selectAll(".circle")
+  this.svg.selectAll(".circle")      
+      .transition()
+      .duration(300)
       .attr("r", function  (d) {return that.r(that.getRadius(d))})
       .attr("cx",function (d) {return that.x(d.x)})
       .attr("cy",function (d) {return that.y(d.y)})
-      .style("fill", function (d) {return that.color(d.type)})
-      .transition()
-      .duration(300);
+      .style("fill", function (d) {return that.color(d.type)});
       
       // .style("stroke", function (d) {return that.color(d.type)})
       // .style("stroke-width", "3px");
@@ -161,7 +161,7 @@ WeatherVis.prototype.filterAndAggregate = function(_filter) {
   var res0 = res.map(function (d) {
     return {
       type: that.dom[0],
-      x: d.TMAX,
+      x: d.TMIN,
       y: d.AWND,
       value: d[that.dom[0]]}
       });
@@ -170,7 +170,7 @@ WeatherVis.prototype.filterAndAggregate = function(_filter) {
     res1 = res.map(function (d) {
       return {
         type: that.dom[1],
-        x: d.TMAX,
+        x: d.TMIN,
         y: d.AWND,
         value: d[that.dom[1]]}
         });

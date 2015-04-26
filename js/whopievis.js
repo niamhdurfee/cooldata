@@ -89,7 +89,6 @@ WhoPieVis.prototype.updateVis = function() {
       .on('mouseover', this.tip.show)
       .on('mouseout', this.tip.hide)
       .on('click', function(d) {
-      	console.log(that.dom)
       // Trigger selectionChanged event. You'd need to account for filtering by time AND type
       $(that.eventHandler).trigger("typeChanged", that.dom)});
 

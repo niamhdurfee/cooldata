@@ -5,7 +5,7 @@ trips =  [re.split(',',line[:-2]) for line in open('../trips.min.csv','r')]
 header = trips.pop(0)
 stations = [re.split(',',line[:-2]) for line in open('../stations.csv')]
 stations = {int(station[0]):station[1:] for station in stations[1:]}
-hood = ['Allston', 'Kendall', 'Fenway/Kenmore', 'Cambridge', 'Fenway', 'South Boston', 'South End', 'Central Square', 'Seaport', 'Downtown', 'Charlestown', 'Brookline', 'East Cambridge', 'West End', 'Dudley Square', 'North Cambridge', 'Back Bay', 'Harvard Square', 'Somerville', 'Porter Square', 'Medford']
+hood = ['Allston','Kendall','Fenway/Kenmore','Cambridge','Fenway','South Boston','South End','Central Square', 'Seaport', 'Downtown', 'Charlestown','Brookline','West End','Dudley Square','Beacon Hill','Back Bay','Harvard Square','Somerville','Porter Square', 'Medford']
 path = "../matrix.js" 
 os.remove(path)
 datafile = open(path,'a')
