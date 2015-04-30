@@ -51,7 +51,8 @@
     </nav>
 
     <div class="container-fluid">
-
+    
+          <div id="formVis"></div>
           <div id="chordVis"></div>
 
     </div><!-- /.container -->
@@ -63,7 +64,7 @@
 <script src="libs/Polyline.encoded.js"></script>
 <script src="libs/token.js"></script>
 <script src="js/chordvis.js"></script>
-<script src="js/timevis.js"></script>
+<script src="js/formvis.js"></script>
 <script src="data/matrix.js"></script>
 <script>
 // Create a map in the div #map
@@ -88,12 +89,13 @@ $(function() {
       var MyEventHandler = {};
 
       // Instantiate all Vis Objects here
-      var chordVis = new ChordVis(d3.select("#chordVis"),stationData,hoodData, MyEventHandler); 
+      var chordVis = new ChordVis(d3.select("#chordVis"),stationData,hoodData, MyEventHandler);
+      var formVis = new FormVis(d3.select("#formVis"), MyEventHandler); 
      // var timeVis = new TimeVis(d3.select("#timeVis"),MyEventHandler);
 
       // Bind the eventHandler to the Vis Objects
-      $(MyEventHandler).bind("selectionChanged", function(event, from, to, status) {
-        // age_vis.onSelectionChange(from, to, status);
+      $(MyEventHandler).bind("selectionChanged", function(event, selected) {
+        chordVis.onSelectionChange(selected);
       });
     };
 

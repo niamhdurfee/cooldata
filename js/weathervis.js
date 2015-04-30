@@ -10,7 +10,8 @@ WeatherVis = function(_parentElement, _data,_eventHandler) {
   this.data = _data;
   this.eventHandler = _eventHandler;
   this.displayData = [];
-  this.dom = ["total"];
+  this.dom = ["total","total"];
+  this.averages = {"registered":.7,"local":.91,"male":0.75,"commuter":.61};
   this.filter = null;
   // Define all "constants" here
   this.margin = {
@@ -31,7 +32,7 @@ WeatherVis = function(_parentElement, _data,_eventHandler) {
 WeatherVis.prototype.initVis = function() {
   var that = this;
   var colorDomain = ['total','registered','casual','female','male','commuter','leisure','visitor','local'];
-  var colorRange = ['black','yellowgreen','grey','#B40486','#2ECCFA','blue','grey','grey','orangered'];
+  var colorRange = ['black','yellowgreen','orangered','#B40486','#2ECCFA','blue','yellow','red','navy'];
 
   this.color = d3.scale.ordinal().domain(colorDomain).range(colorRange);
 
@@ -80,9 +81,14 @@ WeatherVis.prototype.wrangleData = function(_filterFunction) {
 WeatherVis.prototype.updateVis = function() {
   var that = this;
 
+  function getDom(val) {
+    return [0.8*val, 1.2*val]
+  };
+
   this.x.domain(d3.extent(this.displayData, function (d) { return d.x}));
   this.y.domain(d3.extent(this.displayData, function (d) { return d.y}));
   this.r.domain(d3.extent(this.displayData, that.getRadius));
+  this.colorScale = d3.scale.linear().domain(getDom(that.averages[that.dom[0]])).range([that.color(that.dom[0]),that.color(that.dom[1])])
 
   this.svg.select(".y.axis")
     .call(this.yAxis);
@@ -103,7 +109,7 @@ WeatherVis.prototype.updateVis = function() {
       .attr("r", function  (d) {return that.r(that.getRadius(d))})
       .attr("cx",function (d) {return that.x(d.x)})
       .attr("cy",function (d) {return that.y(d.y)})
-      .style("fill", function (d) {return that.color(d.type)});
+      .style("fill", function (d) {return that.colorScale(d.value1/(d.value1+d.value2))});
       
       // .style("stroke", function (d) {return that.color(d.type)})
       // .style("stroke-width", "3px");
@@ -159,26 +165,28 @@ WeatherVis.prototype.filterAndAggregate = function(_filter) {
   
   var res = this.data.filter(this.filter).filter(function(d) {return d.total != 0; });
   var res0 = res.map(function (d) {
-    return {
-      type: that.dom[0],
-      x: d.TMIN,
-      y: d.AWND,
-      value: d[that.dom[0]]}
-      });
-  var res1 = [];
-  if (that.dom[0] != 'total') {
-    res1 = res.map(function (d) {
+    if (that.dom[0] == 'total') {
       return {
-        type: that.dom[1],
+        date: d.date,
         x: d.TMIN,
         y: d.AWND,
-        value: d[that.dom[1]]}
-        });
-  }
-  return res0.concat(res1);
-  };
+        value1: d.total,
+        value2: 0
+      }
+    } else {
+      return {
+        date: d.date,
+        x: d.TMIN,
+        y: d.AWND,
+        value1: d[that.dom[0]],
+        value2: d[that.dom[1]]
+      }
+    }
+  });
+  return res0;
+};
 
 
 WeatherVis.prototype.getRadius = function(d) {
-  return Math.sqrt(d.value/Math.PI);
+  return Math.sqrt((d.value1+d.value2)/Math.PI);
 }
