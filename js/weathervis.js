@@ -183,7 +183,9 @@ WeatherVis.prototype.filterAndAggregate = function(_filter) {
         date: d.date,
         x: d.TMIN,
         y: d.AWND,
+        type1: "Total",
         value1: d.total,
+        type2: null,
         value2: 0
       }
     } else {
@@ -191,7 +193,9 @@ WeatherVis.prototype.filterAndAggregate = function(_filter) {
         date: d.date,
         x: d.TMIN,
         y: d.AWND,
+        type1: that.dom[0],
         value1: d[that.dom[0]],
+        type2: that.dom[1],
         value2: d[that.dom[1]]
       }
     }
