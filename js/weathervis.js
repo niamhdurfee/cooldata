@@ -66,6 +66,16 @@ WeatherVis.prototype.initVis = function() {
       .attr("class", "y axis")
       .attr("transform", "translate("+this.margin.left+",0)");
 
+  this.tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    console.log(d);
+    return "<strong>"+d.x+"</strong> <br><small>slabading</small></span>";
+  })
+
+  this.svg.call(this.tip);
+
   // // filter, aggregate, modify data
   this.wrangleData(null);
 
@@ -95,16 +105,19 @@ WeatherVis.prototype.updateVis = function() {
 
   circles.enter()
       .append("circle")
-      .attr("class","circle");
+      .attr("class","circle")
+      .on('mouseover', this.tip.show)
+      .on("mousemove", function(){return that.tip.style("top", (event.pageY-75)+"px").style("left",(event.pageX-43)+"px");})
+      .on('mouseout', this.tip.hide);
 
-  this.svg.selectAll(".circle")      
+  this.svg.selectAll(".circle")
       .transition()
       .duration(300)
       .attr("r", function  (d) {return that.r(that.getRadius(d))})
       .attr("cx",function (d) {return that.x(d.x)})
       .attr("cy",function (d) {return that.y(d.y)})
       .style("fill", function (d) {return that.color(d.type)});
-      
+
       // .style("stroke", function (d) {return that.color(d.type)})
       // .style("stroke-width", "3px");
 
@@ -156,7 +169,7 @@ WeatherVis.prototype.filterAndAggregate = function(_filter) {
   } else {
     this.filter = filter;
   }
-  
+
   var res = this.data.filter(this.filter).filter(function(d) {return d.total != 0; });
   var res0 = res.map(function (d) {
     return {

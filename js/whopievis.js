@@ -87,6 +87,7 @@ WhoPieVis.prototype.updateVis = function() {
       .attr("transform","translate("+this.width/2+","+this.height/2+")")
       .style("fill", function(d) { return that.color(d.data.type); })
       .on('mouseover', this.tip.show)
+      .on("mousemove", function(){return that.tip.style("top", (event.pageY-75)+"px").style("left",(event.pageX-88)+"px");})
       .on('mouseout', this.tip.hide)
       .on('click', function(d) {
       // Trigger selectionChanged event. You'd need to account for filtering by time AND type
@@ -102,6 +103,8 @@ WhoPieVis.prototype.updateVis = function() {
       .style("fill", "white")
       .style("font-size", "14px")
       .style("font-weight", "bold")
+      .on('mouseover', this.tip.show)
+      .on("mousemove", function(){return that.tip.style("top", (event.pageY-75)+"px").style("left",(event.pageX-88)+"px");})
       .text(function(d) { return d.data.type; });
 
   g.exit().remove()
