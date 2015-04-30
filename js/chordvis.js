@@ -93,7 +93,7 @@ ChordVis.prototype.updateVis = function() {
 
     // Add a mouseover title.
     group.append("title").text(function(d, i) {
-        return that.neighborhoods[i].name + ": " + formatPercent(d.value) + " of origins";
+        return that.neighborhoods[i].name + ": " + d.value + " of origins";
     });
     
     group.append("svg:text")
@@ -135,7 +135,7 @@ ChordVis.prototype.updateVis = function() {
      + ": " + formatPercent(d.source.value)
      + "\n" + that.neighborhoods[d.target.index].name
      + " → " + that.neighborhoods[d.source.index].name
-     + ": " + formatPercent(d.target.value);
+     + ": " + d.target.value;
      });
     
     function mouseover(d, i) {
@@ -175,14 +175,7 @@ ChordVis.prototype.onSelectionChange = function() {
 
 ChordVis.prototype.filterAndAggregate = function(_filter) {
   // Set filter to a function that accepts all items
-  var filter = function() {
-    return true;
-  }
-  if (_filter != null) {
-    filter = _filter;
-  }
-
-  var that = this;
+  var res;
 
 //  return res;
 }
