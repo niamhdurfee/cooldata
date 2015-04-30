@@ -81,7 +81,7 @@ ChordVis.prototype.initVis = function() {
     group.append("title").text(function(d, i) {
         return that.neighborhoods[i].name + ": " + formatPercent(d.value/that.displayData.total) + " of origins";
     });
-    
+
     group.append("svg:text")
         .attr("dy", ".35em")
         .attr("text-anchor", function(d) {return ((d.startAngle + d.endAngle) / 2) > Math.PI ? "end" : null; })
@@ -96,7 +96,7 @@ ChordVis.prototype.initVis = function() {
         .style("font-size","14px")
         .style("fill", "black")
         .style("z-index", "10000")
-    
+
     // Add the group arc.
     var groupPath = group.append("path")
     .attr("id", function(d, i) { return "group" + i; })
@@ -116,14 +116,14 @@ ChordVis.prototype.initVis = function() {
      + "\n" + that.neighborhoods[d.target.index].name
      + " → " + that.neighborhoods[d.source.index].name
      + ": " + d.target.value;
-     });    
-    
+     });
+
 }
 
 ChordVis.prototype.wrangleData = function() {
     this.displayData = this.filterAndAggregate();
-    
- 
+
+
 }
 
 ChordVis.prototype.updateVis = function() {
@@ -158,15 +158,17 @@ ChordVis.prototype.updateVis = function() {
         .style("fill", "black")
         .style("z-index", "10000");
 
-    this.svg.select("path").attr("d", this.arc);
+    this.svg.selectAll("path").data(this.layout.groups).attr("d", this.arc);
 
+    console.log(this.layout.chords());
     // Add the chords.
     var chord = this.svg.selectAll(".chord")
     .data(this.layout.chords)
-    .attr("d", this.path);
+    .attr("d", this.path)
+    .style("fill", function(d) { return that.neighborhoods[d.source.index].color; });
 
     group.exit().remove();
-    
+
     function mouseover(d, i) {
         chord.classed("fade", function(p) {
         return p.source.index != i
@@ -176,7 +178,7 @@ ChordVis.prototype.updateVis = function() {
     function mouseout(d, i) {
         chord.classed("fade", function(p) { return 0});
     }
- 
+
 }
 
 /**
