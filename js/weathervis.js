@@ -96,7 +96,7 @@ WeatherVis.prototype.updateVis = function() {
   this.x.domain(d3.extent(this.displayData, function (d) { return d.x}));
   this.y.domain(d3.extent(this.displayData, function (d) { return d.y}));
   this.r.domain(d3.extent(this.displayData, that.getRadius));
-  this.colorScale = d3.scale.linear().domain(getDom(that.averages[that.dom[0]])).range([that.color(that.dom[0]),that.color(that.dom[1])])
+  this.colorScale = d3.scale.linear().domain(getDom(that.averages[that.dom[0]])).range([that.color(that.dom[1]),that.color(that.dom[0])])
 
   this.svg.select(".y.axis")
     .call(this.yAxis);
@@ -125,10 +125,8 @@ WeatherVis.prototype.updateVis = function() {
       .attr("r", function  (d) {return that.r(that.getRadius(d))})
       .attr("cx",function (d) {return that.x(d.x)})
       .attr("cy",function (d) {return that.y(d.y)})
-      .style("fill", function (d) {return that.colorScale(d.value1/(d.value1+d.value2))});
-
-      // .style("stroke", function (d) {return that.color(d.type)})
-      // .style("stroke-width", "3px");
+      .style("fill", function (d) { return that.colorScale(d.value1/(d.value1+d.value2))})
+      .style("stroke-width", "3px");
 
   circles.exit().remove();
 }
