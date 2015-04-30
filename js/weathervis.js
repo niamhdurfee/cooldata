@@ -32,7 +32,7 @@ WeatherVis = function(_parentElement, _data,_eventHandler) {
 WeatherVis.prototype.initVis = function() {
   var that = this;
   var formatDate = d3.time.format("%a %b %_d, %Y");
-  
+
   this.color = d3.scale.ordinal().domain(colorDomain).range(colorRange);
 
   this.x = d3.scale.linear()
