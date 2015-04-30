@@ -31,6 +31,7 @@ WeatherVis = function(_parentElement, _data,_eventHandler) {
  */
 WeatherVis.prototype.initVis = function() {
   var that = this;
+  var formatDate = d3.time.format("%a %b %_d, %Y");
   var colorDomain = ['total','registered','casual','female','male','commuter','leisure','visitor','local'];
   var colorRange = ['black','yellowgreen','orangered','#B40486','#2ECCFA','blue','yellow','red','navy'];
 
@@ -68,11 +69,10 @@ WeatherVis.prototype.initVis = function() {
       .attr("transform", "translate("+this.margin.left+",0)");
 
   this.tip = d3.tip()
-  .attr('class', 'd3-tip')
+  .attr('class', 'd3-tip weather-tip')
   .offset([-10, 0])
   .html(function(d) {
-    console.log(d);
-    return "<strong>"+d.x+"</strong> <br><small>slabading</small></span>";
+    return "<strong>"+formatDate(d.date)+"</strong> <br><small>"+d.value1+" " +d.type1+"</small> <small>"+d.value2+" " +d.type2+"</small>";
   })
 
   this.svg.call(this.tip);
@@ -113,7 +113,12 @@ WeatherVis.prototype.updateVis = function() {
       .append("circle")
       .attr("class","circle")
       .on('mouseover', this.tip.show)
-      .on("mousemove", function(){return that.tip.style("top", (event.pageY-75)+"px").style("left",(event.pageX-43)+"px");})
+      .on("mousemove", function(){if (window.innerWidth - event.pageX - $('.weather-tip').width()/2 > 20) {
+        return that.tip.style("top", (event.pageY-75)+"px").style("left",(event.pageX-$('.weather-tip').width()/2 - 10)+"px");
+      }
+      else {
+        return that.tip.style("top", (event.pageY-75)+"px").style("left",(event.pageX-$('.weather-tip').width() - 10)+"px");
+      }})
       .on('mouseout', this.tip.hide);
 
   this.svg.selectAll(".circle")
