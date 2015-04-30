@@ -31,9 +31,7 @@ WeatherVis = function(_parentElement, _data,_eventHandler) {
  */
 WeatherVis.prototype.initVis = function() {
   var that = this;
-  var colorDomain = ['total','registered','casual','female','male','commuter','leisure','visitor','local'];
-  var colorRange = ['black','yellowgreen','orangered','#B40486','#2ECCFA','blue','yellow','red','navy'];
-
+ 
   this.color = d3.scale.ordinal().domain(colorDomain).range(colorRange);
 
   this.x = d3.scale.linear()

@@ -158,20 +158,14 @@ ChordVis.prototype.updateVis = function() {
         .style("fill", "black")
         .style("z-index", "10000");
 
-    group.select("path")
-    .enter().append("path")
-    .attr("id", function(d, i) { return "group" + i; })
-    .style("fill", function(d, i) { return that.neighborhoods[i].color; });
-
-
-    group.selectAll("path").attr("d", this.arc);
+    this.svg.select("path").attr("d", this.arc);
 
     // Add the chords.
     var chord = this.svg.selectAll(".chord")
     .data(this.layout.chords)
     .attr("d", this.path);
 
-
+    group.exit().remove();
     
     function mouseover(d, i) {
         chord.classed("fade", function(p) {
@@ -210,7 +204,8 @@ ChordVis.prototype.onSelectionChange = function(d) {
     else if (that.display =='weekday') {
     	this.matrix = _matrixWeekdayData;
 
-    }
+    };
+    this.wrangleData();
     this.updateVis();
   }
 }
