@@ -30,9 +30,6 @@ StackedVis = function(_parentElement, _data, _eventHandler) {
 StackedVis.prototype.initVis = function() {
   var that = this;
 
-  var colorDomain = ['total','registered','casual','female','male','commuter','leisure','visitor','local'];
-  var colorRange = ['black','yellowgreen','grey','#B40486','#2ECCFA','blue','grey','grey','orangered'];
-
   this.color = d3.scale.ordinal().domain(colorDomain).range(colorRange);
 
   this.x = d3.time.scale()
