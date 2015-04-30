@@ -132,9 +132,9 @@ $(function() {
           pieVisRegistered.onSelectionChange(from,to,status);
       });
 
-      $(MyEventHandler).bind("typeChanged", function(event, dom1, dom2) {
-          stackedVis.onTypeChange([dom1, dom2]);
-          weatherVis.onTypeChange([dom1, dom2]);
+      $(MyEventHandler).bind("typeChanged", function(event, dom1, dom2,type) {
+          stackedVis.onTypeChange([dom1, dom2,type]);
+          weatherVis.onTypeChange([dom1, dom2,type]);
       });
     };
 

@@ -22,6 +22,10 @@ body {
  {
     font: 13px;
 }
+#formVis {
+  width: 100%;
+  height:50px;
+}
 #stackedVis, #weatherVis{
   height: 350px;
 }
