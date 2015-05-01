@@ -54,7 +54,7 @@ WhoPieVis.prototype.initVis = function() {
   .attr('class', 'd3-tip')
   .offset([-10, 0])
   .html(function(d) {
-    return "<strong>"+formatPercent(d.data.percent)+"</strong> <br><small>"+formatNum(d.data.value)+" of "+formatNum(d.data.total)+" trips</small></span>";
+    return "<span class='highlight'>"+formatPercent(d.data.percent)+"</span><br><small>"+formatNum(d.data.value)+" of "+formatNum(d.data.total)+" trips</small></span>";
   })
 
   this.svg.call(this.tip);
@@ -157,8 +157,7 @@ WhoPieVis.prototype.filterAndAggregate = function(_filter) {
       type: d.type,
       value: d.value,
       percent: d.value/t,
-      total: t
-    }
+      total: t    }
   });
   return res;
 }

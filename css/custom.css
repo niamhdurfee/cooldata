@@ -22,6 +22,9 @@ body {
  {
     font: 13px;
 }
+.highlight {
+  color:red;
+}
 #formVis {
   width: 100%;
   height:50px;

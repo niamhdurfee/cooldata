@@ -111,9 +111,9 @@ StackedVis.prototype.updateVis = function() {
       .style("fill", function(d) { return that.color(d.type); })
       .style("opacity", 0.5);
 
-  user.select('.area')
-      .on("mouseover", this.mouseover)
-  	  .on("mouseout", this.mouseout);
+  // user.select('.area')
+  //     .on("mouseover", this.mouseover)
+  // 	  .on("mouseout", this.mouseout);
 
   var line = this.svg.selectAll(".userline")
   	  .data(this.displayData);
@@ -186,12 +186,12 @@ StackedVis.prototype.filterAndAggregate = function(_filter) {
   return res;
 }
 
-StackedVis.prototype.mouseover = function() {
-  d3.selectAll(".area").style("opacity",0.3);
-  d3.selectAll(".line").style("stroke","2px");
-  d3.select(d3.event.target).style("opacity",0.8).style("stroke","5px");
-}
-StackedVis.prototype.mouseout = function() {
-  d3.selectAll(".area").style("opacity",0.6)
-  d3.selectAll(".line").style("stroke","2px")
-}
+// StackedVis.prototype.mouseover = function() {
+//   d3.selectAll(".area").style("opacity",0.3);
+//   d3.selectAll(".line").style("stroke","2px");
+//   d3.select(d3.event.target).style("opacity",0.8).style("stroke","5px");
+// }
+// StackedVis.prototype.mouseout = function() {
+//   d3.selectAll(".area").style("opacity",0.6)
+//   d3.selectAll(".line").style("stroke","2px")
+// }

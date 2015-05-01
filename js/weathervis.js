@@ -11,7 +11,7 @@ WeatherVis = function(_parentElement, _data,_eventHandler) {
   this.eventHandler = _eventHandler;
   this.displayData = [];
   this.dom = ["total","total"];
-  this.averages = {"registered":.7,"local":.91,"male":0.75,"commuter":.61};
+  this.averages = {"registered":0.7,"local":.91,"male":0.75,"commuter":.61};
   this.filter = null;
   // Define all "constants" here
   this.margin = {
@@ -31,7 +31,7 @@ WeatherVis = function(_parentElement, _data,_eventHandler) {
  */
 WeatherVis.prototype.initVis = function() {
   var that = this;
-  var formatDate = d3.time.format("%a %b %_d, %Y");
+  var formatDate = d3.time.format("%A %b %_d, %Y");
 
   this.color = d3.scale.ordinal().domain(colorDomain).range(colorRange);
 
@@ -70,7 +70,20 @@ WeatherVis.prototype.initVis = function() {
   .attr('class', 'd3-tip weather-tip')
   .offset([-10, 0])
   .html(function(d) {
-    return "<strong>"+formatDate(d.date)+"</strong> <br><small>"+d.value1+" " +d.type1+"</small> <small>"+d.value2+" " +d.type2+"</small>";
+    var s,t2;
+    if (d.note == '') {
+      s = ''
+    } else {
+      s = "<br>"+d.note
+    } 
+    if (!d.type2) {
+      t2 = '</small>'
+    } else {
+      t2 = " <span class='highlight'>"+d.value2+"</span> " +d.type2+"</small>";
+    }
+    return "<strong>"+formatDate(d.date)+"</strong>"
+       +s+"<br><small><span class='highlight'>"+d.value1+"</span> " 
+       +d.type1+t2;
   })
 
   this.svg.call(this.tip);
@@ -90,7 +103,7 @@ WeatherVis.prototype.updateVis = function() {
   var that = this;
 
   function getDom(val) {
-    return [0.8*val, 1.2*val]
+    return [0.9*val, 1.1*val]
   };
 
   this.x.domain(d3.extent(this.displayData, function (d) { return d.x}));
@@ -183,21 +196,23 @@ WeatherVis.prototype.filterAndAggregate = function(_filter) {
       return {
         date: d.date,
         x: d.TMIN,
-        y: d.AWND,
-        type1: "Total",
+        y: d.TMAX,
+        type1: "total",
         value1: d.total,
         type2: null,
-        value2: 0
+        value2: 0,
+        note: d.note
       }
     } else {
       return {
         date: d.date,
         x: d.TMIN,
-        y: d.AWND,
+        y: d.TMAX,
         type1: that.dom[0],
         value1: d[that.dom[0]],
         type2: that.dom[1],
-        value2: d[that.dom[1]]
+        value2: d[that.dom[1]],
+        note: d.note
       }
     }
   });
