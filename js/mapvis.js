@@ -116,7 +116,7 @@ MapVis.prototype.updateVis = function() {
   this.color = d3.scale.linear().range(["red","grey","lightgreen"]).domain([0.45,0.5,0.55]);
     
   this.routeData.forEach(function(o) {
-        if (o.trips > 700) {
+        if (o.trips > 750) {
           var line = L.Polyline.fromEncoded(o.polyline, polyline_options).addTo(that.map);
           line.bindPopup(o.trips +' trips from ' + "ORIGIN" + ' to ' + "that.stationData[dest].fullname");
           line.on('mouseover', function(e) {
