@@ -74,6 +74,9 @@ StackedVis.prototype.initVis = function() {
       .attr("class", "y axis")
       .attr("transform", "translate("+this.margin.left+",0)");
 
+  this.focus = this.svg.append("g")
+    .append("line")
+    .attr("class","focus");
 
   // // filter, aggregate, modify data
   this.wrangleData(this.filter);
@@ -122,7 +125,7 @@ StackedVis.prototype.updateVis = function() {
   line.enter().append("g")
   	  .attr("class","userline")
   	  .append("path")
-	  .attr("class","line");
+	    .attr("class","line");
 
   line.select(".line")
   	  .attr("d",function (d) { return that.line(d.values)})
@@ -131,19 +134,6 @@ StackedVis.prototype.updateVis = function() {
   user.exit().remove();
   line.exit().remove();
 
-  this.focus = this.svg.append("g")
-      .attr("class", "focus")
-      .attr("width", this.width)
-      .attr("height", this.height)
-      .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")")
-      .style("fill", "none");
-
-  this.focus.append("circle")
-      .attr("r", 4.5);
-
-  this.focus.append("text")
-      .attr("x", 9)
-      .attr("dy", ".35em");
 
   this.svg.append("rect")
       .attr("class", "overlay")
@@ -154,7 +144,9 @@ StackedVis.prototype.updateVis = function() {
       .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
 
   $(".overlay").mousemove(function(event) {
-    var msg = formatDate(that.x.invert(event.pageX-that.margin.left-that.margin.padding));
+    var x = event.pageX-that.margin.left-that.margin.padding;
+    that.focus.attr("x1",x).attr("x2",x).attr("y1",0).attr("y2",that.height)
+    var msg = formatDate(that.x.invert(x));
     console.log(msg);
   });
 
