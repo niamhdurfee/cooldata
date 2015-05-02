@@ -16,7 +16,8 @@ StackedVis = function(_parentElement, _data, _eventHandler) {
       top: 10,
       right: 10,
       bottom: 30,
-      left: 30
+      left: 30,
+      padding: 45
     },
   this.width = this.parentElement.node().clientWidth - this.margin.left - this.margin.right,
   this.height =  this.parentElement.node().clientHeight- this.margin.top - this.margin.bottom;
@@ -88,10 +89,10 @@ StackedVis.prototype.wrangleData = function(_filterFunction) {
 StackedVis.prototype.updateVis = function() {
 
   var that = this;
-
+  var formatDate = d3.time.format("%b %_d, %Y")
   this.x.domain(d3.extent(that.displayData[0].values, function(d) { return d.date; }));
   this.y.domain([0,d3.max(that.displayData, function (d) { return d3.max(d.values, function (a) {return a.value})})]);
-  
+
   this.svg.select(".y.axis")
     .call(this.yAxis);
 
@@ -129,6 +130,34 @@ StackedVis.prototype.updateVis = function() {
 
   user.exit().remove();
   line.exit().remove();
+
+  this.focus = this.svg.append("g")
+      .attr("class", "focus")
+      .attr("width", this.width)
+      .attr("height", this.height)
+      .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")")
+      .style("fill", "none");
+
+  this.focus.append("circle")
+      .attr("r", 4.5);
+
+  this.focus.append("text")
+      .attr("x", 9)
+      .attr("dy", ".35em");
+
+  this.svg.append("rect")
+      .attr("class", "overlay")
+      .attr("width", this.width)
+      .attr("height", this.height)
+      .attr("fill",'none')
+      .attr("pointer-events", "all")
+      .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
+
+  $(".overlay").mousemove(function(event) {
+    var msg = formatDate(that.x.invert(event.pageX-that.margin.left-that.margin.padding));
+    console.log(msg);
+  });
+
 }
 
 /**
@@ -155,6 +184,17 @@ StackedVis.prototype.onTypeChange = function(_dom) {
   	this.updateVis();
   }
 }
+
+StackedVis.prototype.mousemove = function() {
+    var that = this;
+    this.parentElement
+        // i = bisectDate(data, x0, 1),
+        // d0 = data[i - 1],
+        // d1 = data[i],
+        // d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+    // this.focus.attr("transform", "translate(" + (this.width/2) + "," + (this.height/2) + ")");
+    // this.focus.select("text").text("YES");
+  }
 /*
  *
  * ==================================
