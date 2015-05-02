@@ -104,9 +104,8 @@ MapVis.prototype.updateVis = function() {
 
 
   var polyline_options = {
-      weight: 10,
       className: 'line',
-      color: 'black',
+      color: 'grey',
       opacity: 0.5
     };
     
@@ -117,7 +116,7 @@ MapVis.prototype.updateVis = function() {
   this.color = d3.scale.linear().range(["red","grey","lightgreen"]).domain([0.45,0.5,0.55]);
     
   this.routeData.forEach(function(o) {
-        if (o.trips > 300) {
+        if (o.trips > 700) {
           var line = L.Polyline.fromEncoded(o.polyline, polyline_options).addTo(that.map);
           line.bindPopup(o.trips +' trips from ' + "ORIGIN" + ' to ' + "that.stationData[dest].fullname");
           line.on('mouseover', function(e) {
@@ -134,8 +133,6 @@ MapVis.prototype.updateVis = function() {
            c = that.color(orig.overall.average.a/s);
         var circle = L.circle(orig.loc, r, {color: c, opacity: 1, fillOpacity: 0.8, className:'station',weight:2}).addTo(that.map).bindPopup(orig.fullname)
         .on('click', function() {
-//            EVENT HANDLER GOES HERE
-            
             that.display_station_info(o);
         });
     })
