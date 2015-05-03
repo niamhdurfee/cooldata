@@ -171,13 +171,22 @@ MapVis.prototype.getRadius = function(d) {
 MapVis.prototype.display_station_info = function(id)
 {
     var that = this;
-//    slide out menu from right if not already slid out
-
-    $('#station-info').click();
+ 
+    if ( ! ( $('#station-menu').hasClass('menu-open')))
+    {
+        var prev_width = $('#mapVis').width();
+        $('#mapVis').width(prev_width - 240);
+        $('#explore-button').hide();
+        
+        $('#station-menu').toggleClass('menu-open');
+        $('#station-menu').toggleClass('menu-active');  
+        
+    }
     
-    $('#station-name').html(that.stationData[id].toString());
 
-    
-//    use transition to display data
+    $(that.eventHandler).trigger("station-changed", id);   
+
+
+  
     
 }

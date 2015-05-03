@@ -10,6 +10,9 @@
     $.fn.jPushMenu = function(customOptions) {
         console.log(this);
         var o = $.extend({}, $.fn.jPushMenu.defaultOptions, customOptions);
+        
+        console.log("hi");
+        console.log(o);
 
         $('body').addClass(o.pushBodyClass);
 
@@ -18,19 +21,6 @@
 
         $(this).click(function(e) {
             
-//          console.log($('#mapVis').width());
-
-            var prev_width = $('#mapVis').width();
-            $('#mapVis').width(prev_width - 240);
-//            $('#mapVis').style("right", "0px");
-
-            $('#explore-button').hide();
-            
-//                        console.log($('#mapVis').width());
-
-
-//            $('#mapVis').height(.95 * (window.innerHeight-100));
-
             e.stopPropagation();
 
             var target     = '',
@@ -45,12 +35,7 @@
                 target         = '.cbp-spmenu-right';
                 push_direction = 'toleft';
             }
-            else if ($(this).is('.' + o.showTopClass)) {
-                target = '.cbp-spmenu-top';
-            }
-            else if ($(this).is('.' + o.showBottomClass)) {
-                target = '.cbp-spmenu-bottom';
-            }
+
 
             if (target == '') {
                 return;
@@ -85,19 +70,6 @@
                 jPushMenu.close(o);
              });     
 
-        // Close menu on clicking outside menu
-//        if (o.closeOnClickOutside) {
-//             $(document).click(function() {
-//                jPushMenu.close(o);
-//             });
-//         }
-
-//        // Close menu on clicking menu link
-//        if (o.closeOnClickLink) {
-//            $('.cbp-spmenu a').on('click',function() {
-//                jPushMenu.close(o);
-//            });
-//        }
     };
 
    /*
@@ -108,11 +80,7 @@
         pushBodyClass      : 'push-body',
         showLeftClass      : 'menu-left',
         showRightClass     : 'menu-right',
-        showTopClass       : 'menu-top',
-        showBottomClass    : 'menu-bottom',
         activeClass        : 'menu-active',
-        menuOpenClass      : 'menu-open',
-        closeOnClickOutside: true,
-        closeOnClickLink   : true
+        menuOpenClass      : 'menu-open'
     };
 })(jQuery);

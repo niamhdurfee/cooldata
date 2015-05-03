@@ -72,7 +72,7 @@
     
     <div id="close-menu"><span class="icon icon-delete"></span></div>
 </nav>
-<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right station-menu">
+<nav id="station-menu" class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right station-menu">
 	<h3>Station Info</h3><h5 id="station-name"></h5>
 
     
@@ -169,6 +169,8 @@
 <script src="libs/Polyline.encoded.js"></script>
 <script src="libs/token.js"></script>
 <script src="js/mapvis.js"></script>
+<script src="js/stationvis.js"></script>
+
 <!--<script src="js/timevis.js"></script>-->
 <script src="js/jquery.pulse.min.js"></script>
 <script src="js/jPushMenu.js"></script>
@@ -212,7 +214,15 @@ $(function() {
       // Instantiate all Vis Objects here
       var mapVis = new MapVis(d3.select("#mapVis"), stationData, routeData, MyEventHandler); 
 //      var timeVis = new TimeVis(d3.select("#timeVis"),MyEventHandler);
+        
+      var stationVis = new StationVis(d3.select("#stationVis"), stationData, routeData); 
 
+      // Bind the eventHandler to the Vis Objects
+      $(MyEventHandler).bind("station-changed", function(event, id) {
+         stationVis.onSelectionChange(id);
+      });
+        
+        
       // Bind the eventHandler to the Vis Objects
       $(MyEventHandler).bind("selectionChanged", function(event, from, to, status) {
         // age_vis.onSelectionChange(from, to, status);
