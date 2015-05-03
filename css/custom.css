@@ -32,6 +32,9 @@ body {
 #stackedVis, #weatherVis{
   height: 350px;
 }
+#whenVis {
+	height:500px;
+}
 .arc path {
   stroke: #fff;
 }

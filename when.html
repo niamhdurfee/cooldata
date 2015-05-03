@@ -52,24 +52,7 @@
 
     <div class="container-fluid">
 
-    <table width="100%">
-    <thead>
-      <tr>
-        <th width="25%"></th>
-        <th width="25%"></th>
-        <th width="25%"></th>
-        <th width="25%"></th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <tr>
-        <td colspan='2'><div id="stackedVis"></div></td>
-        <td colspan='2'><div id="weatherVis"></div></td>
-      </tr>
-
-    </tbody>
-    </table>
+      <div id="whenVis"></div>
 
 
     </div><!-- /.container -->
@@ -108,7 +91,7 @@ $(function() {
     var initVis = function() {
       var MyEventHandler = {};
       // Instantiate all Vis Objects here
-      var stackedVis = new WhenVis(d3.select("#stackedVis"), dateData, MyEventHandler);
+      var stackedVis = new WhenVis(d3.select("#whenVis"), dateData, MyEventHandler);
 
       // Bind the eventHandler to the Vis Objects
       $(MyEventHandler).bind("selectionChanged", function(event, from, to, status) {
@@ -131,9 +114,12 @@ $(function() {
     };
 
     var startHere = function() {
-      d3.json("data/stations.json", function(error, data) {
+      d3.csv("data/timeofdaydata.csv", function(error, data) {
         if (!error) {
-          dataLoaded(data);
+          dateData = data;
+          console.log(data);
+          // dataLoaded(data);
+          initVis();
         }
       });
     };

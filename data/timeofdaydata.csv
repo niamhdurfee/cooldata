@@ -1,4 +1,4 @@
-time,total,female,reg,leisure,dist,time,totalWeekend,femaleWeekend,regWeekend,leisureWeekend,distWeekend,timeWeekend
+timeofday,total,female,reg,leisure,dist,time,totalWeekend,femaleWeekend,regWeekend,leisureWeekend,distWeekend,timeWeekend
 0:00,5215,536,3096,2025,"9,591.31",110542,1234,121,608,573,"2,137.04",29377
 0:15,4551,443,2672,1694,"9,187.25",105616,1136,100,595,493,"2,029.58",24743
 0:30,4174,369,2326,1541,"7,600.16",90922,1051,93,532,399,"1,898.61",24801
