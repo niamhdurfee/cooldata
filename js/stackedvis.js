@@ -16,7 +16,8 @@ StackedVis = function(_parentElement, _data, _eventHandler) {
       top: 10,
       right: 10,
       bottom: 30,
-      left: 30
+      left: 30,
+      padding: 18
     },
   this.width = this.parentElement.node().clientWidth - this.margin.left - this.margin.right,
   this.height =  this.parentElement.node().clientHeight- this.margin.top - this.margin.bottom;
@@ -38,7 +39,6 @@ StackedVis.prototype.initVis = function() {
   this.y = d3.scale.linear()
     .range([that.height, that.margin.bottom]);
 
-
   this.xAxis = d3.svg.axis()
     .scale(this.x)
     .orient("bottom");
@@ -46,17 +46,18 @@ StackedVis.prototype.initVis = function() {
   this.yAxis = d3.svg.axis()
     .scale(this.y)
     .orient("left");
+  this.line = d3.svg.line()
+  	.interpolate("basis")
+    .defined(function(d) { return d.value != null; })
+    .x(function(d) { return that.x(d.date); })
+    .y(function(d) { return that.y(d.value); });
 
   this.area = d3.svg.area()
     .interpolate("basis")
+    .defined(this.line.defined())
     .x(function(d) { return that.x(d.date); })
-    .y0(function(d) { return that.y(0); })
+    .y0(that.y(0))
     .y1(function(d) { return that.y(d.value); });
-
-  this.line = d3.svg.line()
-  	.interpolate("basis")
-    .x(function(d) { return that.x(d.date); })
-    .y(function(d) { return that.y(d.value); })
 
   this.svg = this.parentElement.append("svg")
     .attr("width", this.width + this.margin.left + this.margin.right)
@@ -73,6 +74,21 @@ StackedVis.prototype.initVis = function() {
       .attr("class", "y axis")
       .attr("transform", "translate("+this.margin.left+",0)");
 
+  this.focus = this.svg.append("g")
+    .append("rect")
+    .attr("class","focus")
+    .attr("x",0)
+    .attr("y",that.margin.top)
+    .attr("height",that.height-that.margin.top)
+    .attr("width","2px")
+    .attr("fill","red")
+    .attr("display",'none');
+
+  this.focustext = this.svg.append("g").attr("class","focustext").attr("display","none")
+
+  this.focustext.append('text').attr("class","date").attr("stroke","red");
+  this.focustext.append('text').attr("class","value1").attr("stroke","black").attr("transform","translate(0,16)");
+  this.focustext.append('text').attr("class","value2").attr("stroke","black").attr("transform","translate(0,32)");
 
   // // filter, aggregate, modify data
   this.wrangleData(this.filter);
@@ -88,10 +104,14 @@ StackedVis.prototype.wrangleData = function(_filterFunction) {
 StackedVis.prototype.updateVis = function() {
 
   var that = this;
-
+  var formatDate = d3.time.format("%b %_d, %Y")
   this.x.domain(d3.extent(that.displayData[0].values, function(d) { return d.date; }));
-  this.y.domain([0,d3.max(that.displayData, function (d) { return d3.max(d.values, function (a) {return a.value})})]);
-  
+  this.y.domain([0,
+    d3.max([1.5*d3.max(that.displayData, function (d) { 
+      return d3.max(d.values, function (a) {return a.value})
+    }),3000])
+  ]);
+
   this.svg.select(".y.axis")
     .call(this.yAxis);
 
@@ -121,7 +141,7 @@ StackedVis.prototype.updateVis = function() {
   line.enter().append("g")
   	  .attr("class","userline")
   	  .append("path")
-	  .attr("class","line");
+	    .attr("class","line");
 
   line.select(".line")
   	  .attr("d",function (d) { return that.line(d.values)})
@@ -129,6 +149,27 @@ StackedVis.prototype.updateVis = function() {
 
   user.exit().remove();
   line.exit().remove();
+
+  this.svg.append("rect")
+      .attr("class", "overlay")
+      .attr("width", this.width)
+      .attr("height", this.height)
+      .attr("fill",'none')
+      .attr("pointer-events", "all")
+      .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
+
+  $(".overlay").mousemove(function (event) {
+    var x = event.pageX-that.margin.left-that.margin.padding;
+    that.focus.attr("x",x).attr("display",null)
+    that.focustext.attr("transform", "translate("+(x+10)+",50)").attr("display",null);
+    $(that.eventHandler).trigger("hoverChanged", that.x.invert(x))
+  })
+
+  $(".overlay").mouseout(function () {
+    that.focus.attr("display","none");
+    that.focustext.attr("display","none")
+  });
+
 }
 
 /**
@@ -155,6 +196,44 @@ StackedVis.prototype.onTypeChange = function(_dom) {
   	this.updateVis();
   }
 }
+
+StackedVis.prototype.onHoverChange = function(date) {
+  var that = this;
+
+  var formatDate = d3.time.format("%b %_d, %Y")
+
+  if (date) {
+    var sel = this.displayData.map(function (a) {
+        var e = a.values.filter(function (d) {
+            return that.checkDate(d.date,date) })
+        return {
+          type: a.type,
+          value: e[0].value,
+          date: e[0].date
+        }
+    });
+    var myStr = ["",""];
+    sel.forEach(function (d,i) {
+      if (d.value != null) {
+        myStr[i] = d.value + " " + d.type;
+      }
+    })
+    that.focustext.select(".date").text(formatDate(sel[0].date));
+    that.focustext.select(".value1").text(myStr[0]);
+    that.focustext.select(".value2").text(myStr[1]);
+  } else {
+      console.log("its null, bitches")
+  }
+}
+
+StackedVis.prototype.mousemove = function() {
+        // i = bisectDate(data, x0, 1),
+        // d0 = data[i - 1],
+        // d1 = data[i],
+        // d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+    // this.focus.attr("transform", "translate(" + (this.width/2) + "," + (this.height/2) + ")");
+    // this.focus.select("text").text("YES");
+  }
 /*
  *
  * ==================================
@@ -179,11 +258,17 @@ StackedVis.prototype.filterAndAggregate = function(_filter) {
     return {
       type: t,
       values: res.map(function (d) {
-        return {date: d.date, value: d[t]}
+        return {date: d.date, value: isNaN(d[t]) ? null : d[t]}
       })
     }
   });
   return res;
+}
+
+StackedVis.prototype.checkDate = function(date1, date2) {
+  return ((date1.getDate() == date2.getDate()) 
+       && (date1.getFullYear() ==date2.getFullYear()) 
+       && (date1.getMonth() == date2.getMonth()))
 }
 
 // StackedVis.prototype.mouseover = function() {

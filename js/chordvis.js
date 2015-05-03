@@ -145,6 +145,7 @@ ChordVis.prototype.updateVis = function() {
     });
 
     group.select("text").attr("dy", ".35em")
+        .transition()
         .attr("text-anchor", function(d) {return ((d.startAngle + d.endAngle) / 2) > Math.PI ? "end" : null; })
         .attr("transform", function(d) {
         return "rotate(" + (((d.startAngle + d.endAngle) / 2) * 180 / Math.PI - 90) + ")"

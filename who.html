@@ -65,13 +65,14 @@
     <tbody>
       <tr>
         <td colspan='2'><div id="stackedVis"></div></td>
-        <td colspan='2'><div id="weatherVis"></div></td>
+        <td><div id="weatherVis"></div></td>
+        <td><div id="ageVis"></div></td>
       </tr>
       <tr>
         <td><div id="pieVis1" class="pievis"></div></td>
         <td><div id="pieVis2" class="pievis"></div></td>
-        <td><div id="pieVis3" class="pievis"></div></td>
-        <td><div id="pieVis4" class="pievis"></div></td>
+        <td style="background-color:rgba(173, 255, 47,0.3)"><div id="pieVis3" class="pievis"></div></td>
+        <td style="background-color:rgba(173, 255, 47,0.3)"><div id="pieVis4" class="pievis"></div></td>
       </tr>
       <tr><td colspan='4'><div id="yearBrush" class="time"></div></td>
       </tr>
@@ -86,13 +87,13 @@
 <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.js'></script>
 <script src="libs/d3.min.js"></script>
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
-<script src="libs/Polyline.encoded.js"></script>
 <script src="libs/token.js"></script>
 <script src="data/colorVariables.js"></script>
 <script src="js/weathervis.js"></script>
 <script src="js/stackedvis.js"></script>
 <script src="js/whopievis.js"></script>
 <script src="js/yearbrush.js"></script>
+<script src="js/agevis.js"></script>
 <script>
 // Create a map in the div #map
 
@@ -110,12 +111,14 @@ $(function() {
     // variables keeping global knowledge of the data
     var dateData;
     var brushData;
+    var ageData;
 
     // call this function after Data is loaded, reformatted and bound to the variables
     var initVis = function() {
       var MyEventHandler = {};
       // Instantiate all Vis Objects here
       var weatherVis = new WeatherVis(d3.select("#weatherVis"), dateData, MyEventHandler); 
+      var ageVis = new AgeVis(d3.select("#ageVis"), ageData, MyEventHandler); 
       var stackedVis = new StackedVis(d3.select("#stackedVis"), dateData, MyEventHandler); 
       var yearBrush = new YearBrush(d3.select("#yearBrush"), brushData, MyEventHandler); 
       var pieVisRegistered = new WhoPieVis(d3.select("#pieVis1"), dateData, ["registered","casual"],MyEventHandler); 
@@ -125,22 +128,28 @@ $(function() {
 
       // Bind the eventHandler to the Vis Objects
       $(MyEventHandler).bind("selectionChanged", function(event, from, to, status) {
-          stackedVis.onSelectionChange(from,to,status);
-          weatherVis.onSelectionChange(from,to,status);
           pieVisLocal.onSelectionChange(from,to,status);
           pieVisType.onSelectionChange(from,to,status);
           pieVisGender.onSelectionChange(from,to,status);
           pieVisRegistered.onSelectionChange(from,to,status);
+          ageVis.onSelectionChange(from,to,status);
+          stackedVis.onSelectionChange(from,to,status);
+          weatherVis.onSelectionChange(from,to,status);
+
       });
 
       $(MyEventHandler).bind("typeChanged", function(event, dom1, dom2,type) {
           stackedVis.onTypeChange([dom1, dom2,type]);
           weatherVis.onTypeChange([dom1, dom2,type]);
       });
+      $(MyEventHandler).bind("hoverChanged", function(event, date) {
+          stackedVis.onHoverChange(date);
+          // weatherVis.onHoverChange(date);
+      });
     };
 
     // call this function after both files are loaded -- error should be "null" if no error
-    var dataLoaded = function(_data) {
+    var dataLoaded = function(_data,_ageData) {
         dateData = _data.map(function (d) { 
           return {
             AWND: parseFloat(d.AWND)*0.223694,
@@ -161,14 +170,32 @@ $(function() {
             total: parseInt(d.total)
           }
         });
-        brushData = dateData.map(function (d) { return d.date });
+        brushData = dateData.map(function (d) { return {date: d.date, total: d.total} });
+        ageData = _ageData.map(function (d) {
+          var res = d3.range(81).map(function () { return 0});
+          d3.entries(d).forEach(function (e) {
+            if (e.key !== "date") {
+              var k = parseInt(e.key);
+              var v = parseInt(e.value);
+              res[k] = v;
+            }
+          })
+          return {
+            date: parseDate(d.date),
+            ages: res
+          }
+        })
         initVis();
     };
 
     var startHere = function() {
-      d3.csv("data/breakdown.csv", function(error, data) {
+      d3.csv("data/breakdown.csv", function (error, data) {
         if (!error) {
-          dataLoaded(data);
+          d3.csv("data/ages.csv", function (errorAges, ageData) {
+            if (!errorAges) {
+              dataLoaded(data,ageData);
+            }
+          })
         }
       });
     };

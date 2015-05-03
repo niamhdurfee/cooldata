@@ -104,9 +104,9 @@ MapVis.prototype.updateVis = function() {
 
 
   var polyline_options = {
-      weight: 2,
       className: 'line',
-      color: 'grey'
+      color: 'grey',
+      opacity: 0.5
     };
     
   var stations = d3.keys(this.stationData);
@@ -115,29 +115,24 @@ MapVis.prototype.updateVis = function() {
     
   this.color = d3.scale.linear().range(["red","grey","lightgreen"]).domain([0.45,0.5,0.55]);
     
-  stations.forEach(function(o) {
-      var orig = that.stationData[o],
-          dests = d3.keys(orig.routes);
-        dests.forEach(function (dest) {
-        if (orig.routes[dest] > 500) {     
-          var line = L.polyline([orig.loc,that.stationData[dest].loc], polyline_options).addTo(that.map);
-          line.bindPopup(orig.routes[dest] + ' trips from ' + orig.fullname + ' to ' + that.stationData[dest].fullname);
+  this.routeData.forEach(function(o) {
+        if (o.trips > 750) {
+          var line = L.Polyline.fromEncoded(o.polyline, polyline_options).addTo(that.map);
+          line.bindPopup(o.trips +' trips from ' + "ORIGIN" + ' to ' + "that.stationData[dest].fullname");
           line.on('mouseover', function(e) {
             e.target.openPopup();
           })
         }
       });
-    });
+
     
     stations.forEach(function (o) {
        var orig = that.stationData[o],
            s = orig.overall.average.a+orig.overall.average.d,
            r = that.getRadius(that.areaScale(s)),
            c = that.color(orig.overall.average.a/s);
-        var circle = L.circle(orig.loc, r, {color: c, opacity: 1, fillOpacity: 0.5, className:'station',weight:2}).addTo(that.map).bindPopup(orig.fullname)
+        var circle = L.circle(orig.loc, r, {color: c, opacity: 1, fillOpacity: 0.8, className:'station',weight:2}).addTo(that.map).bindPopup(orig.fullname)
         .on('click', function() {
-//            EVENT HANDLER GOES HERE
-            
             that.display_station_info(o);
         });
     })

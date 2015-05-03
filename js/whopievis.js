@@ -102,6 +102,7 @@ WhoPieVis.prototype.updateVis = function() {
       .style("font-size", "14px")
       .style("font-weight", "bold")
       .on('mouseover', this.tip.show)
+      .on('mouseout', this.tip.hide)
       .on("mousemove", function(){return that.tip.style("top", (event.pageY-75)+"px").style("left",(event.pageX-88)+"px");})
       .text(function(d) { return d.data.type; });
 

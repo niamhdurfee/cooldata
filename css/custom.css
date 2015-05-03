@@ -29,8 +29,29 @@ body {
   width: 100%;
   height:50px;
 }
-#stackedVis, #weatherVis{
+#stackedVis, #weatherVis, #ageVis {
   height: 350px;
+}
+#whenVis {
+	height:500px;
+}
+.userline {
+	opacity: 0.4
+}
+.userline:hover {
+	opacity: 1
+}
+.weekendLine {
+	opacity: 0.4
+}
+.weekendLine:hover {
+	opacity: 1
+}
+.weekdayLine {
+	opacity: 0.4
+}
+.weekdayLine:hover {
+	opacity: 1
 }
 .arc path {
   stroke: #fff;

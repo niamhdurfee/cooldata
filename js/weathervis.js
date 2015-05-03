@@ -23,6 +23,8 @@ WeatherVis = function(_parentElement, _data,_eventHandler) {
   this.width = this.parentElement.node().clientWidth - this.margin.left - this.margin.right,
   this.height = this.parentElement.node().clientHeight - this.margin.top - this.margin.bottom;
   this.filter = null;
+  this.xDom = 'TMIN';
+  this.yDom = 'TMAX';
   this.initVis();
 }
 
@@ -38,8 +40,8 @@ WeatherVis.prototype.initVis = function() {
   this.x = d3.scale.linear()
     .range([this.margin.left, this.width]);
 
-  this.y = d3.scale.pow()
-    .range([that.height, that.margin.bottom]).exponent(.2);
+  this.y = d3.scale.linear()
+    .range([that.height, that.margin.bottom]);
 
   this.r = d3.scale.linear()
     .range([0, 30]);
@@ -108,7 +110,7 @@ WeatherVis.prototype.updateVis = function() {
 
   this.x.domain(d3.extent(this.displayData, function (d) { return d.x}));
   this.y.domain(d3.extent(this.displayData, function (d) { return d.y}));
-  this.r.domain(d3.extent(this.displayData, that.getRadius));
+  this.r.domain([0,d3.max(this.displayData, that.getRadius)]);
   this.colorScale = d3.scale.linear().domain(getDom(that.averages[that.dom[0]])).range([that.color(that.dom[1]),that.color(that.dom[0])])
 
   this.svg.select(".y.axis")
@@ -195,8 +197,8 @@ WeatherVis.prototype.filterAndAggregate = function(_filter) {
     if (that.dom[0] == 'total') {
       return {
         date: d.date,
-        x: d.TMIN,
-        y: d.TMAX,
+        x: d[that.xDom],
+        y: d[that.yDom],
         type1: "total",
         value1: d.total,
         type2: null,
@@ -206,8 +208,8 @@ WeatherVis.prototype.filterAndAggregate = function(_filter) {
     } else {
       return {
         date: d.date,
-        x: d.TMIN,
-        y: d.TMAX,
+        x: d[that.xDom],
+        y: d[that.yDom],
         type1: that.dom[0],
         value1: d[that.dom[0]],
         type2: that.dom[1],
@@ -218,7 +220,6 @@ WeatherVis.prototype.filterAndAggregate = function(_filter) {
   });
   return res0;
 };
-
 
 WeatherVis.prototype.getRadius = function(d) {
   return Math.sqrt((d.value1+d.value2)/Math.PI);
