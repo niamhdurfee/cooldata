@@ -109,9 +109,11 @@ $(function() {
     // variables keeping global knowledge of the data
     var dateData;
     var brushData;
+    var ageData;
 
     // call this function after Data is loaded, reformatted and bound to the variables
     var initVis = function() {
+      console.log(ageData)
       var MyEventHandler = {};
       // Instantiate all Vis Objects here
       var weatherVis = new WeatherVis(d3.select("#weatherVis"), dateData, MyEventHandler); 
@@ -139,7 +141,7 @@ $(function() {
     };
 
     // call this function after both files are loaded -- error should be "null" if no error
-    var dataLoaded = function(_data) {
+    var dataLoaded = function(_data,_ageData) {
         dateData = _data.map(function (d) { 
           return {
             AWND: parseFloat(d.AWND)*0.223694,
@@ -161,13 +163,31 @@ $(function() {
           }
         });
         brushData = dateData.map(function (d) { return d.date });
+        ageData = _ageData.map(function (d) {
+          var res = d3.range(81).map(function () { return 0});
+          d3.entries(d).forEach(function (e) {
+            if (e.key !== "date") {
+              var k = parseInt(e.key);
+              var v = parseInt(e.value);
+              res[k] = v;
+            }
+          })
+          return {
+            date: d.date,
+            ages: res
+          }
+        })
         initVis();
     };
 
     var startHere = function() {
-      d3.csv("data/breakdown.csv", function(error, data) {
+      d3.csv("data/breakdown.csv", function (error, data) {
         if (!error) {
-          dataLoaded(data);
+          d3.csv("data/ages.csv", function (errorAges, ageData) {
+            if (!errorAges) {
+              dataLoaded(data,ageData);
+            }
+          })
         }
       });
     };

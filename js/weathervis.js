@@ -108,7 +108,7 @@ WeatherVis.prototype.updateVis = function() {
 
   this.x.domain(d3.extent(this.displayData, function (d) { return d.x}));
   this.y.domain(d3.extent(this.displayData, function (d) { return d.y}));
-  this.r.domain(d3.extent(this.displayData, that.getRadius));
+  this.r.domain([0,d3.max(this.displayData, that.getRadius)]);
   this.colorScale = d3.scale.linear().domain(getDom(that.averages[that.dom[0]])).range([that.color(that.dom[1]),that.color(that.dom[0])])
 
   this.svg.select(".y.axis")

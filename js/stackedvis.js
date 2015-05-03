@@ -16,7 +16,8 @@ StackedVis = function(_parentElement, _data, _eventHandler) {
       top: 10,
       right: 10,
       bottom: 30,
-      left: 30
+      left: 30,
+      padding: 45
     },
   this.width = this.parentElement.node().clientWidth - this.margin.left - this.margin.right,
   this.height =  this.parentElement.node().clientHeight- this.margin.top - this.margin.bottom;
@@ -46,18 +47,19 @@ StackedVis.prototype.initVis = function() {
   this.yAxis = d3.svg.axis()
     .scale(this.y)
     .orient("left");
+  this.line = d3.svg.line()
+  	.interpolate("basis")
+    .defined(function(d) { return d.value != null; })
+    .x(function(d) { return that.x(d.date); })
+    .y(function(d) { return that.y(d.value); });
 
   this.area = d3.svg.area()
     .interpolate("basis")
+    .defined(this.line.defined())
     .x(function(d) { return that.x(d.date); })
     .y0(function(d) { return that.y(0); })
     .y1(function(d) { return that.y(d.value); });
-
-  this.line = d3.svg.line()
-  	.interpolate("basis")
-    .x(function(d) { return that.x(d.date); })
-    .y(function(d) { return that.y(d.value); })
-
+    
   this.svg = this.parentElement.append("svg")
     .attr("width", this.width + this.margin.left + this.margin.right)
     .attr("height", this.height + this.margin.top + this.margin.bottom)
@@ -73,6 +75,9 @@ StackedVis.prototype.initVis = function() {
       .attr("class", "y axis")
       .attr("transform", "translate("+this.margin.left+",0)");
 
+  this.focus = this.svg.append("g")
+    .append("line")
+    .attr("class","focus");
 
   // // filter, aggregate, modify data
   this.wrangleData(this.filter);
@@ -88,10 +93,10 @@ StackedVis.prototype.wrangleData = function(_filterFunction) {
 StackedVis.prototype.updateVis = function() {
 
   var that = this;
-
+  var formatDate = d3.time.format("%b %_d, %Y")
   this.x.domain(d3.extent(that.displayData[0].values, function(d) { return d.date; }));
   this.y.domain([0,d3.max(that.displayData, function (d) { return d3.max(d.values, function (a) {return a.value})})]);
-  
+
   this.svg.select(".y.axis")
     .call(this.yAxis);
 
@@ -121,7 +126,7 @@ StackedVis.prototype.updateVis = function() {
   line.enter().append("g")
   	  .attr("class","userline")
   	  .append("path")
-	  .attr("class","line");
+	    .attr("class","line");
 
   line.select(".line")
   	  .attr("d",function (d) { return that.line(d.values)})
@@ -129,6 +134,23 @@ StackedVis.prototype.updateVis = function() {
 
   user.exit().remove();
   line.exit().remove();
+
+
+  this.svg.append("rect")
+      .attr("class", "overlay")
+      .attr("width", this.width)
+      .attr("height", this.height)
+      .attr("fill",'none')
+      .attr("pointer-events", "all")
+      .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
+
+  $(".overlay").mousemove(function(event) {
+    var x = event.pageX-that.margin.left-that.margin.padding;
+    that.focus.attr("x1",x).attr("x2",x).attr("y1",0).attr("y2",that.height)
+    var msg = formatDate(that.x.invert(x));
+    console.log(msg);
+  });
+
 }
 
 /**
@@ -155,6 +177,17 @@ StackedVis.prototype.onTypeChange = function(_dom) {
   	this.updateVis();
   }
 }
+
+StackedVis.prototype.mousemove = function() {
+    var that = this;
+    this.parentElement
+        // i = bisectDate(data, x0, 1),
+        // d0 = data[i - 1],
+        // d1 = data[i],
+        // d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+    // this.focus.attr("transform", "translate(" + (this.width/2) + "," + (this.height/2) + ")");
+    // this.focus.select("text").text("YES");
+  }
 /*
  *
  * ==================================
@@ -179,7 +212,7 @@ StackedVis.prototype.filterAndAggregate = function(_filter) {
     return {
       type: t,
       values: res.map(function (d) {
-        return {date: d.date, value: d[t]}
+        return {date: d.date, value: isNaN(d[t]) ? null : d[t]}
       })
     }
   });
