@@ -1,10 +1,10 @@
-aimport csv,re,os,datetime
+import csv,re,os,datetime
 
 #days = {line[:-2]:{"days":0,"t":0,"f":0,"r":0,"l":0,'dist':0,'time':0} for line in open('../daysofyear.csv')}
 trips = [re.split(',',trip[:-2]) for trip in open('../trips.min.csv')]
-breakdown = [re.split(',',line[:-2])[0] for line in open('../breakdown.csv')]
-
-days = {line[:-2]:[0 for i in range(81)] for line in open('../daysofyear.csv')}
+dates = [re.split(',',line[:-2])[0] for line in open('../breakdown.csv')]
+dates = {line:[0 for x in range(81)] for line in dates[1:]}
+#days = {line[:-2]:[0 for i in range(81)] for line in open('../daysofyear.csv')}
 
 #for each in breakdown[1:]:
 #	days[each[:-5]]['days'] +=1
@@ -41,18 +41,17 @@ days = {line[:-2]:[0 for i in range(81)] for line in open('../daysofyear.csv')}
 
 for trip in trips[1:]:
 	date = datetime.datetime.strptime(trip[2], "%m/%d/%Y %H:%M:%S")
-	day = str(date.month)+'/'+str(date.day)
+	date = str(date.month)+'/'+str(date.day) + '/' +str(date.year)
 	if (trip[5] =='R'):
 		try:
-			days[day][int(trip[7])] += 1
+			dates[date][int(trip[7])] += 1
 		except:
 			pass
+header = [['date']+range(81)]
 
-header = [['day']+range(81)]
-
-for day in days:
-	row = [day]+days[day]
+for day in dates:
+	row = [day]+dates[day]
 	header.append(row)
 
-datafile = csv.writer(open('yeardata_age.csv','w'))
+datafile = csv.writer(open('ages.csv','w'))
 datafile.writerows(header)
