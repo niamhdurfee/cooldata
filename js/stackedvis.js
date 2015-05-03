@@ -47,18 +47,19 @@ StackedVis.prototype.initVis = function() {
   this.yAxis = d3.svg.axis()
     .scale(this.y)
     .orient("left");
+  this.line = d3.svg.line()
+  	.interpolate("basis")
+    .defined(function(d) { return d.value != null; })
+    .x(function(d) { return that.x(d.date); })
+    .y(function(d) { return that.y(d.value); });
 
   this.area = d3.svg.area()
     .interpolate("basis")
+    .defined(this.line.defined())
     .x(function(d) { return that.x(d.date); })
     .y0(function(d) { return that.y(0); })
     .y1(function(d) { return that.y(d.value); });
-
-  this.line = d3.svg.line()
-  	.interpolate("basis")
-    .x(function(d) { return that.x(d.date); })
-    .y(function(d) { return that.y(d.value); })
-
+    
   this.svg = this.parentElement.append("svg")
     .attr("width", this.width + this.margin.left + this.margin.right)
     .attr("height", this.height + this.margin.top + this.margin.bottom)
@@ -211,7 +212,7 @@ StackedVis.prototype.filterAndAggregate = function(_filter) {
     return {
       type: t,
       values: res.map(function (d) {
-        return {date: d.date, value: d[t]}
+        return {date: d.date, value: isNaN(d[t]) ? null : d[t]}
       })
     }
   });
