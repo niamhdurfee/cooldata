@@ -139,7 +139,8 @@ WhenVis.prototype.updateVis = function() {
 
   line.select(".line")
   	  .attr("d",function (d) { return that.line(d.total)})
-  	  .style("stroke", function (d) {return that.color(d.type)});
+  	  .style("stroke", function (d) {return that.color(d.type)})
+      .style("stroke-width", 3)
 
   var weekendLine = this.svg.selectAll(".weekendLine")
   	  .data(this.displayData);
@@ -151,7 +152,8 @@ WhenVis.prototype.updateVis = function() {
 
   weekendLine.select(".line")
   	  .attr("d",function (d) { return that.line(d.weekend)})
-  	  .style("stroke", 'red');
+  	  .style("stroke", 'red')
+      .style("stroke-width", 3)
 
   var weekdayLine = this.svg.selectAll(".weekdayLine")
       .data(this.displayData);
@@ -163,8 +165,8 @@ WhenVis.prototype.updateVis = function() {
 
   weekdayLine.select(".line")
       .attr("d",function (d) { return that.line(d.weekday)})
-      .style("stroke", 'blue');
-
+      .style("stroke", 'blue')
+      .style("stroke-width", 3)
 
   user.exit().remove();
   line.exit().remove();

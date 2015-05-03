@@ -35,6 +35,24 @@ body {
 #whenVis {
 	height:500px;
 }
+.userline {
+	opacity: 0.4
+}
+.userline:hover {
+	opacity: 1
+}
+.weekendLine {
+	opacity: 0.4
+}
+.weekendLine:hover {
+	opacity: 1
+}
+.weekdayLine {
+	opacity: 0.4
+}
+.weekdayLine:hover {
+	opacity: 1
+}
 .arc path {
   stroke: #fff;
 }
