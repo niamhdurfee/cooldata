@@ -43,15 +43,16 @@ for trip in trips[1:]:
 	date = datetime.datetime.strptime(trip[2], "%m/%d/%Y %H:%M:%S")
 	date = str(date.month)+'/'+str(date.day) + '/' +str(date.year)
 	if (trip[5] =='R'):
+		print date, trip[7]
 		try:
 			dates[date][int(trip[7])] += 1
 		except:
 			pass
 header = [['date']+range(81)]
 
-for day in dates:
-	row = [day]+dates[day]
-	header.append(row)
-
-datafile = csv.writer(open('ages.csv','w'))
-datafile.writerows(header)
+#for day in dates:
+#	row = [day]+dates[day]
+#	header.append(row)
+#
+#datafile = csv.writer(open('ages.csv','w'))
+#datafile.writerows(header)

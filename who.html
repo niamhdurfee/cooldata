@@ -65,13 +65,14 @@
     <tbody>
       <tr>
         <td colspan='2'><div id="stackedVis"></div></td>
-        <td colspan='2'><div id="weatherVis"></div></td>
+        <td><div id="weatherVis"></div></td>
+        <td><div id="ageVis"></div></td>
       </tr>
       <tr>
         <td><div id="pieVis1" class="pievis"></div></td>
         <td><div id="pieVis2" class="pievis"></div></td>
-        <td><div id="pieVis3" class="pievis"></div></td>
-        <td><div id="pieVis4" class="pievis"></div></td>
+        <td style="background-color:rgba(173, 255, 47,0.3)"><div id="pieVis3" class="pievis"></div></td>
+        <td style="background-color:rgba(173, 255, 47,0.3)"><div id="pieVis4" class="pievis"></div></td>
       </tr>
       <tr><td colspan='4'><div id="yearBrush" class="time"></div></td>
       </tr>
@@ -92,6 +93,7 @@
 <script src="js/stackedvis.js"></script>
 <script src="js/whopievis.js"></script>
 <script src="js/yearbrush.js"></script>
+<script src="js/agevis.js"></script>
 <script>
 // Create a map in the div #map
 
@@ -113,10 +115,10 @@ $(function() {
 
     // call this function after Data is loaded, reformatted and bound to the variables
     var initVis = function() {
-      console.log(ageData)
       var MyEventHandler = {};
       // Instantiate all Vis Objects here
       var weatherVis = new WeatherVis(d3.select("#weatherVis"), dateData, MyEventHandler); 
+      var ageVis = new AgeVis(d3.select("#ageVis"), ageData, MyEventHandler); 
       var stackedVis = new StackedVis(d3.select("#stackedVis"), dateData, MyEventHandler); 
       var yearBrush = new YearBrush(d3.select("#yearBrush"), brushData, MyEventHandler); 
       var pieVisRegistered = new WhoPieVis(d3.select("#pieVis1"), dateData, ["registered","casual"],MyEventHandler); 
@@ -126,17 +128,23 @@ $(function() {
 
       // Bind the eventHandler to the Vis Objects
       $(MyEventHandler).bind("selectionChanged", function(event, from, to, status) {
-          stackedVis.onSelectionChange(from,to,status);
-          weatherVis.onSelectionChange(from,to,status);
           pieVisLocal.onSelectionChange(from,to,status);
           pieVisType.onSelectionChange(from,to,status);
           pieVisGender.onSelectionChange(from,to,status);
           pieVisRegistered.onSelectionChange(from,to,status);
+          ageVis.onSelectionChange(from,to,status);
+          stackedVis.onSelectionChange(from,to,status);
+          weatherVis.onSelectionChange(from,to,status);
+
       });
 
       $(MyEventHandler).bind("typeChanged", function(event, dom1, dom2,type) {
           stackedVis.onTypeChange([dom1, dom2,type]);
           weatherVis.onTypeChange([dom1, dom2,type]);
+      });
+      $(MyEventHandler).bind("hoverChanged", function(event, date) {
+          stackedVis.onHoverChange(date);
+          // weatherVis.onHoverChange(date);
       });
     };
 
@@ -162,7 +170,7 @@ $(function() {
             total: parseInt(d.total)
           }
         });
-        brushData = dateData.map(function (d) { return d.date });
+        brushData = dateData.map(function (d) { return {date: d.date, total: d.total} });
         ageData = _ageData.map(function (d) {
           var res = d3.range(81).map(function () { return 0});
           d3.entries(d).forEach(function (e) {
@@ -173,7 +181,7 @@ $(function() {
             }
           })
           return {
-            date: d.date,
+            date: parseDate(d.date),
             ages: res
           }
         })
