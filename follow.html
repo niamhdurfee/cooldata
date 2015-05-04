@@ -26,9 +26,11 @@
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-glyphicons.css" rel="stylesheet">
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
     <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.css' rel='stylesheet' />
-    <link rel="stylesheet" href="css/custom.css" />
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/follow.css" rel="stylesheet">
   </head>
 
   <body>
@@ -42,9 +44,9 @@
           <ul class="nav navbar-nav">
             <li><a href="/">overview</a></li>
             <li><a href="/who.html">who</a></li>
-            <li class="active"><a href="/where.html">where</a></li>
+            <li><a href="/where.html">where</a></li>
             <li><a href="/when.html">when</a></li>
-            <li><a href="/follow.html">follow me</a></li>
+            <li class="active"><a href="/follow.html">follow me</a></li>            
             <li><a href="/process.html">process book</a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -52,9 +54,30 @@
     </nav>
 
     <div class="container-fluid">
-    
-          <div id="formVis"></div>
-          <div id="chordVis"></div>
+    <span class="glyphicons-icon bicycle blue"></span>
+
+
+    <table width="100%">
+      <thead>
+        <tr>
+          <th width="30%"></th>
+          <th width="40%"></th>
+          <th width="30%"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan='2'>
+            <div id="map"></div>
+          </td>
+          <td>
+            <div id="runningVis" class="span4 "></div>
+          </td>
+        </tr>
+        
+      </tbody>
+    </table>
+        
 
     </div><!-- /.container -->
 <script src="libs/jquery-2.1.3.min.js"></script>
@@ -63,10 +86,11 @@
 <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.js'></script>
 <script src="libs/d3.min.js"></script>
 <script src="libs/Polyline.encoded.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 <script src="libs/token.js"></script>
-<script src="js/chordvis.js"></script>
-<script src="js/formvis.js"></script>
-<script src="data/matrix.js"></script>
+<script src="js/yearbrush.js"></script>
+<script src="js/followvis.js"></script>
+<script src="js/runningvis.js"></script>
 <script>
 // Create a map in the div #map
 
@@ -75,46 +99,85 @@ $(function() {
     // this function can convert Date objects to a string
     // it can also convert strings to Date objects
     // see: https://github.com/mbostock/d3/wiki/Time-Formatting
-    var dateFormatter = d3.time.format("%Y-%m-%d");
+    var parseDate = d3.time.format("%_m/%_d/%Y %H:%M:%S").parse;
 
     //==========================================
     //--- HERE IS WHERE ALL THE MAGIC STARTS --
     //==========================================
 
     // variables keeping global knowledge of the data
-    var matrixData,
-        stationData = {};
+    var data;
+    var routeData = {};
+    var initVis = function () {
 
-    // call this function after Data is loaded, reformatted and bound to the variables
-    var initVis = function() {
       var MyEventHandler = {};
 
-      // Instantiate all Vis Objects here
-      var chordVis = new ChordVis(d3.select("#chordVis"),stationData,hoodData, MyEventHandler);
-      var formVis = new FormVis(d3.select("#formVis"), MyEventHandler); 
-     // var timeVis = new TimeVis(d3.select("#timeVis"),MyEventHandler);
+      var mapVis = new FollowVis(d3.select("body"), routeData, MyEventHandler);
+      var runningVis = new RunningVis(d3.select("#runningVis"), routeData,MyEventHandler);
+      console.log(data);
+      i = 0;
 
-      // Bind the eventHandler to the Vis Objects
-      $(MyEventHandler).bind("selectionChanged", function(event, selected) {
-        chordVis.onSelectionChange(selected);
-      });
-    };
+      var tick = function () {
+        if (i < data.length) {
+          runningVis.updateVis(i,data[i]);
+          mapVis.tick(i,data[i]);
+          setTimeout(tick, 250)
+          i += 1
+        } else {
+          i = 0;
+          tick();
+        }
+      }
+      tick();
+
+    }
 
     // call this function after both files are loaded -- error should be "null" if no error
-    var dataLoaded = function(_stationData,_hoodData) {
-        stationData = _stationData;
-        hoodData = _hoodData;
-        initVis();
+    var dataLoaded = function(_data,_routeData) {
+       var pad = function (a,b){ return(1e4+a+"").slice(-b) }
+
+       var neededRoutes = [];
+
+       data = _data.map(function (d) { 
+          var reverse, origdest;
+          if (d.strt_statn == d.end_statn) {
+            reverse = null;
+            origdest = null;
+          } else {
+            reverse = +d.strt_statn > +d.end_statn;
+            origdest = pad(Math.min(+d.strt_statn,+d.end_statn),3) + pad(Math.max(+d.strt_statn,+d.end_statn),3);
+          }
+          neededRoutes.push(origdest);
+          return {
+            duration: +d.duration,
+            start: parseDate(d.start),
+            end: parseDate(d.end),
+            origdest: origdest,
+            reverse: reverse,
+            userType: d.userType,
+            tripType: (d.tripType == 'trip') ? "greenyellow" : "blue",
+            gender: d.gender
+          }
+        }).filter(function (d) { return d.reverse != null});
+
+      neededRoutes = d3.set(neededRoutes).values();
+
+       _routeData.forEach(function (d) {
+          if (neededRoutes.indexOf(d.origdest) > -1) {
+            routeData[d.origdest] = {polyline: d.polyline, dist: parseFloat(d.dist)};
+          }
+       });
+      initVis();
     };
 
     var startHere = function() {
-      d3.json("data/stations.json", function(errorStation, stationData) {
-        if (!errorStation) {
-          d3.csv("data/neighborhoods.csv", function(errorHood, neighborhoods) {
-            if (!errorHood) {
-              dataLoaded(stationData, neighborhoods);
+      d3.csv("data/mayorsbike.csv", function (error, data) {
+        if (!error) {
+          d3.csv("data/routes_stats.csv", function (errorRoute, routeData) {
+            if (!errorRoute) {
+              dataLoaded(data,routeData);
             }
-          }) 
+          })
         }
       });
     };
@@ -122,6 +185,5 @@ $(function() {
     startHere();
   });
 </script>
-
-  </body>
+</body>
 </html>
