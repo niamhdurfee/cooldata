@@ -14,7 +14,7 @@ AgeVis = function(_parentElement, _data,_eventHandler) {
   this.margin = {
       top: 10,
       right: 10,
-      bottom: 20,
+      bottom: 30,
       left: 30
     },
   this.width = this.parentElement.node().clientWidth - this.margin.left - this.margin.right,
@@ -38,7 +38,8 @@ AgeVis.prototype.initVis = function() {
 
   this.xAxis = d3.svg.axis()
     .scale(this.x)
-    .orient("bottom");
+    .orient("bottom")
+    .ticks(6);
 
   this.yAxis = d3.svg.axis()
     .scale(this.y)
@@ -60,11 +61,27 @@ AgeVis.prototype.initVis = function() {
   this.svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0,"+this.height+")")
-      .call(this.xAxis);
+      .call(this.xAxis)
+      .append("text")
+      .attr("transform", "translate("+this.width+",-20)")
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Age");
 
   this.svg.append("g")
       .attr("class", "y axis")
-      .attr("transform", "translate("+this.margin.left+",0)");
+      .attr("transform", "translate("+this.margin.left+",0)")  
+      .append("text")
+      .attr("transform", "translate("+this.margin.left+","+this.margin.top+") rotate(-90)")
+      .attr("y", -10)
+      .style("text-anchor", "end")
+      .text("Count");
+
+  this.svg.append("g")
+    .attr("class","chart title")
+    .attr("transform", "translate("+(this.width/2 - 50)+",24)")
+    .append("text")
+    .text("age distribution*");
 
 
   // // filter, aggregate, modify data

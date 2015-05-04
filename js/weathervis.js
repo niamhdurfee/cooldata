@@ -10,7 +10,7 @@ WeatherVis = function(_parentElement, _data,_eventHandler) {
   this.data = _data;
   this.eventHandler = _eventHandler;
   this.displayData = [];
-  this.dom = ["total","total"];
+  this.dom = ["total"];
   this.averages = {"registered":0.7,"local":.91,"male":0.75,"commuter":.61};
   this.filter = null;
   // Define all "constants" here
@@ -140,7 +140,7 @@ WeatherVis.prototype.updateVis = function() {
       .attr("r", function  (d) {return that.r(that.getRadius(d))})
       .attr("cx",function (d) {return that.x(d.x)})
       .attr("cy",function (d) {return that.y(d.y)})
-      .style("fill", function (d) { return that.colorScale(d.value1/(d.value1+d.value2))})
+      .style("fill", function (d) { return (that.dom[0] =="total") ? "grey" :that.colorScale(d.value1/(d.value1+d.value2))})
       .style("stroke-width", "3px");
 
   circles.exit().remove();

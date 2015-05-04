@@ -29,6 +29,11 @@
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
     <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.css' rel='stylesheet' />
     <link rel="stylesheet" href="css/custom.css" />
+    <style>
+    .chart.title {
+      font-size: 18px;
+      font-weight: bold;
+    }</style>
   </head>
 
   <body>
@@ -48,6 +53,8 @@
             <li><a href="/process.html">process book</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
+            <li><a id="reset"><span class="glyphicon glyphicon-repeat"></span></a></li>
+            <li><a data-toggle="modal" data-target="#note"><span class="glyphicon glyphicon-asterisk"></span></a></li>
             <li><a data-toggle="modal" data-target="#help"><span class="glyphicon glyphicon-question-sign"></span></a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -90,17 +97,36 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+          <h4 class="modal-title" id="myModalLabel">I'm overwhelmed</h4>
         </div>
         <div class="modal-body">
-          ...
+          <p><strong>The big line graph</strong> just shows the overall daily counts. When you click on any of the pie charts, that data populates this chart. Like this:</p><img src="design/img/stackedvis.png" alt="Smiley face" height="100"><img src="design/img/genderstackedvis.png" alt="Smiley face" height="100"><br>
+          <img src="design/img/pievis.png" height="100"><p><strong>The pie charts</strong> show the breakdown of the all the trips.  Note that while all 1.6 million trips are classified as either casual or registered, and either leisure or commuter, we only have gender and local information for the registered users, who make up 75% of all rides.</p><p>When you click on these charts, their information populates other charts on the page</p>
+          <img src="design/img/age.png" height="100"><p><strong>The age distribution</strong> show the distribution of the ages for all of the trips taken by registered users.</p>
+          <img src="design/img/brush.gif" width="400"><p><strong>The brush</strong> lets you select a subset of trip information based on time. The background graph just lets you know where you can find data over the course of the years.</p>
+
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">I guess I'm less overwhelmed</button>
         </div>
       </div>
     </div>
-  </div><script src="libs/jquery-2.1.3.min.js"></script>
+    </div>
+
+    <div class="modal fade" id="note" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <p>We only have age, gender, and home ZIP code for trips taken by registered users, which make up 75% of all trips.</p>
+            <p>Also, age data for registered users is only available through Sept. 30, 2012.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">I see</button>
+          </div>
+        </div>
+      </div>
+    </div>
+<script src="libs/jquery-2.1.3.min.js"></script>
 <script src="libs/bootstrap.min.js"></script>
 <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
 <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.js'></script>
@@ -158,13 +184,17 @@ $(function() {
       });
 
       $(MyEventHandler).bind("typeChanged", function(event, dom1, dom2,type) {
-          stackedVis.onTypeChange([dom1, dom2,type]);
-          weatherVis.onTypeChange([dom1, dom2,type]);
+          stackedVis.onTypeChange([dom1, dom2]);
+          weatherVis.onTypeChange([dom1, dom2]);
       });
       $(MyEventHandler).bind("hoverChanged", function(event, date) {
           stackedVis.onHoverChange(date);
           // weatherVis.onHoverChange(date);
       });
+      $('#reset').on("click", function () {
+          stackedVis.onTypeChange(["total"]);
+          weatherVis.onTypeChange(["total"]);
+      })
     };
 
     // call this function after both files are loaded -- error should be "null" if no error
