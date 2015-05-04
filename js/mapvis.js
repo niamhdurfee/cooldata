@@ -170,7 +170,7 @@ MapVis.prototype.display_station_info = function(id)
     if ( ! ( $('#station-menu').hasClass('menu-open')))
     {
         var prev_width = $('#mapVis').width();
-        $('#mapVis').width(prev_width - 240);
+        $('#mapVis').width(prev_width - 340);
         $('#explore-button').hide();
         
         $('#station-menu').toggleClass('menu-open');
