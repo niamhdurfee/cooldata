@@ -50,6 +50,7 @@
             <li><a href="/process.html">process book</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
+            <li><a id="playpause"><span id="imgPlayPause" class="glyphicon glyphicon-pause"></span></a></li>
             <li><a data-toggle="modal" data-target="#help" id="helpButton"><span class="glyphicon glyphicon-question-sign"></span></a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -88,7 +89,7 @@
         <div class="modal-content">
           <div class="modal-body">
           <button type="button" class="btn btn-default btn-lg" id="playButton" style="margin: 0 auto;">
-            <span class="glyphicon glyphicon-play-circle"></span> Play!
+            <span class="glyphicon glyphicon-play"></span> Play!
           </button> 
           </div>
         </div>
@@ -133,6 +134,9 @@ $(function() {
     // see: https://github.com/mbostock/d3/wiki/Time-Formatting
     $('#play').modal('show');
 
+
+
+
     var parseDate = d3.time.format("%_m/%_d/%Y %H:%M:%S").parse;
 
     //==========================================
@@ -157,6 +161,11 @@ $(function() {
         play = true;
         tick();
        });
+      $('#playpause').on('click', function () {
+        $("#imgPlayPause").attr("class", function () { return play ? "glyphicon glyphicon-play" : "glyphicon glyphicon-pause"})
+        play = play ? false : true;
+        tick();
+      });
 
 
       var mapVis = new FollowVis(d3.select("body"), routeData, MyEventHandler);
@@ -170,7 +179,7 @@ $(function() {
           if (i < data.length) {
             runningVis.updateVis(i,data[i]);
             mapVis.tick(i,data[i]);
-            setTimeout(tick, 1)
+            setTimeout(tick, 100)
             i += 1
           } else {
             i = 0;
