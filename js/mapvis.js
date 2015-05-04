@@ -118,6 +118,7 @@ MapVis.prototype.updateVis = function() {
   this.routeData.forEach(function(o) {
         if (o.trips > 750) {
           var line = L.Polyline.fromEncoded(o.polyline, polyline_options).addTo(that.map);
+          console.log(line);
           line.bindPopup(o.trips +' trips from ' + "ORIGIN" + ' to ' + "that.stationData[dest].fullname");
           line.on('mouseover', function(e) {
             e.target.openPopup();
