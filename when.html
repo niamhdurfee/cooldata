@@ -144,7 +144,6 @@ $(function() {
       d3.csv("data/timeofdaydata.csv", function(error, data) {
         if (!error) {
           dateData = data;
-          console.log(data);
           // dataLoaded(data);
           initVis();
         }
