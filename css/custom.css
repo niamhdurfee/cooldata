@@ -87,7 +87,10 @@ body {
   opacity: 0.65;
   fill: lightgrey;
 }
-
+#chordVis {
+  height:800px;
+  width:800px;
+}
 .icon-right
 {
     color: #399F2E;

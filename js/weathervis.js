@@ -126,12 +126,7 @@ WeatherVis.prototype.updateVis = function() {
       .append("circle")
       .attr("class","circle")
       .on('mouseover', this.tip.show)
-      .on("mousemove", function(){if (window.innerWidth - event.pageX - $('.weather-tip').width()/2 > 20) {
-        return that.tip.style("top", (event.pageY-75)+"px").style("left",(event.pageX-$('.weather-tip').width()/2 - 10)+"px");
-      }
-      else {
-        return that.tip.style("top", (event.pageY-75)+"px").style("left",(event.pageX-$('.weather-tip').width() - 10)+"px");
-      }})
+      .on("mousemove", function(){ return that.tip.style("top", (event.pageY+20)+"px").style("left",event.pageX+"px");})
       .on('mouseout', this.tip.hide);
 
   this.svg.selectAll(".circle")
