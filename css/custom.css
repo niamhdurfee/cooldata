@@ -36,19 +36,19 @@ body {
 	height:500px;
 }
 .userline {
-	opacity: 0.4
+	opacity: 0.5
 }
 .userline:hover {
 	opacity: 1
 }
 .weekendLine {
-	opacity: 0.4
+	opacity: 0.5
 }
 .weekendLine:hover {
 	opacity: 1
 }
 .weekdayLine {
-	opacity: 0.4
+	opacity: 0.5
 }
 .weekdayLine:hover {
 	opacity: 1
