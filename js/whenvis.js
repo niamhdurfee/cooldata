@@ -8,9 +8,9 @@
 WhenVis = function(_parentElement, _data, _eventHandler) {
   this.parentElement = _parentElement;
   this.data = _data;
-	console.log(this.data);
   this.eventHandler = _eventHandler;
   this.displayData = [];
+  this.selection = 'total';
   this.dom = ["total"];
   // Define all "constants" here
   this.margin = {
@@ -35,6 +35,10 @@ WhenVis = function(_parentElement, _data, _eventHandler) {
 WhenVis.prototype.initVis = function() {
   var that = this;
 
+  d3.selectAll("button").on("click", function () {
+    $(that.eventHandler).trigger("selectionChanged", $(this)[0].value);
+    // that.updateVis($(this)[0].value)
+  })
   this.color = d3.scale.ordinal().domain(colorDomain).range(colorRange);
 
   this.x = d3.scale.linear()
@@ -94,6 +98,8 @@ WhenVis.prototype.initVis = function() {
 }
 
 WhenVis.prototype.wrangleData = function(_filterFunction) {
+
+  console.log('wrangling');
   this.displayData = this.filterAndAggregate(_filterFunction);
 }
 
@@ -102,7 +108,7 @@ WhenVis.prototype.updateVis = function() {
   var that = this;
 
   // this.x.domain(d3.extent(that.displayData, function(d) { console.log(d); return d.timeofday; }));
-  this.y.domain([0,d3.max(that.displayData, function (d) { return d3.max(d.total, function (a) {return a.value})})]);
+  this.y.domain([0,d3.max(that.displayData, function (d) {  return d3.max(d.total, function (a) {console.log(a); return a.value})})]);
 
   this.svg.select(".y.axis")
     .call(this.yAxis);
@@ -117,16 +123,28 @@ WhenVis.prototype.updateVis = function() {
       .attr("class", "user")
       .append("path")
 
+ this.svg.selectAll('.xText').remove();
   this.svg
       .append("text")
+      .attr("class", 'xText')
       .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
       .attr("transform", "translate("+this.width/2+","+(this.height+50)+")")  // text is drawn off the screen top left, move down and out and rotate
       .text("Time of Day");
+
+
   this.svg
       .append("text")
+      .attr("class", "xText")
       .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-      .attr("transform", "translate("+this.margin.left/4+","+(this.height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
-      .text("Average Speed (mph)");
+      .attr("transform", "translate("+this.margin.left/8+","+(this.height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
+      .text(function() {
+         if (that.selection=='total') {
+           return 'Average Speed (mph)';
+         }
+         else {
+           return 'Time';
+         }
+      });
 
 
   var line = this.svg.selectAll(".userline")
@@ -138,6 +156,7 @@ WhenVis.prototype.updateVis = function() {
 	  .attr("class","line");
 
   line.select(".line")
+      .transition()
   	  .attr("d",function (d) { return that.line(d.total)})
   	  .style("stroke", function (d) {return that.color(d.type)})
       .style("stroke-width", 3)
@@ -151,8 +170,9 @@ WhenVis.prototype.updateVis = function() {
 	  .attr("class","line");
 
   weekendLine.select(".line")
+      .transition()
   	  .attr("d",function (d) { return that.line(d.weekend)})
-  	  .style("stroke", 'red')
+  	  .style("stroke", 'blue')
       .style("stroke-width", 3)
 
   var weekdayLine = this.svg.selectAll(".weekdayLine")
@@ -164,8 +184,9 @@ WhenVis.prototype.updateVis = function() {
     .attr("class","line");
 
   weekdayLine.select(".line")
+      .transition()
       .attr("d",function (d) { return that.line(d.weekday)})
-      .style("stroke", 'blue')
+      .style("stroke", 'red')
       .style("stroke-width", 3)
 
   user.exit().remove();
@@ -180,14 +201,11 @@ WhenVis.prototype.updateVis = function() {
  * be defined here.
  * @param selection
  */
-WhenVis.prototype.onSelectionChange = function(from,to,status) {
-  if (status) {
-    this.wrangleData(null)
-  } else {
-    this.wrangleData(function(d) {
-      return ((d.date >= from) && (d.date <= to))
-    });
-  };
+
+WhenVis.prototype.onSelectionChange = function(selection) {
+  this.selection = selection;
+  console.log(this.selection);
+  this.wrangleData(this.filter);
   this.updateVis();
 }
 
@@ -207,7 +225,6 @@ WhenVis.prototype.onTypeChange = function(_dom) {
  * */
 
 WhenVis.prototype.filterAndAggregate = function(_filter) {
-
   var makeMinutes = function(s) {
     a = s.split(":");
     var minutes = 0;
@@ -225,23 +242,54 @@ WhenVis.prototype.filterAndAggregate = function(_filter) {
   };
 
   var that = this;
+  console.log(that.selection );
   var res = this.data;
   res = that.dom.map(function (t) {
-    return {
-      type: t,
-      total: res.map(function (d) {
-        return {date: makeMinutes(d.timeofday),value: makeValue(d.dist,d.time)};
-      }),
-      weekend: res.map(function (d) {
-        return {date: makeMinutes(d.timeofday),value: makeValue(d.distWeekend, d.timeWeekend)};
-      }),
-      weekday: res.map(function (d) {
-        return {date: makeMinutes(d.timeofday),value: makeDifValue(d.dist, d.distWeekend, d.time, d.timeWeekend)};
-      })
-    };
-  });
+    if (that.selection === 'total') {
+      return {
+        type: t,
+        total: res.map(function (d) {
+          return {date: makeMinutes(d.timeofday),value: makeValue(d.dist,d.time)};
+        }),
+        weekend: res.map(function (d) {
+          return {date: makeMinutes(d.timeofday),value: makeValue(d.distWeekend, d.timeWeekend)};
+        }),
+        weekday: res.map(function (d) {
+          return {date: makeMinutes(d.timeofday),value: makeDifValue(d.dist, d.distWeekend, d.time, d.timeWeekend)};
+        })
+      };
+    }
+    else if(that.selection === 'maleVsFemale') {
+      return {
+        type: t,
+        total: res.map(function (d) {
+          return {date: makeMinutes(d.timeofday),value: parseInt(d.total)/60};
+        }),
+        weekend: res.map(function (d) {
+          return {date: makeMinutes(d.timeofday),value: (parseInt(d.total) - parseInt(d.female))/60};
+        }),
+        weekday: res.map(function (d) {
+          return {date: makeMinutes(d.timeofday),value: parseInt(d.female)/60};
+        })
+      };
+    }
+    else {
+      return {
+        type: t,
+        total: res.map(function (d) {
+          return {date: makeMinutes(d.timeofday),value: parseInt(d.total)/60};
+        }),
+        weekend: res.map(function (d) {
+          return {date: makeMinutes(d.timeofday),value: (parseInt(d.total) - parseInt(d.leisure))/60};
+        }),
+        weekday: res.map(function (d) {
+          return {date: makeMinutes(d.timeofday),value: parseInt(d.leisure)/60};
+        })
+      };
+    }
 
-  console.log(res);
+  });
+console.log(res);
   return res;
 }
 

@@ -1,0 +1,22 @@
+    #map{
+      height: 700px;
+    }
+    .M {
+    color: blue;
+    }
+    .F {
+    color: fuchsia;
+    }
+    .N {
+      color: gray;
+    }
+    .distance {
+      font-size: 26px;
+    }
+    #distCount, #timeCount {
+      font-weight: bold;
+      font-size: 40px;
+    }
+    #runningVis {
+      padding-left: 20px
+    }

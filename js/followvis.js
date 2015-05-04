@@ -1,14 +1,13 @@
 /**
- * TempVis
+ * FollowVis
  * @param _parentElement -- the HTML or SVG element (D3 node) to which to attach the vis
  * @param _data -- the data array
  * @param _metaData -- the meta-data / data description object
  * @constructor
  */
-TempVis = function(_parentElement, _data, _metaData,_eventHandler) {
+FollowVis = function(_parentElement, _metaData,_eventHandler) {
   this.parentElement = _parentElement;
-  this.data = _data;
-  this.metaData = _metaData;
+  this.routeData = _metaData;
   this.eventHandler = _eventHandler;
   this.displayData = [];
 
@@ -28,20 +27,29 @@ TempVis = function(_parentElement, _data, _metaData,_eventHandler) {
 /**
  * Method that sets up the SVG and the variables
  */
-TempVis.prototype.initVis = function() {
+FollowVis.prototype.initVis = function() {
+  var that = this;
+  this.map = new L.mapbox.map('map', 'niamhdurfee.m3dcii07',{center: [42.35272,-71.09], zoom: 13});
 
-  // // filter, aggregate, modify data
-  this.wrangleData(null);
-
+  d3.entries(this.routeData).forEach( function (d) {L.Polyline.fromEncoded(d.value.polyline, {opacity:0,className:"trips od"+d.key}).addTo(that.map)})
   // // call the update method
   this.updateVis();
 }
 
-TempVis.prototype.wrangleData = function(_filterFunction) {
-  this.displayData = this.filterAndAggregate(_filterFunction);
-}
+FollowVis.prototype.tick = function(i,trip) {
+  if (i == 0) { 
+    d3.selectAll(".trips").attr("stroke-opacity",0).classed("taken",false);
 
-TempVis.prototype.updateVis = function() {
+  }
+
+  var a = ".od" + trip.origdest;
+  d3.selectAll(".taken").attr("stroke-opacity",0.3);
+  d3.select(a).attr("stroke-opacity",1).attr("stroke",trip.tripType).classed("taken",true);
+
+  }
+ 
+
+FollowVis.prototype.updateVis = function() {
   var that = this;
 }
 
@@ -51,7 +59,7 @@ TempVis.prototype.updateVis = function() {
  * be defined here.
  * @param selection
  */
-TempVis.prototype.onSelectionChange = function() {
+FollowVis.prototype.onSelectionChange = function() {
 
   this.updateVis();
 }
@@ -64,7 +72,7 @@ TempVis.prototype.onSelectionChange = function() {
  *
  * */
 
-TempVis.prototype.filterAndAggregate = function(_filter) {
+FollowVis.prototype.filterAndAggregate = function(_filter) {
   // Set filter to a function that accepts all items
   var filter = function() {
     return true;
@@ -75,5 +83,5 @@ TempVis.prototype.filterAndAggregate = function(_filter) {
 
   var that = this;
 
-  return res;
+  return 0;
 }

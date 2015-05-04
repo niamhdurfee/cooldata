@@ -20,8 +20,8 @@ ChordVis = function (_parentElement, _data,_metaData, _eventHandler) {
       left: 10,
       padding: 120
     },
-  this.width = window.innerWidth - this.margin.left - this.margin.right - this.margin.padding,
-  this.height = window.innerHeight - this.margin.top - this.margin.bottom - this.margin.padding,
+  this.width = this.parentElement.node().clientWidth- this.margin.left - this.margin.right - this.margin.padding,
+  this.height = this.parentElement.node().clientHeight - this.margin.top - this.margin.bottom - this.margin.padding,
   this.outerRadius = Math.min(this.width, this.height) / 2 - 100,
   this.innerRadius = this.outerRadius - 24;
 
@@ -59,64 +59,29 @@ ChordVis.prototype.initVis = function() {
     this.svg.append("circle")
     .attr("r", this.outerRadius);
 
+    this.tipGroup = d3.tip()
+      .attr('class', 'd3-tip')
+      .attr('x',0)
+      .attr('y',0)
+      .offset([-10, 0])
+      .html(function(d) {
+        console.log(d);
+        return "<span class='highlight'>"+"YES"+"</span><br><small>"+"YES"+" of "+"YES"+" trips</small></span>";
+      })
+    this.tipChord = d3.tip()
+      .attr('class', 'd3-tip')
+      .offset([-10, 0])
+      .html(function(d) {
+        return "<span class='highlight'>"+"NO"+"</span><br><small>"+"NO"+" of "+"NO"+" trips</small></span>";
+      })
+
+    this.svg.call(this.tipGroup);
+    this.svg.call(this.tipChord);
+
     // filter, aggregate, modify data
     this.wrangleData();
 
-    var color = d3.scale.category20();
-
-    var formatPercent = d3.format(".1%");
-
-
-    // Compute the chord layout.
-    this.layout.matrix(this.matrix);
-
-    // Add a group per neighborhood.
-    var group = this.svg.selectAll(".group")
-    .data(this.layout.groups).enter().append("g")
-    .attr("class", "group")
-    .on("mouseover", console.log("mouseover"))
-    .on("mouseout", console.log("mouseout"));
-
-    // Add a mouseover title.
-    group.append("title").text(function(d, i) {
-        return that.neighborhoods[i].name + ": " + formatPercent(d.value/that.displayData.total) + " of origins";
-    });
-
-    group.append("svg:text")
-        .attr("dy", ".35em")
-        .attr("text-anchor", function(d) {return ((d.startAngle + d.endAngle) / 2) > Math.PI ? "end" : null; })
-        .attr("transform", function(d) {
-        return "rotate(" + (((d.startAngle + d.endAngle) / 2) * 180 / Math.PI - 90) + ")"
-            + "translate(" + (that.outerRadius +5) + ")"
-            + (((d.startAngle + d.endAngle) / 2) > Math.PI ? "rotate(180)" : "");
-        })
-        .text(function(d,i) {
-            return that.neighborhoods[i].name;
-        })
-        .style("font-size","14px")
-        .style("fill", "black")
-        .style("z-index", "10000")
-
-    // Add the group arc.
-    var groupPath = group.append("path")
-    .attr("id", function(d, i) { return "group" + i; })
-    .attr("d", this.arc)
-    .style("fill", function(d, i) { return that.neighborhoods[i].color; });
-
-    // Add the chords.
-    var chord = this.svg.selectAll(".chord")
-    .data(this.layout.chords).enter().append("path")
-    .attr("class", "chord")
-    .attr("d", this.path)
-    .style("fill", function(d) { return that.neighborhoods[d.source.index].color; })
-    .append("title").text(function(d) {
-     return that.neighborhoods[d.source.index].name
-     + " → " + that.neighborhoods[d.target.index].name
-     + ": " + d.source.value
-     + "\n" + that.neighborhoods[d.target.index].name
-     + " → " + that.neighborhoods[d.source.index].name
-     + ": " + d.target.value;
-     });
+    this.updateVis();
 
 }
 
@@ -138,14 +103,23 @@ ChordVis.prototype.updateVis = function() {
 
     // Add a group per neighborhood.
     var group = this.svg.selectAll(".group")
-    .data(this.layout.groups);
+      .data(this.layout.groups)
 
+    var group_enter = group.enter().append("g")
+      .attr("class", "group");
+
+    group.attr("d",this.arc);
+    group_enter.append("title");
+    group_enter.append("text");
+    group_enter.append("path");
+
+        // Add a mouseover title.
     group.select("title").text(function(d, i) {
         return that.neighborhoods[i].name + ": " + formatPercent(d.value/that.displayData.total) + " of origins";
     });
 
-    group.select("text").attr("dy", ".35em")
-        .transition()
+    group.select("text")
+        .attr("dy", ".35em")
         .attr("text-anchor", function(d) {return ((d.startAngle + d.endAngle) / 2) > Math.PI ? "end" : null; })
         .attr("transform", function(d) {
         return "rotate(" + (((d.startAngle + d.endAngle) / 2) * 180 / Math.PI - 90) + ")"
@@ -157,27 +131,53 @@ ChordVis.prototype.updateVis = function() {
         })
         .style("font-size","14px")
         .style("fill", "black")
-        .style("z-index", "10000");
+        .style("z-index", "10000")
 
-    this.svg.selectAll("path").data(this.layout.groups).attr("d", this.arc);
+    group.select('path')
+      .attr("id", function(d, i) { return "group" + i; })
+      .attr("d", this.arc)
+      .style("fill", function(d, i) { return that.neighborhoods[i].color; })
+      .on("mouseover", mouseoverGroup)
+      .on("mouseout", mouseoutGroup)
+      .on("mousemove", function(){return that.tipGroup.style("top", (event.pageY+20)+"px").style("left",event.pageX+"px");});
 
-    console.log(this.layout.chords());
     // Add the chords.
     var chord = this.svg.selectAll(".chord")
-    .data(this.layout.chords)
-    .attr("d", this.path)
-    .style("fill", function(d) { return that.neighborhoods[d.source.index].color; });
+      .data(this.layout.chords)
 
+    var chord_enter = chord.enter()
+      .append("path")
+      .attr("class", "chord")
+
+    chord
+      .attr("d", this.path)
+      .style("fill", function(d) { return that.neighborhoods[d.source.index].color; })
+      .on("mouseover",this.tipChord.show)
+      .on("mouseout",this.tipChord.hide)
+      .on("mousemove", function(){return that.tipChord.style("top", (event.pageY+20)+"px").style("left",event.pageX+"px");});
+
+    chord_enter.append("title")
+
+    chord.select("title").text(function(d) {
+     return that.neighborhoods[d.source.index].name
+     + " → " + that.neighborhoods[d.target.index].name
+     + ": " + d.source.value
+     + "\n" + that.neighborhoods[d.target.index].name
+     + " → " + that.neighborhoods[d.source.index].name
+     + ": " + d.target.value;
+     });
+
+    chord.exit().remove()
     group.exit().remove();
 
-    function mouseover(d, i) {
-        chord.classed("fade", function(p) {
-        return p.source.index != i
-        && p.target.index != i;
-        });
+    function mouseoverGroup(d, i) {
+      chord.classed("fade", function(p) {
+        return p.source.index != i && p.target.index != i;
+      });
+      that.tipGroup.show(d);
     }
-    function mouseout(d, i) {
-        chord.classed("fade", function(p) { return 0});
+    function mouseoutGroup(d, i) {
+      that.tipGroup.hide(d);
     }
 
 }
