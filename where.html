@@ -96,6 +96,7 @@
 <script src="libs/token.js"></script>
 <script src="js/chordvis.js"></script>
 <script src="js/formvis.js"></script>
+<script src="js/neighborhoodvis.js"></script>
 <script src="data/matrix.js"></script>
 <script>
 // Create a map in the div #map
@@ -112,15 +113,15 @@ $(function() {
     //==========================================
 
     // variables keeping global knowledge of the data
-    var matrixData,
-        stationData = {};
+    var stationData = {};
 
     // call this function after Data is loaded, reformatted and bound to the variables
     var initVis = function() {
       var MyEventHandler = {};
 
       // Instantiate all Vis Objects here
-      var chordVis = new ChordVis(d3.select("#chordVis"),stationData,hoodData, MyEventHandler);
+      var chordVis = new ChordVis(d3.select("#chordVis")hoodData, MyEventHandler);
+      var neighborhoodVis = new NeighborhoodVis(d3.select("#neighborhoodVis"),stationData,hoodData, MyEventHandler);
       var formVis = new FormVis(d3.select("#formVis"), MyEventHandler); 
      // var timeVis = new TimeVis(d3.select("#timeVis"),MyEventHandler);
 
