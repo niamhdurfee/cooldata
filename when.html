@@ -52,7 +52,13 @@
 
     <div class="container-fluid">
 
+      <div class="btn-group" role="group">
+        <button id="total" type="button" class="btn btn-default" value="total">Total</button>
+        <button id="maleVsFemale" type="button" class="btn btn-default" value="maleVsFemale">Male vs Female</button>
+        <button id="commuteVsLeisure" type="button" class="btn btn-default" value="unregistered">Commute vs Leisure</button>
+      </div>
       <div id="whenVis"></div>
+
 
 
     </div><!-- /.container -->
@@ -87,19 +93,21 @@ $(function() {
     var dateData;
     var brushData;
 
+
+
     // call this function after Data is loaded, reformatted and bound to the variables
     var initVis = function() {
       var MyEventHandler = {};
       // Instantiate all Vis Objects here
-      var stackedVis = new WhenVis(d3.select("#whenVis"), dateData, MyEventHandler);
+      var whenVis = new WhenVis(d3.select("#whenVis"), dateData, MyEventHandler);
 
       // Bind the eventHandler to the Vis Objects
-      $(MyEventHandler).bind("selectionChanged", function(event, from, to, status) {
-          stackedVis.onSelectionChange(from,to,status);
+      $(MyEventHandler).bind("selectionChanged", function(event, val) {
+          whenVis.onSelectionChange(val);
       });
 
       $(MyEventHandler).bind("typeChanged", function(event, dom1, dom2,type) {
-          stackedVis.onTypeChange([dom1, dom2,type]);
+          whenVis.onTypeChange([dom1, dom2,type]);
       });
     };
 
