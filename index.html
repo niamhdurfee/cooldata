@@ -73,35 +73,81 @@
     <div id="close-menu"><span class="icon icon-delete"></span></div>
 </nav>
 <nav id="station-menu" class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right station-menu">
-	<h3 id="station-name">Station Info</h3><h5 id="station-name"></h5>
+	<h3 id="station-name">Station Info </h3>
+    <h5><div id="station-amt"></div></h5>
     
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              WHO
+            </a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
 
-    
-    <h4>Top 5 Destinations</h4>
-    <div id="top-destinations">
-        <ul>
+            <div id="stationVis">
+            </div>
+
+              
+          </div>
             
-        </ul>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingTwo">
+          <h4 class="panel-title">
+            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              WHERE
+            </a>
+          </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            <div id="top-origins">
+                <ul></ul>
+            </div>
+                          <div id="top-destinations">
+                <ul></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingThree">
+          <h4 class="panel-title">
+            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              WHEN
+            </a>
+          </h4>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+
+          </div>
+        </div>
+      </div>
     </div>
-    <hr><h4>Top 5 Origins</h4>
-    <div id="top-origins"></div>
+    
 
     
-        <div id="stationVis">
-     </div>
+
+
     
     
     
     <div id="close-menu"><span class="icon icon-delete"></span></div>
-</nav>
+  </nav>
 
-                
-        <row>
-            <div class="col-md-12">
-                <div id="mapVis">
-                </div>
-            </div>            
-        </row>
+
+    <row>
+        <div class="col-md-12">
+            <div id="mapVis">
+            </div>
+        </div>            
+    </row>
 
              
 
@@ -161,8 +207,7 @@ $(function() {
 
       // Instantiate all Vis Objects here
       var mapVis = new MapVis(d3.select("#mapVis"), stationData, routeData, MyEventHandler); 
-//      var timeVis = new TimeVis(d3.select("#timeVis"),MyEventHandler);
-        
+//      var timeVis = new TimeVis(d3.select("#timeVis"),MyEventHandler);  
       var stationVis = new StationVis(d3.select("#stationVis"), stationData, routeData); 
 
       // Bind the eventHandler to the Vis Objects
@@ -175,6 +220,8 @@ $(function() {
       $(MyEventHandler).bind("selectionChanged", function(event, from, to, status) {
         // age_vis.onSelectionChange(from, to, status);
       });
+        
+        
     };
 
     // call this function after both files are loaded -- error should be "null" if no error

@@ -118,7 +118,7 @@ MapVis.prototype.updateVis = function() {
   this.routeData.forEach(function(o) {
         if (o.trips > 750) {
           var line = L.Polyline.fromEncoded(o.polyline, polyline_options).addTo(that.map);
-          line.bindPopup(o.trips +' trips from ' + "ORIGIN" + ' to ' + "that.stationData[dest].fullname");
+          line.bindPopup(o.trips +' trips from ' + that.stationData[+o.origdest.substring(0,3)].fullname +  ' to ' + that.stationData[+o.origdest.substring(3,7)].fullname);
           line.on('mouseover', function(e) {
             e.target.openPopup();
           })
@@ -175,7 +175,6 @@ MapVis.prototype.display_station_info = function(id)
         
         $('#station-menu').toggleClass('menu-open');
         $('#station-menu').toggleClass('menu-active');  
-        
     }
     
 

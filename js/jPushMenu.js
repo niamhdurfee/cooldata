@@ -8,11 +8,8 @@
 
 (function($) {
     $.fn.jPushMenu = function(customOptions) {
-        console.log(this);
         var o = $.extend({}, $.fn.jPushMenu.defaultOptions, customOptions);
         
-        console.log("hi");
-        console.log(o);
 
         $('body').addClass(o.pushBodyClass);
 
