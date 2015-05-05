@@ -33,7 +33,7 @@ WhoPieVis.prototype.initVis = function() {
   var formatPercent = d3.format("%");
   var formatNum = d3.format(",")
 
-  this.color = d3.scale.ordinal().domain(colorDomain).range(colorRange);
+  this.color = d3.scale.ordinal().domain(colorDomain).range(colorbrewer.Greens[9]);
 
   this.arc = d3.svg.arc()
     .outerRadius(this.radius - 10)
