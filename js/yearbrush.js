@@ -60,7 +60,7 @@ YearBrush.prototype.initVis = function() {
   this.svg.append("g")
     .attr("class", "year axis")
     .call(this.xAxis)
-    .selectAll("text")  
+    .selectAll("text")
     .style("text-anchor", "middle")
     .attr("transform", function(d) {
         return "translate(15,"+(that.height/2)+") rotate(90)" });
