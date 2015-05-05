@@ -51,11 +51,7 @@ StationVis.prototype.initVis = function() {
     .attr("height", this.height - 50 + this.margin.top + this.margin.bottom)
   .append("g")
     .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
-    
-    
 
-
-    
 };
 
 
@@ -115,13 +111,11 @@ StationVis.prototype.updateVis = function(id) {
 
     labels.exit().remove();
     
-
     // calculate top 5 destinations
     var sorted = [];
     for (var route in station.routes)
         sorted.push([route, station.routes[route]]);
     sorted.sort(function(a, b) {return b[1] - a[1]})
-    
     sorted = sorted.slice(0,5);
     
     var y = d3.scale.linear()
@@ -158,15 +152,48 @@ StationVis.prototype.updateVis = function(id) {
     
     texts.exit().remove();
     
+    // why isn't bar graph changing on update?
     
-//    $("#top-destinations ul").empty();
-//    $("#top-destinations ul").append('<li>' + that.stationData[sorted[0][0]].fullname + '</li>');
-//    $("#top-destinations ul").append('<li>' + that.stationData[sorted[1][0]].fullname + '</li>');
-//    $("#top-destinations ul").append('<li>' + that.stationData[sorted[2][0]].fullname + '</li>');
-//    $("#top-destinations ul").append('<li>' + that.stationData[sorted[3][0]].fullname + '</li>');
-//    $("#top-destinations ul").append('<li>' + that.stationData[sorted[4][0]].fullname + '</li>');
-//
+    
+    // calculate top 5 origins
+    var origins = [];
+    for (var key in this.stationData)
+        origins.push([key, this.stationData[key].routes[id]]);
+    origins.sort(function(a, b) {return b[1] - a[1]})
+    origins = origins.slice(0,5);
+    
+    
+    var y_orig = d3.scale.linear()
+      .domain([0, origins[0][1] ])
+      .range([0, this.height-40]);  
+    
+    
+    var rects3 = this.originsvg.selectAll("rect")
+      .data(origins);
+    
+    rects3.enter().append("rect")
+      .attr("width", function(d) { return 40; })
+      .attr("height", function(d) { return y_orig(d[1]); })
+      .attr("x", function(d, i) { return i*55; })
+      .attr("y", function(d) { return y_orig(origins[0][1]) - y_orig(d[1]); })
+      .style("fill", "#399F2E")
+      .on('mouseover', function(d) { $('#name-origins-hov').html(that.stationData[d[0]].fullname) } )
+      .on('mouseout', function() { $('#name-origins-hov').empty() });
+    
+    rects3.exit().remove();
+    
+    var texts2 = this.originsvg.selectAll("text")
+      .data(origins);
 
+    texts2.enter().append("text")
+      .style('font-size', '10px')
+      .style('font-weight', '800')
+      .style('fill', 'white')
+      .text( function (d) { return d[1]; })
+      .attr("x", function(d, i) { return i*55 + 8; })
+      .attr("y", function(d) { return y_orig(origins[0][1]) - y_orig(d[1]) + 15; });
+    
+    texts2.exit().remove();
 };
 
       
