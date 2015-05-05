@@ -103,8 +103,6 @@ ChordVis.prototype.updateVis = function() {
     var that = this;
     var color = d3.scale.category20c();
 
-
-    console.log(color(1));
     // Compute the chord layout.
     this.layout.matrix(this.matrix);
 
@@ -140,7 +138,7 @@ ChordVis.prototype.updateVis = function() {
       .attr("id", function(d, i) { return "group" + i; })
       .attr("d", this.arc)
 //      .style("fill", function(d, i) { console.log(i); return color[i]; })
-      .style("fill", function(d, i) { console.log(i); return color(i); })
+      .style("fill", function(d, i) { return color(i); })
       .on("mouseover", mouseoverGroup)
       .on("mouseout", mouseoutGroup)
       .on("click",function(d,i) {

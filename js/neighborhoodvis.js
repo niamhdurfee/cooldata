@@ -51,8 +51,10 @@ NeighborhoodVis = function(_parentElement, _data, _metaData,_eventHandler) {
 NeighborhoodVis.prototype.initVis = function() {
 
   this.map = L.mapbox.map('mapVis', 'niamhdurfee.loko84n8',{center: [42.35272,-71.09], zoom: 13});
+    
+  var color = d3.scale.category20c();
+  this.color = d3.scale.ordinal().domain(this.neighborhoods.map(function (d) { return d.name})).range(this.neighborhoods.map(function (d,i) {return color(i); }));
 
-  this.color = d3.scale.ordinal().domain(this.neighborhoods.map(function (d) { return d.name})).range(this.neighborhoods.map(function (d) { return d.color}));
 
   this.circles = new L.FeatureGroup();
 
@@ -86,6 +88,7 @@ NeighborhoodVis.prototype.updateVis = function() {
   this.areaScale = d3.scale.linear().range([0,250000]).domain([0, d3.max(this.stationData, this.filter)]);
 
   this.displayStations.forEach(function (o) {
+//      console.log(o);
        s = that.filter(o),
        r = that.getRadius(that.areaScale(s)),
        c = that.color(o.hood);
