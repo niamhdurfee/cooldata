@@ -149,4 +149,4 @@ for station in stations:
 	f.write('"weekday":'+weekday[str(station[0])] +  ',\n')
 	f.write('"routes":'+routes[str(station[0])]+'\n },\n')
 f.write("}")
-f.close()		
+f.close()
