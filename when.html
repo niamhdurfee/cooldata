@@ -112,6 +112,11 @@ $(function() {
     var dateData;
     var brushData;
 
+    var makeMinutes = function (m) {
+      var a = m.split(":");
+      return parseInt(a[0]) * 60 + parseInt(a[1]);
+    }
+
     // call this function after Data is loaded, reformatted and bound to the variables
     var initVis = function() {
       var MyEventHandler = {};
@@ -133,18 +138,52 @@ $(function() {
     var dataLoaded = function(_data) {
         dateData = _data.map(function (d) {
           return {
-            hourly: d.overall.hourly
+            total: {
+              dist: parseFloat(d.dist),
+              total: +d.total,
+              registered: +d.reg,
+              casual: +d.total - +d.reg,
+              female: +d.female,
+              male: +d.total - +d.female,
+              commuter: +d.total - +d.leisure,
+              leisure: +d.leisure,
+              duration:+d.time,
+              timeofday: makeMinutes(d.timeofday)
+            },
+            weekend: {
+              dist: parseFloat(d.distWeekend),
+              total: +d.totalWeekend,
+              registered: +d.regWeekend,
+              casual: +d.totalWeekend - +d.regWeekend,
+              female: +d.femaleWeekend,
+              male: +d.totalWeekend - +d.femaleWeekend,
+              commuter: +d.totalWeekend - +d.leisureWeekend,
+              leisure: +d.leisureWeekend,
+              duration:+d.timeWeekend,
+              timeofday: makeMinutes(d.timeofday)
+            },
+            weekday: {
+              dist: parseFloat(d.dist) - parseFloat(d.distWeekend),
+              total: +d.total - +d.totalWeekend,
+              registered: +d.reg - +d.regWeekend,
+              casual: +d.total - +d.totalWeekend - +d.reg + +d.regWeekend,
+              female: +d.female - +d.femaleWeekend,
+              male: +d.total - +d.female,
+              commuter: +d.total - +d.totalWeekend - +d.leisure + +d.leisureWeekend,
+              leisure: +d.leisure - +d.leisureWeekend,
+              duration:+d.time - +d.timeWeekend,
+              timeofday: makeMinutes(d.timeofday)
+            }
           }
         });
+console.log(dateData);
         initVis();
     };
 
     var startHere = function() {
       d3.csv("data/timeofdaydata.csv", function(error, data) {
         if (!error) {
-          dateData = data;
-          // dataLoaded(data);
-          initVis();
+          dataLoaded(data);
         }
       });
     };
