@@ -1,5 +1,6 @@
 body {
 	padding-top: 60px;
+    font-family: 'Helvetica Neue';
 }
 #filterform {
     width:300px;
@@ -219,9 +220,7 @@ body {
   text-align: center;
 
 }
-.panel-title{
-    text-align: center;
-}
+
 
 #legend label,
 #legend span {
@@ -231,4 +230,25 @@ body {
   width:50%;
   text-align:center;
   font-size:10px;
-  }
+}
+
+
+/* styles for the panel on right of overview */
+.panel-title{
+    text-align: center;
+}
+
+.panel-title a {
+  font-weight: 500;
+  color: #555;
+}
+
+.panel-title a:active {
+    text-transform: none;
+    text-decoration: none;
+}
+
+.panel-heading {
+ padding: 0;
+}
+

@@ -42,14 +42,14 @@ StationVis.prototype.initVis = function() {
     .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
 
   this.originsvg = this.originParentElement.append("svg")
-    .attr("width", this.width + this.margin.left + this.margin.right)
-    .attr("height", this.height - 50 + this.margin.top + this.margin.bottom)
+    .attr("width", this.width + 10 + this.margin.left + this.margin.right)
+    .attr("height", this.height + 55 + this.margin.top + this.margin.bottom)
   .append("g")
     .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
 
   this.destsvg = this.destParentElement.append("svg")
-    .attr("width", this.width + this.margin.left + this.margin.right)
-    .attr("height", this.height - 50 + this.margin.top + this.margin.bottom)
+    .attr("width", this.width + 10 + this.margin.left + this.margin.right)
+    .attr("height", this.height + 55 + this.margin.top + this.margin.bottom)
   .append("g")
     .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
 
@@ -150,32 +150,45 @@ StationVis.prototype.updateVis = function(id) {
     // vertical bars for top 5 destinations
     var dest_rects = this.destsvg.selectAll("rect")
       .data(destinations);
-    var dest_rects_enter = dest_rects.enter().append("rect");  
+    var dest_rects_enter = dest_rects.enter().append("rect");
     dest_rects
-      .attr("width", function(d) { return 40; })
+      .attr("x", function(d, i) { return i*55 + 5; })
+      .attr("y", function(d) { return y_dest(destinations[0][1]) - y_dest(d[1]) + 50; })
+      .attr("width", function(d) { return 30; })
       .attr("height", function(d) { return y_dest(d[1]); })
-      .attr("x", function(d, i) { return i*55; })
-      .attr("y", function(d) { return y_dest(destinations[0][1]) - y_dest(d[1]); })
-      .style("fill", "#399F2E")
-      .on('mouseover', function(d) { $('#name-dest-hov').html(that.stationData[d[0]].fullname) } )
-      .on('mouseout', function() { $('#name-dest-hov').empty() });
+      .style("fill", "#399F2E");
     dest_rects.exit().remove();
 
-    // labels on top of bars for # trips
-    var dest_labels = this.destsvg.selectAll("text")
+    // labels for top 5 destinations
+    var dest_num_labels = this.destsvg.selectAll(".numlabels")
       .data(destinations);
-    var dest_labels_enter = dest_labels.enter().append("text")
-    dest_labels
+    var dest_num_labels_enter = dest_num_labels.enter().append("text").attr('class', 'numlabels');
+    dest_num_labels
       .style('font-size', '10px')
       .style('font-weight', '800')
       .style('fill', 'white')
       .text( function (d) { return d[1]; })
-      .attr("x", function(d, i) { return i*55 + 8; })
-      .attr("y", function(d) { return y_dest(destinations[0][1]) - y_dest(d[1]) + 15; });
-    dest_labels.exit().remove();
-
-    // ADD TOOLTIPS ON MOUSEOVER
-
+      .attr("x", function(d, i) { return i*55 + 9; })
+      .attr("y", function(d) { return y_dest(destinations[0][1]) - y_dest(d[1]) + 65; });
+    dest_num_labels.exit().remove();
+  
+    var dest_text_labels = this.destsvg.selectAll(".textlabels")
+      .data(destinations);
+    var dest_text_labels_enter = dest_text_labels.enter().append("text").attr('class', 'textlabels');
+    dest_text_labels
+      .style('class', 'text-labels')
+      .style('font-size', '12px')
+      .style('font-weight', '400')
+      .style('fill', '#555')
+      .text( function (d) { return that.stationData[d[0]].short; })
+      .attr("y", function(d, i) { return i*55 + 2; })
+      .attr("x", function(d) { return -1 * ( y_dest(destinations[0][1]) + 50); })
+      .attr("transform", function(d) {
+        return "rotate(-90)" 
+      });
+    dest_text_labels.exit().remove();
+    
+    
 
     
     
@@ -200,30 +213,43 @@ StationVis.prototype.updateVis = function(id) {
       .data(origins);
     var origin_rects_enter = origin_rects.enter().append("rect");
     origin_rects
-      .attr("x", function(d, i) { return i*55; })
-      .attr("y", function(d) { return y_origin(origins[0][1]) - y_origin(d[1]); })
-//      .transition()
-      .attr("width", function(d) { return 40; })
+      .attr("x", function(d, i) { return i*55 + 5; })
+      .attr("y", function(d) { return y_origin(origins[0][1]) - y_origin(d[1]) + 50; })
+      .attr("width", function(d) { return 30; })
       .attr("height", function(d) { return y_origin(d[1]); })
-      .style("fill", "#399F2E")
-      .on('mouseover', function(d) { $('#name-origins-hov').html(that.stationData[d[0]].fullname) } )
-      .on('mouseout', function() { $('#name-origins-hov').empty() });
+      .style("fill", "#399F2E");
     origin_rects.exit().remove();
 
     // labels for top 5 origins
-    var origin_labels = this.originsvg.selectAll("text")
+    var origin_num_labels = this.originsvg.selectAll(".numlabels")
       .data(origins);
-    var origin_labels_enter = origin_labels.enter().append("text");
-    origin_labels
+    var origin_num_labels_enter = origin_num_labels.enter().append("text").attr('class', 'numlabels');
+    origin_num_labels
       .style('font-size', '10px')
       .style('font-weight', '800')
       .style('fill', 'white')
       .text( function (d) { return d[1]; })
-      .attr("x", function(d, i) { return i*55 + 8; })
-      .attr("y", function(d) { return y_origin(origins[0][1]) - y_origin(d[1]) + 15; });
-    origin_labels.exit().remove();
-
-
+      .attr("x", function(d, i) { return i*55 + 9; })
+      .attr("y", function(d) { return y_origin(origins[0][1]) - y_origin(d[1]) + 65; });
+    origin_num_labels.exit().remove();
+  
+    var origin_text_labels = this.originsvg.selectAll(".textlabels")
+      .data(origins);
+    var origin_text_labels_enter = origin_text_labels.enter().append("text").attr('class', 'textlabels');
+    origin_text_labels
+      .style('class', 'text-labels')
+      .style('font-size', '12px')
+      .style('font-weight', '400')
+      .style('fill', '#555')
+      .text( function (d) { console.log(that.stationData[d[0]]); return that.stationData[d[0]].short; })
+      .attr("y", function(d, i) { return i*55 + 2; })
+      .attr("x", function(d) { return -1 * ( y_origin(origins[0][1]) + 50); })
+      .attr("transform", function(d) {
+        return "rotate(-90)" 
+      });
+    origin_text_labels.exit().remove();
+    
+    
     // HOURLY WHEN
     // ***************
     // timesvg
