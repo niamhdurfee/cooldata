@@ -20,7 +20,8 @@
   <link rel="manifest" href="img/manifest.json">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <link rel="stylesheet" type="text/css" href="css/jPushMenu.css" />
-  <link rel="stylesheet" type="text/css" href="css/icons.css" />
+<!--  <link rel="stylesheet" type="text/css" href="css/icons.css" />-->
+  <link rel="stylesheet" type="text/css" href="css/tabs.css" />
 
   <meta name="msapplication-TileColor" content="#ffffff">
   <meta name="msapplication-TileImage" content="img/ms-icon-144x144.png">
@@ -63,19 +64,7 @@
     </nav>
 
     <div class="container-fluid">
-<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left">
-	<h3>Explore</h3>
 
-    
-	<a href="#">By Gender</a>
-	<a href="#">By Age</a>
-	<a href="#">By Distance</a>
-	<a href="#">By Speed</a>
-	<a href="#">By Time of Day</a>
-	<a href="#">By Day of Week</a>
-    
-    <div id="close-menu"><span class="icon icon-delete"></span></div>
-</nav>
 <nav id="station-menu" class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right station-menu">
 	<h3 id="station-name">Station Info </h3>
     <h5><div id="station-amt"></div></h5>
@@ -85,17 +74,16 @@
         <div class="panel-heading" role="tab" id="headingOne">
           <h4 class="panel-title">
             <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-              WHO
+              who?
             </a>
           </h4>
         </div>
         <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
           <div class="panel-body">
 
-            <div id="stationVis">
-            </div>
+            <div id="whoVis"></div>
 
-              
+              Learn More about Who
           </div>
             
         </div>
@@ -104,18 +92,39 @@
         <div class="panel-heading" role="tab" id="headingTwo">
           <h4 class="panel-title">
             <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-              WHERE
+              where?
             </a>
           </h4>
         </div>
         <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
           <div class="panel-body">
-            <div id="top-origins">
-                <ul></ul>
-            </div>
-                          <div id="top-destinations">
-                <ul></ul>
-            </div>
+              
+            <section>
+				<div class="tabs tabs-style-flip">
+					<nav>
+						<ul>
+							<li><a href="#section-flip-1" class="icon icon-plane"><span>Origins</span></a></li>
+							<li><a href="#section-flip-2" class="icon icon-date"><span>Destinations</span></a></li>
+						</ul>
+					</nav>
+					<div class="content-wrap">
+						<section id="section-flip-1">
+                            <div id="originsVis"></div>
+                            <div id="name-origins-hov"></div>
+                        </section>
+						<section id="section-flip-2">
+                            <div id="destVis"></div>
+                            <div id="name-dest-hov"></div>
+                        </section>
+					</div><!-- /content -->
+				</div><!-- /tabs -->
+			</section>
+              
+              
+              
+              
+              
+
           </div>
         </div>
       </div>
@@ -123,7 +132,7 @@
         <div class="panel-heading" role="tab" id="headingThree">
           <h4 class="panel-title">
             <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-              WHEN
+              when?
             </a>
           </h4>
         </div>
@@ -180,6 +189,7 @@
 <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
 <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.js'></script>
 <script src="libs/d3.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 <script src="libs/Polyline.encoded.js"></script>
 <script src="libs/token.js"></script>
 <script src="js/mapvis.js"></script>
@@ -188,18 +198,21 @@
 <!--<script src="js/timevis.js"></script>-->
 <script src="js/jquery.pulse.min.js"></script>
 <script src="js/jPushMenu.js"></script>
-
-<!--call jPushMenu, required-->
+<script src="js/cbpFWTabs.js"></script>
 <script>
+    (function() {
+
+        [].slice.call( document.querySelectorAll( '.tabs' ) ).forEach( function( el ) {
+            new CBPFWTabs( el );
+        });
+
+    })();
+
     jQuery(document).ready(function($) {
         $('.toggle-menu').jPushMenu();
     });
-</script>
-<script>
-
 
     $('#expand').pulse({color: '#eee' }, { duration : 2000, pulses : -1 });
-
 </script>
       
 <script>
@@ -228,7 +241,7 @@ $(function() {
       // Instantiate all Vis Objects here
       var mapVis = new MapVis(d3.select("#mapVis"), stationData, routeData, MyEventHandler); 
 //      var timeVis = new TimeVis(d3.select("#timeVis"),MyEventHandler);  
-      var stationVis = new StationVis(d3.select("#stationVis"), stationData, routeData); 
+      var stationVis = new StationVis(d3.select("#whoVis"),d3.select("#originsVis"), d3.select("#destVis"), stationData, routeData); 
 
       // Bind the eventHandler to the Vis Objects
       $(MyEventHandler).bind("station-changed", function(event, id) {
