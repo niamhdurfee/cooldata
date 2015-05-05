@@ -59,7 +59,7 @@ body {
   height: 350px;
 }
 #whenVis {
-	height:500px;
+	height:700px;
 }
 #yearBrush {
  position: fixed;
@@ -178,4 +178,3 @@ body {
 .panel-heading {
  padding: 0;
 }
-
