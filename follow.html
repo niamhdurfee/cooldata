@@ -51,7 +51,6 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a id="reset"><span class="glyphicon glyphicon-refresh"></span></a></li>
-            <li><a id="playpause"><span id="imgPlayPause" class="glyphicon glyphicon-pause"></span></a></li>
             <li><a data-toggle="modal" data-target="#help" id="helpButton"><span class="glyphicon glyphicon-question-sign"></span></a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -105,6 +104,11 @@
 
             </div>
             <div id="pieVis">
+            </div>
+            <div align="center">
+              <button id="slower" class="btn btn-default"><span class="glyphicon glyphicon-step-backward"></span></button>
+              <button id="pause" class="btn btn-default"><span id='imgPause' class="glyphicon glyphicon-pause"></span></button>
+              <button id="faster" class="btn btn-default"><span class="glyphicon glyphicon-step-forward"></span></button>
             </div>
           </td>
         </tr>
@@ -190,24 +194,28 @@ $(function() {
         play = true;
         tick();
        });
-      $('#playpause').on('click', function () {
-        $("#imgPlayPause").attr("class", function () { return play ? "glyphicon glyphicon-play" : "glyphicon glyphicon-pause"})
+      $('#reset').on("click", function () {
+        i = 0;
+      });
+      $("#faster").on("click", function () {
+        timeout /= 2;
+      });
+      $("#slower").on("click", function () {
+        timeout *= 2;
+      });
+      $('#pause').on('click', function () {
+        $("#imgPause").attr("class", function () { return play ? "glyphicon glyphicon-play" : "glyphicon glyphicon-pause"})
         play = play ? false : true;
         tick();
       });
-      $('#reset').on("click", function () {
-        i = 0;
-      })
 
-
-      // var mapVis = new FollowVis(d3.select("body"), routeData, MyEventHandler);
+      var mapVis = new FollowVis(d3.select("body"), routeData, MyEventHandler);
       var runningVis = new RunningVis(d3.select("#runningVis"), routeData,MyEventHandler);
       var pieVis = new PieVis(d3.select("#pieVis"),MyEventHandler);
       var progressVis = new ProgressVis(d3.select("#progressVis"),routeData,MyEventHandler);
 
       var i = 0;
-
-
+      var timeout = 100;
       var tick = function () {
         if (play) {
           if (i < data.length) {
@@ -215,7 +223,7 @@ $(function() {
             mapVis.tick(i,data[i]);
             pieVis.tick(i,data[i]);
             progressVis.tick(i,data[i]);
-            setTimeout(tick, 100)
+            setTimeout(tick, timeout)
             i += 1
           } else {
             i = 0;
