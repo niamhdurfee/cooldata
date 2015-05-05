@@ -45,6 +45,7 @@ WhenVis.prototype.initVis = function() {
   this.xAxis = d3.svg.axis()
     .scale(this.x)
     .tickFormat(formatMinutes)
+    .ticks(20)
     .orient("bottom");
 
   this.yAxis = d3.svg.axis()
@@ -109,8 +110,8 @@ WhenVis.prototype.updateVis = function() {
   this.svg.select(".x.axis")
     .call(this.xAxis);
   var lbl = (this.yVariable[0] == 'speed') ? "speed (mph)" : "count";
-  lbl = (this.yVariable[0] == 'dist') ? "total distance (miles)" :lbl;
-  lbl = (this.yVariable[0] == 'duration') ? "total time (minutes)" : lbl;
+  lbl = (this.yVariable[0] == 'dist') ? "average distance per trip (miles)" :lbl;
+  lbl = (this.yVariable[0] == 'duration') ? "average time per trip (minutes)" : lbl;
   this.yAxisLabel.text(lbl)
 
   var area = this.svg.selectAll(".area")

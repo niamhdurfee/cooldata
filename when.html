@@ -221,6 +221,12 @@ $(function() {
           d.speed.total = 60 *d.dist.total / d.duration.total;
           d.speed.weekend = 60 *d.dist.weekend / d.duration.weekend;
           d.speed.weekday = 60 *d.dist.weekday / d.duration.weekday;
+          d.duration.total /= d.total.total;
+          d.duration.weekend /= d.total.weekend;
+          d.duration.weekday /= d.total.weekday;
+          d.dist.total /= d.total.total;
+          d.dist.weekend /= d.total.weekend;
+          d.dist.weekday /= d.total.weekday;
         })
         initVis();
     };
