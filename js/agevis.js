@@ -61,13 +61,6 @@ AgeVis.prototype.initVis = function() {
   this.svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0,"+this.height+")")
-<<<<<<< HEAD
-      .call(this.xAxis);
-
-  this.svg.append("g")
-      .attr("class", "y axis")
-      .attr("transform", "translate("+this.margin.left+",0)");
-=======
       .call(this.xAxis)
       .append("text")
       .attr("transform", "translate("+this.width+",-20)")
@@ -89,7 +82,6 @@ AgeVis.prototype.initVis = function() {
     .attr("transform", "translate("+(this.width/2 - 50)+",24)")
     .append("text")
     .text("age distribution*");
->>>>>>> origin/master
 
 
   // // filter, aggregate, modify data
