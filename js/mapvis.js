@@ -35,21 +35,35 @@ MapVis = function(_parentElement,_stationData, _routeData, _eventHandler) {
  * Method that sets up the SVG and the variables
  */
 MapVis.prototype.initVis = function() {
-
+that = this;
   this.map = L.mapbox.map('mapVis', 'niamhdurfee.loko84n8');
   // fromEncoded(encoded).addto(map);
   // var line_points = [[42.361285,-71.06514],[42.353412,-71.044624]];
   // var polyline = L.polyline(line_points).addTo(map);
 
   // // call the update method
-  this.updateVis();
+  var polyline_options = {
+      className: 'line',
+      color: 'grey',
+      opacity: 0.5
+    };
+  this.allLines = new L.FeatureGroup();
+  this.lines = new L.FeatureGroup();
+  this.routeData.forEach(function(o ) {
+
+          if (o.trips > 750) {
+            var line = L.Polyline.fromEncoded(o.polyline, polyline_options).addTo(that.map);
+            that.allLines.addLayer(line);
+          }
+      });
+  this.updateVis(-1);
 };
 
 // MapVis.prototype.wrangleData = function(_filterFunction) {
 //   this.setScale(_filterFunction);
 // };
 
-MapVis.prototype.updateVis = function() {
+MapVis.prototype.updateVis = function(b) {
   var that = this;
 
 
@@ -103,10 +117,24 @@ MapVis.prototype.updateVis = function() {
       " - " + $( "#slider-time" ).slider( "values", 1 ) );
 
 
-  var polyline_options = {
-      className: 'line',
-      color: 'grey',
-      opacity: 0.5
+  if (b > 0) {
+    this.map.removeLayer(this.allLines);
+  }
+  else {
+    this.map.removeLayer(this.lines);
+  }
+  this.lines = new L.FeatureGroup();
+
+
+    var enter_polyline_options = {
+          className: 'line',
+      color: 'darkgreen',
+      opacity: 0.8
+    };
+    var exit_polyline_options = {
+          className: 'line',
+      color: 'red',
+      opacity: 0.8
     };
   var popup_options = {
     closeButton: true,
@@ -119,11 +147,24 @@ MapVis.prototype.updateVis = function() {
 
   this.color = d3.scale.linear().range(["red","grey","lightgreen"]).domain([0.45,0.5,0.55]);
 
-  this.routeData.forEach(function(o) {
-        if (o.trips > 750) {
-          var line = L.Polyline.fromEncoded(o.polyline, polyline_options).addTo(that.map);
+  this.routeData.forEach(function(o ) {
+        if(b>0) {
+          if (o.trips > 750 && parseInt(o.origdest.substring(0,3)) == b) {
+            var line = L.Polyline.fromEncoded(o.polyline, enter_polyline_options).addTo(that.map);
+            that.lines.addLayer(line);
+          }
+          else if(o.trips > 750 && parseInt(o.origdest.substring(3)) == b) {
+            var line = L.Polyline.fromEncoded(o.polyline, exit_polyline_options).addTo(that.map);
+            that.lines.addLayer(line);
+          }
         }
       });
+      if (b > 0) {
+        this.map.addLayer(this.lines);
+      }
+      else {
+        this.map.addLayer(this.allLines);
+      }
 
 
     stations.forEach(function (o) {
@@ -131,14 +172,17 @@ MapVis.prototype.updateVis = function() {
            s = orig.overall.average.a+orig.overall.average.d,
            r = that.getRadius(that.areaScale(s)),
            c = that.color(orig.overall.average.a/s);
-        var popup = L.popup(popup_options).setContent(orig.fullname);
-        var circle = L.circle(orig.loc, r, {color: c, opacity: 1, fillOpacity: 0.8, className:'station',weight:2}).addTo(that.map).bindPopup(popup)
-        circle.bindPopup(orig.fullname);
-        circle.on('mouseover', function() {
-            circle.openPopup();
+        var circle = L.circle(orig.loc, r, {color: c, opacity: 1, fillOpacity: 0.8, className:'station',weight:2}).addTo(that.map)
+        circle.on('mouseover', function(event) {
             that.display_station_info(o);
+            that.updateVis(o);
         });
+        circle.on('mouseout', function () {
+          that.updateVis(-1);
+        })
+
     })
+
 };
 
 /**
