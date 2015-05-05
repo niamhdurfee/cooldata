@@ -87,7 +87,6 @@ ProgressVis.prototype.initVis = function() {
 }
 
 ProgressVis.prototype.tick = function(i,_trip) {
-  console.log(_trip, _trip.tripType);
   if (i == 0) { this.onReset(_trip); }
   else { this.filterAndAggregate(_trip);}
 }

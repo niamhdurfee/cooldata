@@ -20,16 +20,16 @@ id,name,short_name,lat,lng,region
 64,Congress / Sleeper,Congress / Sleeper,42.3511,-71.0496,Seaport
 65,Boston Convention & Exhibition Center,Boston Convention Center,42.347342,-71.044348,Seaport
 22,South Station - 700 Atlantic Ave.,South Station,42.352175,-71.055547,Downtown
-20,Aquarium Station - 200 Atlantic Ave.,Aquarium,42.35977,-71.051601,Downtown
+20,Aquarium Station - 200 Atlantic Ave.,Aquarium,42.35977,-71.051601,Seaport
 23,Mayor Thomas M. Menino - Government Center,Government Center,42.359677,-71.059364,Downtown
-6,Cambridge St. at Joy St.,Cambridge St / Joy St,42.361285,-71.06514,Downtown
+6,Cambridge St. at Joy St.,Cambridge St / Joy St,42.361285,-71.06514,Beacon Hill
 38,TD Garden - Legends Way,North Station,42.365471,-71.061451,West End
 35,Summer St. / Arch St.,Summer St. / Arch St.,42.354594,-71.05896,Downtown
 40,Lewis Wharf - Atlantic Ave.,Lewis Wharf - Atlantic Ave,42.363871,-71.050877,Seaport
 43,Rowes Wharf - Atlantic Ave,Rowes Wharf - Atlantic Ave,42.357143,-71.050699,Seaport
 44,Faneuil Hall - Union St. at North St.,Faneuil Hall,42.360583,-71.056868,Downtown
 47,Cross St. at Hanover St.,Cross St / Hanover St,42.362811,-71.056067,Downtown
-49,Stuart St. at Charles St.,Stuart St / Charles St,42.351146,-71.066289,Beacon Hill
+49,Stuart St. at Charles St.,Stuart St / Charles St,42.351146,-71.066289,Back Bay
 48,Post Office Square,Post Office Square,42.356755,-71.055407,Downtown
 54,Tremont St / West St,Tremont St / West St,42.354979,-71.063348,Downtown
 59,Chinatown Gate Plaza - Surface Rd. at Beach St.,Chinatown Gate Plaza,42.351356,-71.059367,Downtown
@@ -46,12 +46,12 @@ id,name,short_name,lat,lng,region
 36,Boston Public Library - 700 Boylston St.,Boston Public Library,42.349673,-71.077303,Back Bay
 42,Boylston St. at Arlington St.,Boylston St / Arlington St,42.352096,-71.070378,Back Bay
 50,Boylston St / Berkeley St,Boylston St / Berkeley St,42.350989,-71.073644,Back Bay
-58,The Esplanade - Beacon St. at Arlington St.,The Esplanade,42.355596,-71.07278,Back Bay
+58,The Esplanade - Beacon St. at Arlington St.,The Esplanade,42.355596,-71.07278,Beacon Hill
 10,B.U. Central - 725 Comm. Ave.,B.U. Central,42.350075,-71.105884,Fenway/Kenmore
-11,Longwood Ave / Binney St,Longwood Ave / Binney St,42.338629,-71.1065,Fenway
-19,Buswell Park,Buswell Park,42.347527,-71.105828,Fenway
+11,Longwood Ave / Binney St,Longwood Ave / Binney St,42.338629,-71.1065,Fenway/Kenmore
+19,Buswell Park,Buswell Park,42.347527,-71.105828,Fenway/Kenmore
 14,Louis Pasteur / Longwood Ave,Louis Pasteur / Longwood Ave,42.337171,-71.102797,Fenway/Kenmore
-3,Colleges of the Fenway,Colleges of the Fenway,42.340021,-71.100812,Fenway
+3,Colleges of the Fenway/Kenmore,Colleges of the Fenway/Kenmore,42.340021,-71.100812,Fenway/Kenmore
 34,Overland St at Brookline Ave,Overland St / Brookline Ave,42.346171,-71.099855,Fenway/Kenmore
 33,Kenmore Sq / Comm Ave,Kenmore Sq / Comm Ave,42.349046,-71.096831,Fenway/Kenmore
 45,Yawkey Way at Boylston St.,Yawkey Way / Boylston St,42.344763,-71.09788,Fenway/Kenmore
@@ -96,7 +96,7 @@ id,name,short_name,lat,lng,region
 98,Charlestown - Warren St at Chelsea St,Charlestown - Warren St,42.371848,-71.060292,Charlestown
 99,Mayor Thomas M. Menino - Government Center,,42.35892,-71.057629,Downtown
 100,Dudley Square,,42.328654,-71.084198,Dudley Square
-101,BIDMC - Brookline at Burlington St,,42.345733,-71.100694,Fenway
+101,BIDMC - Brookline at Burlington St,,42.345733,-71.100694,Fenway/Kenmore
 102,Boston Medical Center -  East Concord at Harrison Ave,,42.336437,-71.073089,South End
 103,Boylston at Fairfield,,42.348762,-71.082383,Back Bay
 104,Andrew Station - Dorchester Ave at Humboldt Pl,,42.330716,-71.057044,South Boston
@@ -112,7 +112,7 @@ id,name,short_name,lat,lng,region
 114,TD Garden - Causeway at Portal Park #1,,42.365942,-71.060515,West End
 115,Spaulding Rehabilitation Hospital - Charlestown Navy Yard,,42.378338,-71.048927,Charlestown
 116,Charles St at Beacon St,,42.356052,-71.069849,Beacon Hill
-117,Milk St at India St,,42.358508,-71.052984,Downtown
+117,Milk St at India St,,42.358508,-71.052984,Seaport
 118,Hayes Square at Vine St.,,42.377022,-71.056605,Charlestown
 119,New Balance Store - Boylston at Dartmouth,,42.350413,-71.07655,Back Bay
 120,JP Monument - South St at Centre St,,42.309467,-71.115645,Brookline

@@ -55,9 +55,26 @@
     </nav>
 
     <div class="container-fluid">
-    
-          <div id="formVis"></div>
-          <div id="chordVis"></div>
+
+          <table width="100%">
+            <thead>
+              <tr>
+                <th width="50%"></th>
+                <th width="50%"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><div id="formVis"></div><div id="chordVis"></div</td>
+                <td>
+                  <div id="neighborhoodVis">
+                    <div id="mapVis">
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
     </div><!-- /.container -->
     <div class="modal fade" id="help" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -71,7 +88,7 @@
             <p>This is a <a href="https://github.com/mbostock/d3/wiki/Chord-Layout">chord diagram!</a></p>
             <p>We looked at each of the Hubway stations and figured out what neighborhood it belonged to. <small>The team member that did this is in fact not from Boston...</small></p>
             <p>Using python, we tallied the number of trips from neighborhood A to neighborhood B, and wrote a datafile containing a global variable<code>_matrixData</code>, since chord diagrams work best when data is formatted as a matrix. We did this for the overall counts, as well as for weekend & weekday trips, and for registered & casual users</p>
-            <p>Hovering over the neighborhoods (represented along the circumference of the diagram) will tell you 
+            <p>Hovering over the neighborhoods (represented along the circumference of the diagram) will tell you
             <ul>
             <li>how many stations are in that neighborhood,</li>
             <li>the total number of trips originating from there,</li>
@@ -121,14 +138,18 @@ $(function() {
       var MyEventHandler = {};
 
       // Instantiate all Vis Objects here
-      var formVis = new FormVis(d3.select("#formVis"), MyEventHandler); 
+      var formVis = new FormVis(d3.select("#formVis"), MyEventHandler);
       var chordVis = new ChordVis(d3.select("#chordVis"), hoodData, MyEventHandler);
-      // var neighborhoodVis = new NeighborhoodVis(d3.select("#neighborhoodVis"),stationData,hoodData, MyEventHandler);
+      var neighborhoodVis = new NeighborhoodVis(d3.select("#neighborhoodVis"),stationData,hoodData, MyEventHandler);
      // var timeVis = new TimeVis(d3.select("#timeVis"),MyEventHandler);
 
       // Bind the eventHandler to the Vis Objects
+      $(MyEventHandler).bind("hoodChanged", function(event, selected) {
+        neighborhoodVis.onHoodChange(selected);
+      });
       $(MyEventHandler).bind("selectionChanged", function(event, selected) {
         chordVis.onSelectionChange(selected);
+        neighborhoodVis.onSelectionChange(selected);
       });
     };
 
@@ -146,7 +167,7 @@ $(function() {
             if (!errorHood) {
               dataLoaded(stationData, neighborhoods);
             }
-          }) 
+          })
         }
       });
     };

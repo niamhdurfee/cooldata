@@ -88,8 +88,8 @@ body {
   fill: lightgrey;
 }
 #chordVis {
-  height:800px;
-  width:800px;
+  height:600px;
+  width:700px;
 }
 .icon-right
 {
@@ -225,4 +225,3 @@ body {
 .panel-title{
     text-align: center;
 }
-

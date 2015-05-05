@@ -17,11 +17,11 @@ ChordVis = function (_parentElement,_metaData, _eventHandler) {
       right: 10,
       bottom: 10,
       left: 10,
-      padding: 120
+      padding:60
     },
-  this.width = this.parentElement.node().clientWidth- this.margin.left - this.margin.right - this.margin.padding,
-  this.height = this.parentElement.node().clientHeight - this.margin.top - this.margin.bottom - this.margin.padding,
-  this.outerRadius = Math.min(this.width, this.height) / 2 - 100,
+  this.width = this.parentElement.node().clientWidth,
+  this.height = this.parentElement.node().clientHeight,
+  this.outerRadius = Math.min(this.width, this.height) / 2 - this.margin.padding,
   this.innerRadius = this.outerRadius - 36;
 
   this.initVis();
@@ -82,7 +82,7 @@ ChordVis.prototype.initVis = function() {
                  + "<br><span style='color:#399F2E'>" + that.neighborhoods[d.target.index].name
                  + " → " + that.neighborhoods[d.source.index].name
                  + ": </span>" + formatInt(d.target.value);
-       } 
+       }
      })
 
     this.svg.call(this.tipGroup);
@@ -97,8 +97,6 @@ ChordVis.prototype.initVis = function() {
 
 ChordVis.prototype.wrangleData = function() {
     this.displayData = this.filterAndAggregate();
-
-
 }
 
 ChordVis.prototype.updateVis = function() {
@@ -134,7 +132,7 @@ ChordVis.prototype.updateVis = function() {
         .text(function(d,i) {
             return that.neighborhoods[i].name;
         })
-        .style("font-size","14px")
+        .style("font-size","10px")
         .style("fill", "black")
         .style("z-index", "10000")
 
@@ -145,6 +143,9 @@ ChordVis.prototype.updateVis = function() {
       .style("fill", function(d, i) { console.log(i); return color(i); })
       .on("mouseover", mouseoverGroup)
       .on("mouseout", mouseoutGroup)
+      .on("click",function(d,i) {
+        $(that.eventHandler).trigger("hoodChanged",that.neighborhoods[i].name)
+      })
       .on("mousemove", function(){return that.tipGroup.style("top", (event.pageY+20)+"px").style("left",event.pageX+"px");});
 
     // Add the chords.
@@ -187,6 +188,7 @@ ChordVis.prototype.updateVis = function() {
  */
 ChordVis.prototype.onSelectionChange = function(d) {
   var that = this;
+  console.log(d);
   if (d !== that.display) {
   	that.display = d;
   	if (that.display =='all') {
