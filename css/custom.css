@@ -23,7 +23,7 @@ body {
     font: 13px;
 }
 .highlight {
-  color:red;
+  color:#399F2E;
 }
 #formVis {
   width: 100%;
@@ -91,6 +91,7 @@ body {
   height:600px;
   width:700px;
 }
+
 .icon-right
 {
     color: #399F2E;
@@ -209,8 +210,6 @@ body {
 .range input[type="range"] {
     outline: none;
 }
-
-
 .d3-tip {
   line-height: 1;
   font-weight: bold;
@@ -220,8 +219,6 @@ body {
   text-align: center;
 
 }
-
-
 .panel-title{
     text-align: center;
 }

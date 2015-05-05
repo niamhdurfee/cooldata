@@ -63,14 +63,20 @@ StationVis.prototype.initVis = function() {
 
 
 StationVis.prototype.updateVis = function(id) {
+    
+    // updates four svgs on change of station
+    // **************************************
+    // whosvg -- breakdown of users for a station
+    // originsvg -- bar graph of top 5 origins
+    // destsvg -- bar graph of top 5 destinations
+    // whensvg -- line of hourly data
 
     var that = this;
     station = that.stationData[id];
 
-    // UPDATE STATION DATA
+    // update station data
     $('#station-name').html(station.fullname);
     $('#station-amt').html(Math.round(station['overall']['average']['t'])+ " trips per day");
-
 
     // create data for layering
     var data = [ { "key": "Male", "values": [ {"x": "Male",  "y": station.overall.average.t - station.overall.average.f} ] },
@@ -81,8 +87,10 @@ StationVis.prototype.updateVis = function(id) {
                  { "key": "Commuting", "values": [ {"x": "Commuting",  "y": station.overall.average.c} ] }
                ];
 
-
     // USER BREAKDOWNS
+    // ***************
+    // whosvg
+    
     var y = d3.scale.linear()
       .domain([0, station.overall.average.t])
       .range([0, this.width-40]);
@@ -90,13 +98,12 @@ StationVis.prototype.updateVis = function(id) {
     var stack = d3.layout.stack().values(function(d){ return d.values;}),
     layers = stack(data);
 
-    var rects = this.whosvg.selectAll("rects")
+    var who_rects = this.whosvg.selectAll("rects")
       .data(layers);
 
-    rects.enter().append("rect")
+    who_rects.enter().append("rect")
       .style("fill", function (d,i) { if (i%2 == 0) return colors[0]; else return colors[1];})
       .attr("width", 0)
-      .attr("x", y(station.overall.average.t/2))
       .transition()
       .duration(800)
       .attr("width", function(d) { return y(d.values[0].y);})
@@ -104,15 +111,15 @@ StationVis.prototype.updateVis = function(id) {
       .attr("x", function (d, i) { return y(d.values[0].y0) - Math.floor(i/2)*280;})
       .attr("y", function (d, i) { return Math.floor(i/2) * 65 + 30;});
 
-    rects.exit().transition()
+    who_rects.exit().transition()
       .style("fill", '#fff')
       .duration(800)
       .remove();
 
-    var labels = this.whosvg.selectAll("text")
+    var who_labels = this.whosvg.selectAll("text")
       .data(layers)
 
-    labels.enter().append("text")
+    who_labels.enter().append("text")
       .style('fill', '#fff')
       .attr("x", function (d, i) { if (i%2 == 0) return 0; else return y(station.overall.average.t);})
       .attr("y", function (d, i) { return Math.floor(i/2) * 65 + 23;})
@@ -121,134 +128,130 @@ StationVis.prototype.updateVis = function(id) {
       .style('class', 'lead')
       .style('text-anchor', function (d,i) { if (i%2 == 0) return 'start'; else return 'end'; });
 
-    labels.exit().remove();
+    who_labels.exit().remove();
 
 
 
 
-
-    // DESTINATIONS
-    var sorted = [];
+    // TOP DESTINATIONS
+    // ***************
+    // destsvg
+    
+    var destinations = [];
     for (var route in station.routes)
-        sorted.push([route, station.routes[route]]);
-    sorted.sort(function(a, b) {return b[1] - a[1]})
-    sorted = sorted.slice(0,5);
+        destinations.push([route, station.routes[route]]);
+    destinations.sort(function(a, b) {return b[1] - a[1]})
+    destinations = destinations.slice(0,5);
 
-    var y = d3.scale.linear()
-      .domain([0, sorted[0][1] ])
+    var y_dest = d3.scale.linear()
+      .domain([0, destinations[0][1] ])
       .range([0, this.height-40]);
 
-    var tip = d3.tip().attr('class', 'd3-tip').html(function(d) { return d; });
-    this.destsvg.call(tip);
-
-    var rects2 = this.destsvg.selectAll("rect")
-      .data(sorted);
-
-    rects2.enter().append("rect")
+    // vertical bars for top 5 destinations
+    var dest_rects = this.destsvg.selectAll("rect")
+      .data(destinations);
+    var dest_rects_enter = dest_rects.enter().append("rect");  
+    dest_rects
       .attr("width", function(d) { return 40; })
-      .attr("height", function(d) { return y(d[1]); })
+      .attr("height", function(d) { return y_dest(d[1]); })
       .attr("x", function(d, i) { return i*55; })
-      .attr("y", function(d) { return y(sorted[0][1]) - y(d[1]); })
+      .attr("y", function(d) { return y_dest(destinations[0][1]) - y_dest(d[1]); })
       .style("fill", "#399F2E")
       .on('mouseover', function(d) { $('#name-dest-hov').html(that.stationData[d[0]].fullname) } )
       .on('mouseout', function() { $('#name-dest-hov').empty() });
+    dest_rects.exit().remove();
 
-    rects2.exit().remove();
-
-    var texts = this.destsvg.selectAll("text")
-      .data(sorted);
-
-    texts.enter().append("text")
+    // labels on top of bars for # trips
+    var dest_labels = this.destsvg.selectAll("text")
+      .data(destinations);
+    var dest_labels_enter = dest_labels.enter().append("text")
+    dest_labels
       .style('font-size', '10px')
       .style('font-weight', '800')
       .style('fill', 'white')
       .text( function (d) { return d[1]; })
       .attr("x", function(d, i) { return i*55 + 8; })
-      .attr("y", function(d) { return y(sorted[0][1]) - y(d[1]) + 15; });
+      .attr("y", function(d) { return y_dest(destinations[0][1]) - y_dest(d[1]) + 15; });
+    dest_labels.exit().remove();
 
-    texts.exit().remove();
-
-    // why isn't bar graph changing on update?
+    // ADD TOOLTIPS ON MOUSEOVER
 
 
-    // ORIGINS
+    
+    
+    
 
-    // calculate top 5 origins
+    // TOP ORIGINS
+    // ***************
+    // originsvg
+    
     var origins = [];
     for (var key in this.stationData)
         origins.push([key, this.stationData[key].routes[id]]);
     origins.sort(function(a, b) {return b[1] - a[1]})
     origins = origins.slice(0,5);
 
-
-    var y_orig = d3.scale.linear()
+    var y_origin = d3.scale.linear()
       .domain([0, origins[0][1] ])
       .range([0, this.height-40]);
 
-
-    var rects3 = this.originsvg.selectAll("rect")
+    // vertical bars for top 5 origins
+    var origin_rects = this.originsvg.selectAll("rect")
       .data(origins);
-
-    rects3.enter().append("rect")
-      .attr("width", function(d) { return 40; })
-      .attr("height", function(d) { return y_orig(d[1]); })
+    var origin_rects_enter = origin_rects.enter().append("rect");
+    origin_rects
       .attr("x", function(d, i) { return i*55; })
-      .attr("y", function(d) { return y_orig(origins[0][1]) - y_orig(d[1]); })
+      .attr("y", function(d) { return y_origin(origins[0][1]) - y_origin(d[1]); })
+//      .transition()
+      .attr("width", function(d) { return 40; })
+      .attr("height", function(d) { return y_origin(d[1]); })
       .style("fill", "#399F2E")
       .on('mouseover', function(d) { $('#name-origins-hov').html(that.stationData[d[0]].fullname) } )
       .on('mouseout', function() { $('#name-origins-hov').empty() });
+    origin_rects.exit().remove();
 
-    rects3.exit().remove();
-
-    var texts2 = this.originsvg.selectAll("text")
+    // labels for top 5 origins
+    var origin_labels = this.originsvg.selectAll("text")
       .data(origins);
-
-    texts2.enter().append("text")
+    var origin_labels_enter = origin_labels.enter().append("text");
+    origin_labels
       .style('font-size', '10px')
       .style('font-weight', '800')
       .style('fill', 'white')
       .text( function (d) { return d[1]; })
       .attr("x", function(d, i) { return i*55 + 8; })
-      .attr("y", function(d) { return y_orig(origins[0][1]) - y_orig(d[1]) + 15; });
+      .attr("y", function(d) { return y_origin(origins[0][1]) - y_origin(d[1]) + 15; });
+    origin_labels.exit().remove();
 
-    texts2.exit().remove();
 
-
-    // TIMELINE
-
-    // console.log(this.stationData[id].overall.hourly);
-
-//    var valueline = d3.svg.line()
-//    .interpolate("basis")           // <=== THERE IT IS!
-//    .x(function(d) { return x(d.time); })
-//    .y(function(d) { return y(d.rates); });
-//
+    // HOURLY WHEN
+    // ***************
+    // timesvg
+    
     var rates = [];
-
     for (var time in this.stationData[id].overall.hourly)
         rates.push({'x': time, 'y': this.stationData[id].overall.hourly[time]['t']});
 
-    // console.log(rates);
-
-
-
-    var xscale = d3.scale.linear()
+    
+    var time_x = d3.scale.linear()
       .domain([0, 23])
       .range([0, this.width-40]);
 
-    var yscale = d3.scale.linear()
+    var time_y = d3.scale.linear()
       .domain([Math.max.apply(Math,rates.map(function(o){return o.y;})), 0 ])
       .range([0, this.height-40]);
 
     var lineFunction = d3.svg.line()
-       .x(function(d) { return xscale(d.x); })
-       .y(function(d) { return yscale(d.y); })
+       .x(function(d) { return time_x(d.x); })
+       .y(function(d) { return time_y(d.y); })
        .interpolate("basis");
 
     var path = this.timesvg.selectAll("path")
         .data(rates);
 
-    path.enter().append("path")
+    var path_enter = path.enter().append("path");
+    
+    path
         .attr("d", lineFunction(rates))
         .style("stroke-width", 2)
         .style("stroke", "#399F2E")
