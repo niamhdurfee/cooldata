@@ -11,7 +11,7 @@ WhenVis = function(_parentElement, _data, _eventHandler) {
   this.eventHandler = _eventHandler;
   this.displayData = [];
   this.breakdown = ['total'];
-  this.yVariable = ['speed'];
+  this.yVariable = ['commuter','leisure'];
 
   // Define all "constants" here
   this.margin = {
@@ -122,8 +122,9 @@ WhenVis.prototype.updateVis = function() {
       .append("path")
       .attr("class", "areaPath");
 
-  area.select('path').attr("d", function(d) { return that.area(d.points); })
-      .transition()
+  area.select('path').transition()
+      .attr("d", function(d) { return that.area(d.points); })
+      .transition().duration(300)
       .style("fill", function(d,i) {return that.color(i)})
       .style("opacity", 0.5);
 
@@ -134,7 +135,8 @@ WhenVis.prototype.updateVis = function() {
       .attr('class','line')
       .append("path")
 
-  line.select("path").attr("d",function (d) { return that.line(d.points)})
+  line.select("path").transition().duration(300)
+      .attr("d",function (d) { return that.line(d.points)})
       .style("stroke", function(d,i) {return that.color(i)});
 
   var text = this.svg.selectAll(".datalabel")

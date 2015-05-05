@@ -50,20 +50,21 @@ StationVis.prototype.initVis = function() {
   this.destsvg = this.destParentElement.append("svg")
     .attr("width", this.width + 10 + this.margin.left + this.margin.right)
     .attr("height", this.height + 55 + this.margin.top + this.margin.bottom)
-  .append("g")
+    .append("g")
     .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
 
   this.timesvg = this.timeParentElement.append("svg")
     .attr("width", this.width + this.margin.left + this.margin.right)
     .attr("height", this.height  + this.margin.top + this.margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
+    .append("g")
+    .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")")
+    .attr("fill","white");
 
 };
 
 
 StationVis.prototype.updateVis = function(id) {
-    
+
     // updates four svgs on change of station
     // **************************************
     // whosvg -- breakdown of users for a station
@@ -90,7 +91,7 @@ StationVis.prototype.updateVis = function(id) {
     // USER BREAKDOWNS
     // ***************
     // whosvg
-    
+
     var y = d3.scale.linear()
       .domain([0, station.overall.average.t])
       .range([0, this.width-40]);
@@ -136,7 +137,7 @@ StationVis.prototype.updateVis = function(id) {
     // TOP DESTINATIONS
     // ***************
     // destsvg
-    
+
     var destinations = [];
     for (var route in station.routes)
         destinations.push([route, station.routes[route]]);
@@ -171,7 +172,7 @@ StationVis.prototype.updateVis = function(id) {
       .attr("x", function(d, i) { return i*55 + 9; })
       .attr("y", function(d) { return y_dest(destinations[0][1]) - y_dest(d[1]) + 65; });
     dest_num_labels.exit().remove();
-  
+
     var dest_text_labels = this.destsvg.selectAll(".textlabels")
       .data(destinations);
     var dest_text_labels_enter = dest_text_labels.enter().append("text").attr('class', 'textlabels');
@@ -184,20 +185,20 @@ StationVis.prototype.updateVis = function(id) {
       .attr("y", function(d, i) { return i*55 + 2; })
       .attr("x", function(d) { return -1 * ( y_dest(destinations[0][1]) + 50); })
       .attr("transform", function(d) {
-        return "rotate(-90)" 
+        return "rotate(-90)"
       });
     dest_text_labels.exit().remove();
-    
-    
 
-    
-    
-    
+
+
+
+
+
 
     // TOP ORIGINS
     // ***************
     // originsvg
-    
+
     var origins = [];
     for (var key in this.stationData)
         origins.push([key, this.stationData[key].routes[id]]);
@@ -232,7 +233,7 @@ StationVis.prototype.updateVis = function(id) {
       .attr("x", function(d, i) { return i*55 + 9; })
       .attr("y", function(d) { return y_origin(origins[0][1]) - y_origin(d[1]) + 65; });
     origin_num_labels.exit().remove();
-  
+
     var origin_text_labels = this.originsvg.selectAll(".textlabels")
       .data(origins);
     var origin_text_labels_enter = origin_text_labels.enter().append("text").attr('class', 'textlabels');
@@ -241,50 +242,72 @@ StationVis.prototype.updateVis = function(id) {
       .style('font-size', '12px')
       .style('font-weight', '400')
       .style('fill', '#555')
-      .text( function (d) { console.log(that.stationData[d[0]]); return that.stationData[d[0]].short; })
+      .text( function (d) { return that.stationData[d[0]].short; })
       .attr("y", function(d, i) { return i*55 + 2; })
       .attr("x", function(d) { return -1 * ( y_origin(origins[0][1]) + 50); })
       .attr("transform", function(d) {
-        return "rotate(-90)" 
+        return "rotate(-90)"
       });
     origin_text_labels.exit().remove();
-    
-    
+
+
     // HOURLY WHEN
     // ***************
     // timesvg
-    
-    var rates = [];
-    for (var time in this.stationData[id].overall.hourly)
-        rates.push({'x': time, 'y': this.stationData[id].overall.hourly[time]['t']});
+    var timeColor = ["crimson","lightgreen"];
 
-    
+    var ratesArr = this.stationData[id].overall.hourly.map(function (e,i) { return {x:i,y:e.a }})
+    var ratesDep = this.stationData[id].overall.hourly.map(function (e,i) { return{x:i,y:e.d }})
+    var rates = [ratesArr,ratesDep]
+
     var time_x = d3.scale.linear()
       .domain([0, 23])
       .range([0, this.width-40]);
 
     var time_y = d3.scale.linear()
-      .domain([Math.max.apply(Math,rates.map(function(o){return o.y;})), 0 ])
-      .range([0, this.height-40]);
+      .domain([0,d3.max(rates, function (d) { return d3.max(d, function (a) { return a.y})})])
+      .range([this.height-20,0]);
 
+    var timeXAxis = d3.svg.axis()
+      .scale(time_x)
+      .ticks(10)
+      .orient("bottom");
+
+    this.timesvg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0,"+(this.height-20)+")")
+        .call(timeXAxis);
     var lineFunction = d3.svg.line()
        .x(function(d) { return time_x(d.x); })
        .y(function(d) { return time_y(d.y); })
        .interpolate("basis");
 
-    var path = this.timesvg.selectAll("path")
+    var path = this.timesvg.selectAll(".line")
         .data(rates);
 
-    var path_enter = path.enter().append("path");
-    
+    var path_enter = path.enter().append("path").attr("class","line");
+
     path
-        .attr("d", lineFunction(rates))
-        .style("stroke-width", 2)
-        .style("stroke", "#399F2E")
-        .style("fill", "none");
+        .attr("d", lineFunction)
+        .attr("stroke-width", 2)
+        .attr("stroke",function (d,i) {return timeColor[i]})
+        .attr("fill", "none");
+    path.exit().remove()
+    var areaFunction = d3.svg.area()
+       .x(function(d) { return time_x(d.x); })
+       .y0(time_y(0))
+       .y1(function(d) { return time_y(d.y); })
+       .interpolate("basis");
 
-    path.exit().remove();
+    var area = this.timesvg.selectAll(".area")
+        .data(rates);
 
+    var area_enter = path.enter().append("path").attr("class","area");
+
+    area.attr("d", areaFunction)
+        .attr("fill",function (d,i) {return timeColor[i]})
+        .attr("opacity",0.3)
+    area.exit().remove();
 };
 
 
