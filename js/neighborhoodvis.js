@@ -88,7 +88,6 @@ NeighborhoodVis.prototype.updateVis = function() {
   this.areaScale = d3.scale.linear().range([0,250000]).domain([0, d3.max(this.stationData, this.filter)]);
 
   this.displayStations.forEach(function (o) {
-//      console.log(o);
        s = that.filter(o),
        r = that.getRadius(that.areaScale(s)),
        c = that.color(o.hood);

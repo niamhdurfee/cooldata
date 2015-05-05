@@ -30,9 +30,11 @@ WhenVis = function(_parentElement, _data, _eventHandler) {
 WhenVis.prototype.initVis = function() {
   var that = this;
 
+
+
   this.color = d3.scale.ordinal().domain(colorDomain).range(colorRange);
 
-  this.x = d3.time.scale()
+  this.x = d3.scale.linear()
     .domain([0,1440])
     .range([this.margin.left, this.width]);
 

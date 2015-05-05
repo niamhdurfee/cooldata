@@ -2,7 +2,10 @@ import re,os,csv
 import datetime
 trips = [re.sub('\r\n','',line) for line in open('../trips.min.csv')]
 trips = [re.split(',',line) for line in trips[1:]]
-stations = [re.split(',',station[:-2]) for station in open('../stations.csv').readlines()[1:]]
+stations = open('../stations.csv').readlines()
+stations = re.split("\r",stations[0]) 
+stations = [re.split(',',line) for line in stations[1:]]
+
 
 p = 0.001592356688          # 1/628
 pDay = 0.002229299363		 # 1/((5/7)*628)
