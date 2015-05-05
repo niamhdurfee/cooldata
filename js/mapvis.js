@@ -12,7 +12,7 @@ MapVis = function(_parentElement,_stationData, _routeData, _eventHandler) {
   this.eventHandler = _eventHandler;
   this.displayData = [];
   this.disp = 0;
-    
+
   // Define all "constants" here
   this.margin = {
       top: 10,
@@ -23,7 +23,7 @@ MapVis = function(_parentElement,_stationData, _routeData, _eventHandler) {
   this.width = this.parentElement.node().clientWidth - this.margin.left - this.margin.right,
   this.height = this.parentElement.node().clientWidth - this.margin.top - this.margin.bottom,
   this.header_height = 60 + this.margin.bottom;
-    
+
   // set width of outer div to height of window
   $('#mapVis').height(window.innerHeight - this.header_height);
 
@@ -51,16 +51,16 @@ MapVis.prototype.initVis = function() {
 
 MapVis.prototype.updateVis = function() {
   var that = this;
-    
-        
+
+
     //create min/max values for sliders
-    
+
     var dist_max = Math.max.apply(Math,this.routeData.map(function(o){return o.dist;}));
     var dist_min = Math.min.apply(Math,this.routeData.map(function(o){return o.dist;}));
 
     var time_max = Math.max.apply(Math,this.routeData.map(function(o){return o.time;}));
     var time_min = Math.min.apply(Math,this.routeData.map(function(o){return o.time;}));
-    
+
     $( "#slider-age" ).slider({
       range: true,
       min: 0,
@@ -73,8 +73,8 @@ MapVis.prototype.updateVis = function() {
 
     $( "#age-amount" ).val( "" + $( "#slider-age" ).slider( "values", 0 ) +
       " - " + $( "#slider-age" ).slider( "values", 1 ) );
-    
-    
+
+
     $( "#slider-distance" ).slider({
       range: true,
       min: dist_min,
@@ -84,7 +84,7 @@ MapVis.prototype.updateVis = function() {
         $( "#distance-amount" ).val( "" + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
       }
     });
-    
+
     $( "#distance-amount" ).val( "" + $( "#slider-distance" ).slider( "values", 0 ) +
       " - " + $( "#slider-distance" ).slider( "values", 1 ) );
 
@@ -98,7 +98,7 @@ MapVis.prototype.updateVis = function() {
         $( "#time-amount" ).val( "" + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
       }
     });
-    
+
     $( "#time-amount" ).val( "" + $( "#slider-time" ).slider( "values", 0 ) +
       " - " + $( "#slider-time" ).slider( "values", 1 ) );
 
@@ -108,31 +108,34 @@ MapVis.prototype.updateVis = function() {
       color: 'grey',
       opacity: 0.5
     };
-    
+  var popup_options = {
+    closeButton: true,
+    offset: [50,60]
+   };
+
   var stations = d3.keys(this.stationData);
-    
+
   this.areaScale = d3.scale.linear().range([0,200000]).domain([0, d3.max(stations, function (ea) {return (that.stationData[ea].overall.average.a + that.stationData[ea].overall.average.d)})]);
-    
+
   this.color = d3.scale.linear().range(["red","grey","lightgreen"]).domain([0.45,0.5,0.55]);
-    
+
   this.routeData.forEach(function(o) {
         if (o.trips > 750) {
           var line = L.Polyline.fromEncoded(o.polyline, polyline_options).addTo(that.map);
-          line.bindPopup(o.trips +' trips from ' + that.stationData[+o.origdest.substring(0,3)].fullname +  ' to ' + that.stationData[+o.origdest.substring(3,7)].fullname);
-          line.on('mouseover', function(e) {
-            e.target.openPopup();
-          })
         }
       });
 
-    
+
     stations.forEach(function (o) {
        var orig = that.stationData[o],
            s = orig.overall.average.a+orig.overall.average.d,
            r = that.getRadius(that.areaScale(s)),
            c = that.color(orig.overall.average.a/s);
-        var circle = L.circle(orig.loc, r, {color: c, opacity: 1, fillOpacity: 0.8, className:'station',weight:2}).addTo(that.map).bindPopup(orig.fullname)
-        .on('click', function() {
+        var popup = L.popup(popup_options).setContent(orig.fullname);
+        var circle = L.circle(orig.loc, r, {color: c, opacity: 1, fillOpacity: 0.8, className:'station',weight:2}).addTo(that.map).bindPopup(popup)
+        circle.bindPopup(orig.fullname);
+        circle.on('mouseover', function() {
+            circle.openPopup();
             that.display_station_info(o);
         });
     })
@@ -147,7 +150,7 @@ MapVis.prototype.updateVis = function() {
 MapVis.prototype.onSelectionChange = function() {
 
   this.updateVis();
-    
+
 };
 
 /*
@@ -166,21 +169,21 @@ MapVis.prototype.getRadius = function(d) {
 MapVis.prototype.display_station_info = function(id)
 {
     var that = this;
- 
+
     if ( ! ( $('#station-menu').hasClass('menu-open')))
     {
         var prev_width = $('#mapVis').width();
         $('#mapVis').width(prev_width - 340);
         $('#explore-button').hide();
-        
+
         $('#station-menu').toggleClass('menu-open');
-        $('#station-menu').toggleClass('menu-active');  
+        $('#station-menu').toggleClass('menu-active');
     }
-    
-
-    $(that.eventHandler).trigger("station-changed", id);   
 
 
-  
-    
+    $(that.eventHandler).trigger("station-changed", id);
+
+
+
+
 }
