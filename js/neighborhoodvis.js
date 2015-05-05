@@ -26,8 +26,9 @@ NeighborhoodVis = function(_parentElement, _data, _metaData,_eventHandler) {
       left: 100
     },
   this.width = this.parentElement.node().clientWidth - this.margin.left - this.margin.right,
-  this.height = this.parentElement.node().clientWidth - this.margin.top - this.margin.bottom,
-  this.mapHeight = 2*this.height/3;
+  this.height = this.parentElement.node().clientHeight,
+  this.header_height = 60 + this.margin.bottom;
+  this.mapHeight = window.innerHeight - this.header_height;
 
   // set width of outer div to height of window
   $('#mapVis').height(this.mapHeight);

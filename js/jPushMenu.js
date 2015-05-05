@@ -4,13 +4,13 @@
  * @author: takien
  * http://takien.com
  * Original version (pure JS) is created by Mary Lou http://tympanus.net/
+ * Modified for left menu only, as well as for modifying size of mapvis
  */
 
 (function($) {
     $.fn.jPushMenu = function(customOptions) {
         var o = $.extend({}, $.fn.jPushMenu.defaultOptions, customOptions);
         
-
         $('body').addClass(o.pushBodyClass);
 
         // Add class to toggler

@@ -27,9 +27,34 @@ body {
   color:#399F2E;
 }
 #formVis {
-  width: 100%;
+  width: 50%;
   height:50px;
+  position: fixed;
+  top: 60px;
+ text-align: center;
 }
+.btn-toolbar {
+    text-align: center;
+    display: inline-block;
+    float: middle;
+}
+
+.btn-group {
+ max-width: 300px;   
+}
+
+.btn {
+  width: 120px;
+  color: #399F2E;
+  font-weight: 300;
+}
+
+.btn.active {
+  background-color: #399F2E;
+    color: white;
+    font-weight: 800;
+}
+
 #stackedVis, #weatherVis, #ageVis {
   height: 350px;
 }
