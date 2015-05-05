@@ -2,10 +2,10 @@
   height: 450px;
 }
 .M {
-color: blue;
+color: #399F2E;
 }
 .F {
-color: fuchsia;
+color: #217D1C;
 }
 .N {
   color: gray;
@@ -30,3 +30,6 @@ color: fuchsia;
 .total {
   font-size: 32px;
 }
+
+
+    

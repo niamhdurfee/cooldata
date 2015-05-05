@@ -6,12 +6,19 @@
  * @constructor
  */
 FormVis = function(_parentElement, _eventHandler) {
-  this.parentElement = _parentElement;
+    
+this.parentElement = _parentElement.append("div")
+  .attr("class", "row")
+  .attr("id", "chord-selection")
+.append("div")
+.attr("class", "span12");
+    
+//  this.parentElement = _parentElement;
   this.eventHandler = _eventHandler;
 
   // Define all "constants" here
   this.margin = {
-      top: 10,
+      top: 0,
       right: 10,
       bottom: 10,
       left: 10
@@ -30,9 +37,8 @@ FormVis.prototype.initVis = function() {
 
   this.form = this.parentElement
     .append("div")
-    .attr("class","btn-toolbar")
+    .attr("class","btn-toolbar pagination-centered")
     .attr("role","toolbar")
-    .attr("align","middle")
     .html(       
         '<div class="btn-group" role="group">' + 
           '<button type="button" id="all" value="all" class="btn btn-default active">Overall</button>' + 

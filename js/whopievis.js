@@ -33,12 +33,21 @@ WhoPieVis.prototype.initVis = function() {
   var formatPercent = d3.format("%");
   var formatNum = d3.format(",")
 
-  this.color = d3.scale.ordinal().domain(colorDomain).range(colorbrewer.Greens[9]);
+  var color_list = [];
+    color_list[1] = colorbrewer.Greens[9][5];
+    color_list[2] = colorbrewer.Greens[9][1];
+    color_list[3] = colorbrewer.Greens[9][2];
+    color_list[4] = colorbrewer.Greens[9][6];
+    color_list[5] = colorbrewer.Greens[9][7];
+    color_list[6] = colorbrewer.Greens[9][3];
+    color_list[7] = colorbrewer.Greens[9][4];
+    color_list[8] = colorbrewer.Greens[9][8];
+
+  this.color = d3.scale.ordinal().domain(colorDomain).range(color_list);
 
   this.arc = d3.svg.arc()
     .outerRadius(this.radius - 10)
     .innerRadius(0);
-
 
   this.svg = this.parentElement.append("svg")
     .attr("width", this.width + this.margin.left + this.margin.right)
@@ -101,6 +110,7 @@ WhoPieVis.prototype.updateVis = function() {
       .style("fill", "white")
       .style("font-size", "14px")
       .style("font-weight", "bold")
+      .style('text-transform', 'capitalize')
       .on('mouseover', this.tip.show)
       .on('mouseout', this.tip.hide)
       .on("mousemove", function(){return that.tip.style("top", (event.pageY+20)+"px").style("left",event.pageX+"px");})

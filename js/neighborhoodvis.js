@@ -26,8 +26,9 @@ NeighborhoodVis = function(_parentElement, _data, _metaData,_eventHandler) {
       left: 100
     },
   this.width = this.parentElement.node().clientWidth - this.margin.left - this.margin.right,
-  this.height = this.parentElement.node().clientWidth - this.margin.top - this.margin.bottom,
-  this.mapHeight = 2*this.height/3;
+  this.height = this.parentElement.node().clientHeight,
+  this.header_height = 60 + this.margin.bottom;
+  this.mapHeight = window.innerHeight - this.header_height;
 
   // set width of outer div to height of window
   $('#mapVis').height(this.mapHeight);
@@ -88,7 +89,6 @@ NeighborhoodVis.prototype.updateVis = function() {
   this.areaScale = d3.scale.linear().range([0,250000]).domain([0, d3.max(this.stationData, this.filter)]);
 
   this.displayStations.forEach(function (o) {
-//      console.log(o);
        s = that.filter(o),
        r = that.getRadius(that.areaScale(s)),
        c = that.color(o.hood);

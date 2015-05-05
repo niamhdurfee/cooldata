@@ -41,7 +41,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="/" style="color:lightgreen">datahub</a>
+          <a class="navbar-brand" href="/" style="color:#399F2E">datahub</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
@@ -74,18 +74,17 @@
     </thead>
 
     <tbody>
-      <tr>
+      <tr class="top-row">
         <td colspan='2'><div id="stackedVis"></div></td>
-        <!-- <td><div id="weatherVis"></div></td> -->
         <td colspan='2'><div id="ageVis"></div></td>
       </tr>
-      <tr>
+      <tr class="middle-row">
         <td><div id="pieVis1" class="pievis"></div></td>
+        <td><div id="pieVis3" class="pievis"></div></td>
         <td><div id="pieVis2" class="pievis"></div></td>
-        <td style="background-color:rgba(173, 255, 47,0.3)"><div id="pieVis3" class="pievis"></div></td>
-        <td style="background-color:rgba(173, 255, 47,0.3)"><div id="pieVis4" class="pievis"></div></td>
+        <td><div id="pieVis4" class="pievis"></div></td>
       </tr>
-      <tr><td colspan='4'><div id="yearBrush" class="time"></div></td>
+      <tr class="bottom-row"><td colspan='4'><div id="yearBrush" class="time"></div></td>
       </tr>
     </tbody>
     </table>

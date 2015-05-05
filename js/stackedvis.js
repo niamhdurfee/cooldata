@@ -31,8 +31,17 @@ StackedVis = function(_parentElement, _data, _eventHandler) {
 StackedVis.prototype.initVis = function() {
   var that = this;
 
-  this.color = d3.scale.ordinal().domain(colorDomain).range(colorRange);
+  var color_list = [];
+    color_list[1] = colorbrewer.Greens[9][5];
+    color_list[2] = colorbrewer.Greens[9][1];
+    color_list[3] = colorbrewer.Greens[9][2];
+    color_list[4] = colorbrewer.Greens[9][6];
+    color_list[5] = colorbrewer.Greens[9][7];
+    color_list[6] = colorbrewer.Greens[9][3];
+    color_list[7] = colorbrewer.Greens[9][4];
+    color_list[8] = colorbrewer.Greens[9][8];
 
+  this.color = d3.scale.ordinal().domain(colorDomain).range(color_list);
   this.x = d3.time.scale()
     .range([this.margin.left, this.width]);
 
@@ -70,7 +79,8 @@ StackedVis.prototype.initVis = function() {
     .attr("class","chart title")
     .attr("transform", "translate("+(this.width/2 - 100)+",24)")
     .append("text")
-    .text("daily trips over time");
+    .style('fill', '#217D1C')
+    .text("Daily Trips Over Time");
 
 
   this.svg.append("g")
@@ -93,14 +103,14 @@ StackedVis.prototype.initVis = function() {
     .attr("y",that.margin.top)
     .attr("height",that.height-that.margin.top)
     .attr("width","2px")
-    .attr("fill","red")
+    .attr("fill","#399F2E")
     .attr("display",'none');
 
-  this.focustext = this.svg.append("g").attr("class","focustext").attr("display","none")
+  this.focustext = this.svg.append("g").attr("class","focustext").attr("display","none").attr('font-weight', '200')
 
-  this.focustext.append('text').attr("class","date").attr("stroke","red");
-  this.focustext.append('text').attr("class","value1").attr("stroke","black").attr("transform","translate(0,16)");
-  this.focustext.append('text').attr("class","value2").attr("stroke","black").attr("transform","translate(0,32)");
+  this.focustext.append('text').attr("class","date").attr("stroke","#399F2E");
+  this.focustext.append('text').attr("class","value1").attr("stroke","#555").attr("transform","translate(0,16)");
+  this.focustext.append('text').attr("class","value2").attr("stroke","#555").attr("transform","translate(0,32)");
 
   // // filter, aggregate, modify data
   this.wrangleData(this.filter);

@@ -36,7 +36,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="/" style="color:lightgreen">datahub</a>
+          <a class="navbar-brand" href="/" style="color:#399F2E">datahub</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
@@ -55,12 +55,20 @@
     </nav>
 
     <div class="container-fluid">
-
+    <div id="formgroup" align="center">
       <div class="btn-group" role="group">
-        <button id="total" type="button" class="btn btn-default" value="total">Total</button>
-        <button id="maleVsFemale" type="button" class="btn btn-default" value="maleVsFemale">Male vs Female</button>
-        <button id="commuteVsLeisure" type="button" class="btn btn-default" value="unregistered">Commute vs Leisure</button>
+        <button value="total" type="button" class="btn btn-default formgroup2">total</button>
+        <button value="weekday" type="button" class="btn btn-default formgroup2">weekday</button>
+        <button value="weekend" type="button" class="btn btn-default formgroup2">weekend</button>
       </div>
+      <div class="btn-group" role="group">
+        <button value="gender" type="button" class="btn btn-default formgroupy">gender</button>
+        <button value="commute" type="button" class="btn btn-default formgroupy">commuter/leisure</button>
+        <button value="registered" type="button" class="btn btn-default formgroupy">registered/casual</button>
+        <button value="duration" type="button" class="btn btn-default formgroupy">duration</button>
+        <button value="speed" type="button" class="btn btn-default formgroupy">speed</button>
+        <button value="dist" type="button" class="btn btn-default formgroupy">dist</button>
+      </div></div>
       <div id="whenVis"></div>
 
 
@@ -104,6 +112,17 @@ $(function() {
     // see: https://github.com/mbostock/d3/wiki/Time-Formatting
     var parseDate = d3.time.format("%_m/%_d/%Y").parse;
 
+    var myDom = {
+      gender: ['male','female'],
+      total: ['total'],
+      weekend: ['weekend'],
+      weekday: ['weekday'],
+      commute: ['leisure','commute'],
+      dist: 'dist',
+      speed:'speed',
+      duration: 'duration'
+    };
+
     //==========================================
     //--- HERE IS WHERE ALL THE MAGIC STARTS --
     //==========================================
@@ -123,14 +142,25 @@ $(function() {
       // Instantiate all Vis Objects here
 
       var whenVis = new WhenVis(d3.select("#whenVis"), dateData, MyEventHandler);
-
       // Bind the eventHandler to the Vis Objects
-      $(MyEventHandler).bind("selectionChanged", function(event, val) {
-          whenVis.onSelectionChange(val);
+      $('.formgroupy').on('click',function (d) {
+          if ($(this).hasClass('active')) {
+            $(this).removeClass('active')
+          } else {
+            $('.formgroupy').removeClass('active')
+            $(this).addClass('active')
+          }
+          whenVis.onSelectionChange()
       });
 
-      $(MyEventHandler).bind("typeChanged", function(event, dom1, dom2,type) {
-          whenVis.onTypeChange([dom1, dom2,type]);
+      $('.formgroup2').on('click',function (d) {
+          if ($(this).hasClass('active')) {
+            $(this).removeClass('active')
+          } else {
+            $('.formgroup2').removeClass('active')
+            $(this).addClass('active')
+          }
+          whenVis.onSelectionChange()
       });
     };
 
@@ -138,45 +168,66 @@ $(function() {
     var dataLoaded = function(_data) {
         dateData = _data.map(function (d) {
           return {
-            total: {
-              dist: parseFloat(d.dist),
+            timeofday: makeMinutes(d.timeofday),
+            dist : {
+              total: parseFloat(d.dist.replace(',','')),
+              weekend: parseFloat(d.distWeekend.replace(',','')),
+              weekday: parseFloat(d.dist.replace(',','')) - parseFloat(d.distWeekend.replace(',',''))
+            },
+            total : {
               total: +d.total,
-              registered: +d.reg,
-              casual: +d.total - +d.reg,
-              female: +d.female,
-              male: +d.total - +d.female,
-              commuter: +d.total - +d.leisure,
-              leisure: +d.leisure,
-              duration:+d.time,
-              timeofday: makeMinutes(d.timeofday)
+              weekend: +d.totalWeekend,
+              weekday: +d.total - +d.totalWeekend
             },
-            weekend: {
-              dist: parseFloat(d.distWeekend),
-              total: +d.totalWeekend,
-              registered: +d.regWeekend,
-              casual: +d.totalWeekend - +d.regWeekend,
-              female: +d.femaleWeekend,
-              male: +d.totalWeekend - +d.femaleWeekend,
-              commuter: +d.totalWeekend - +d.leisureWeekend,
-              leisure: +d.leisureWeekend,
-              duration:+d.timeWeekend,
-              timeofday: makeMinutes(d.timeofday)
+            duration : {
+              total: +d.time,
+              weekend: +d.timeWeekend,
+              weekday: +d.time - +d.timeWeekend
             },
-            weekday: {
-              dist: parseFloat(d.dist) - parseFloat(d.distWeekend),
-              total: +d.total - +d.totalWeekend,
-              registered: +d.reg - +d.regWeekend,
-              casual: +d.total - +d.totalWeekend - +d.reg + +d.regWeekend,
-              female: +d.female - +d.femaleWeekend,
-              male: +d.total - +d.female,
-              commuter: +d.total - +d.totalWeekend - +d.leisure + +d.leisureWeekend,
-              leisure: +d.leisure - +d.leisureWeekend,
-              duration:+d.time - +d.timeWeekend,
-              timeofday: makeMinutes(d.timeofday)
+            female : {
+              total: +d.female,
+              weekend: +d.femaleWeekend,
+              weekday: +d.female - +d.femaleWeekend
+            },
+            male : {
+              total: +d.reg - +d.female,
+              weekend: +d.regWeekend - +d.femaleWeekend,
+              weekday: (+d.reg - +d.female) - (+d.regWeekend - +d.femaleWeekend)
+            },
+            registered : {
+              total: +d.reg,
+              weekend: +d.regWeekend,
+              weekday: +d.reg - +d.regWeekend
+            },
+            casual : {
+              total: +d.total - +d.reg,
+              weekend: +d.totalWeekend - +d.regWeekend,
+              weekday: (+d.total - +d.reg) - (+d.totalWeekend - +d.regWeekend)
+            },
+            leisure : {
+              total: +d.leisure,
+              weekend: +d.leisureWeekend,
+              weekday: +d.leisure - +d.leisureWeekend
+            },
+            commuter : {
+              total: +d.total - +d.leisure,
+              weekend: +d.totalWeekend - +d.leisureWeekend,
+              weekday: (+d.total - +d.female) - (+d.totalWeekend - +d.femaleWeekend)
             }
-          }
-        });
-console.log(dateData);
+        }});
+
+        dateData.forEach(function (d) {
+          d.speed = {}
+          d.speed.total = 60 *d.dist.total / d.duration.total;
+          d.speed.weekend = 60 *d.dist.weekend / d.duration.weekend;
+          d.speed.weekday = 60 *d.dist.weekday / d.duration.weekday;
+          d.duration.total /= d.total.total;
+          d.duration.weekend /= d.total.weekend;
+          d.duration.weekday /= d.total.weekday;
+          d.dist.total /= d.total.total;
+          d.dist.weekend /= d.total.weekend;
+          d.dist.weekday /= d.total.weekday;
+        })
         initVis();
     };
 
