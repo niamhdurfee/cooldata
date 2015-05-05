@@ -245,13 +245,17 @@ StationVis.prototype.updateVis = function(id) {
        .y(function(d) { return yscale(d.y); })
        .interpolate("basis");
 
-    this.timesvg.append("svg:path")
-            .attr("d", lineFunction(rates))
-            .style("stroke-width", 2)
-            .style("stroke", "#399F2E")
-            .style("fill", "none");
-
-
+    var path = this.timesvg.selectAll("path")
+        .data(rates);
+    
+    path.enter().append("path")
+        .attr("d", lineFunction(rates))
+        .style("stroke-width", 2)
+        .style("stroke", "#399F2E")
+        .style("fill", "none");
+    
+    path.exit().remove();
+ 
 };
 
 
