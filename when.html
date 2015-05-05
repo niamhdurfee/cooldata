@@ -64,7 +64,7 @@
       <div class="btn-group" role="group">
         <button value="gender" type="button" class="btn btn-default formgroupy">gender</button>
         <button value="commute" type="button" class="btn btn-default formgroupy">commuter/leisure</button>
-        <button value="registered" type="button" class="btn btn-default formgroupy">registered/casual</button> 
+        <button value="registered" type="button" class="btn btn-default formgroupy">registered/casual</button>
         <button value="duration" type="button" class="btn btn-default formgroupy">duration</button>
         <button value="speed" type="button" class="btn btn-default formgroupy">speed</button>
         <button value="dist" type="button" class="btn btn-default formgroupy">dist</button>
@@ -142,7 +142,7 @@ $(function() {
       // Instantiate all Vis Objects here
 
       var whenVis = new WhenVis(d3.select("#whenVis"), dateData, MyEventHandler);
-      // Bind the eventHandler to the Vis Objects  
+      // Bind the eventHandler to the Vis Objects
       $('.formgroupy').on('click',function (d) {
           if ($(this).hasClass('active')) {
             $(this).removeClass('active')
@@ -150,7 +150,7 @@ $(function() {
             $('.formgroupy').removeClass('active')
             $(this).addClass('active')
           }
-          whenVis.onSelectionChange()    
+          whenVis.onSelectionChange()
       });
 
       $('.formgroup2').on('click',function (d) {
@@ -160,7 +160,7 @@ $(function() {
             $('.formgroup2').removeClass('active')
             $(this).addClass('active')
           }
-          whenVis.onSelectionChange()    
+          whenVis.onSelectionChange()
       });
     };
 
@@ -187,7 +187,7 @@ $(function() {
             female : {
               total: +d.female,
               weekend: +d.femaleWeekend,
-              weekday: +d.female - +d.femaleWeekend 
+              weekday: +d.female - +d.femaleWeekend
             },
             male : {
               total: +d.reg - +d.female,
@@ -197,7 +197,7 @@ $(function() {
             registered : {
               total: +d.reg,
               weekend: +d.regWeekend,
-              weekday: +d.reg - +d.regWeekend 
+              weekday: +d.reg - +d.regWeekend
             },
             casual : {
               total: +d.total - +d.reg,
@@ -207,7 +207,7 @@ $(function() {
             leisure : {
               total: +d.leisure,
               weekend: +d.leisureWeekend,
-              weekday: +d.leisure - +d.leisureWeekend 
+              weekday: +d.leisure - +d.leisureWeekend
             },
             commuter : {
               total: +d.total - +d.leisure,
