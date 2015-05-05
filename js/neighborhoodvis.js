@@ -52,7 +52,7 @@ NeighborhoodVis = function(_parentElement, _data, _metaData,_eventHandler) {
 NeighborhoodVis.prototype.initVis = function() {
 
   this.map = L.mapbox.map('mapVis', 'niamhdurfee.loko84n8',{center: [42.35272,-71.09], zoom: 13});
-    
+
   var color = d3.scale.category20c();
   this.color = d3.scale.ordinal().domain(this.neighborhoods.map(function (d) { return d.name})).range(this.neighborhoods.map(function (d,i) {return color(i); }));
 
@@ -97,6 +97,9 @@ NeighborhoodVis.prototype.updateVis = function() {
       circle.bindPopup(o.fullname);
       circle.on('mouseover', function() {
           circle.openPopup();
+      });
+      circle.on('mouseout', function() {
+          circle.closePopup();
       });
       that.circles.addLayer(circle);
   })
