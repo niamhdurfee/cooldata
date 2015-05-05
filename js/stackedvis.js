@@ -79,7 +79,8 @@ StackedVis.prototype.initVis = function() {
     .attr("class","chart title")
     .attr("transform", "translate("+(this.width/2 - 100)+",24)")
     .append("text")
-    .text("daily trips over time");
+    .style('fill', '#217D1C')
+    .text("Daily Trips Over Time");
 
 
   this.svg.append("g")
@@ -105,7 +106,7 @@ StackedVis.prototype.initVis = function() {
     .attr("fill","#399F2E")
     .attr("display",'none');
 
-  this.focustext = this.svg.append("g").attr("class","focustext").attr("display","none")
+  this.focustext = this.svg.append("g").attr("class","focustext").attr("display","none").attr('font-weight', '200')
 
   this.focustext.append('text').attr("class","date").attr("stroke","#399F2E");
   this.focustext.append('text').attr("class","value1").attr("stroke","#555").attr("transform","translate(0,16)");

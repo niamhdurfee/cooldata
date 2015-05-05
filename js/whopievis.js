@@ -110,6 +110,7 @@ WhoPieVis.prototype.updateVis = function() {
       .style("fill", "white")
       .style("font-size", "14px")
       .style("font-weight", "bold")
+      .style('text-transform', 'capitalize')
       .on('mouseover', this.tip.show)
       .on('mouseout', this.tip.hide)
       .on("mousemove", function(){return that.tip.style("top", (event.pageY+20)+"px").style("left",event.pageX+"px");})

@@ -81,7 +81,8 @@ AgeVis.prototype.initVis = function() {
     .attr("class","chart title")
     .attr("transform", "translate("+(this.width/2 - 50)+",24)")
     .append("text")
-    .text("age distribution*");
+    .style('fill', '#217D1C')
+    .text("Age Distribution*");
 
 
   // // filter, aggregate, modify data

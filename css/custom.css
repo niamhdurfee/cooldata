@@ -31,10 +31,14 @@ body {
   height:50px;
 }
 #stackedVis, #weatherVis, #ageVis {
-  height: 400px;
+  height: 350px;
 }
 #whenVis {
 	height:500px;
+}
+#yearBrush {
+ position: fixed;
+    bottom: 0;
 }
 .userline {
 	opacity: 0.5
