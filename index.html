@@ -138,7 +138,7 @@
         </div>
         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
           <div class="panel-body">
-
+            <div id="timeVis"></div>
           </div>
         </div>
       </div>
@@ -241,7 +241,7 @@ $(function() {
       // Instantiate all Vis Objects here
       var mapVis = new MapVis(d3.select("#mapVis"), stationData, routeData, MyEventHandler); 
 //      var timeVis = new TimeVis(d3.select("#timeVis"),MyEventHandler);  
-      var stationVis = new StationVis(d3.select("#whoVis"),d3.select("#originsVis"), d3.select("#destVis"), stationData, routeData); 
+      var stationVis = new StationVis(d3.select("#whoVis"),d3.select("#originsVis"), d3.select("#destVis"),d3.select("#timeVis"), stationData, routeData); 
 
       // Bind the eventHandler to the Vis Objects
       $(MyEventHandler).bind("station-changed", function(event, id) {

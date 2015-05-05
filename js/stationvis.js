@@ -5,10 +5,11 @@
  * @param _metaData -- the meta-data / data description object
  * @constructor
  */
-StationVis = function(_whoParentElement,_originParentElement,_destParentElement,_stationData, _routeData) {
+StationVis = function(_whoParentElement,_originParentElement,_destParentElement,_timeParentElement,_stationData, _routeData) {
   this.whoParentElement = _whoParentElement;
   this.originParentElement = _originParentElement;
   this.destParentElement = _destParentElement;
+  this.timeParentElement = _timeParentElement;
 
   this.stationData = _stationData;
   this.routeData = _routeData;
@@ -51,6 +52,12 @@ StationVis.prototype.initVis = function() {
     .attr("height", this.height - 50 + this.margin.top + this.margin.bottom)
   .append("g")
     .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
+    
+  this.timesvg = this.timeParentElement.append("svg")
+    .attr("width", this.width + this.margin.left + this.margin.right)
+    .attr("height", this.height  + this.margin.top + this.margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
 
 };
 
@@ -59,10 +66,13 @@ StationVis.prototype.updateVis = function(id) {
     
     var that = this;
     station = that.stationData[id];
-    
+
+    // UPDATE STATION DATA
     $('#station-name').html(station.fullname);
     $('#station-amt').html(Math.round(station['overall']['average']['t'])+ " trips per day");
 
+    
+    // create data for layering
     var data = [ { "key": "Male", "values": [ {"x": "Male",  "y": station.overall.average.t - station.overall.average.f} ] },
                  { "key": "Female", "values": [ {"x": "Female",  "y": station.overall.average.f} ] },
                  { "key": "Unregistered", "values": [ {"x": "Unregistered",  "y": station.overall.average.t - station.overall.average.r} ] },
@@ -71,6 +81,8 @@ StationVis.prototype.updateVis = function(id) {
                  { "key": "Commuting", "values": [ {"x": "Commuting",  "y": station.overall.average.c} ] }
                ];
     
+    
+    // USER BREAKDOWNS
     var y = d3.scale.linear()
       .domain([0, station.overall.average.t])
       .range([0, this.width-40]);    
@@ -111,7 +123,11 @@ StationVis.prototype.updateVis = function(id) {
 
     labels.exit().remove();
     
-    // calculate top 5 destinations
+    
+    
+    
+    
+    // DESTINATIONS
     var sorted = [];
     for (var route in station.routes)
         sorted.push([route, station.routes[route]]);
@@ -155,6 +171,8 @@ StationVis.prototype.updateVis = function(id) {
     // why isn't bar graph changing on update?
     
     
+    // ORIGINS
+    
     // calculate top 5 origins
     var origins = [];
     for (var key in this.stationData)
@@ -194,7 +212,50 @@ StationVis.prototype.updateVis = function(id) {
       .attr("y", function(d) { return y_orig(origins[0][1]) - y_orig(d[1]) + 15; });
     
     texts2.exit().remove();
+    
+    
+    // TIMELINE
+    
+    console.log(this.stationData[id].overall.hourly);
+    
+//    var valueline = d3.svg.line()
+//    .interpolate("basis")           // <=== THERE IT IS!
+//    .x(function(d) { return x(d.time); })
+//    .y(function(d) { return y(d.rates); });
+//    
+    var rates = [];
+    
+    for (var time in this.stationData[id].overall.hourly)
+        rates.push({'x': time, 'y': this.stationData[id].overall.hourly[time]['t']});
+    
+    console.log(rates);
+    
+
+    
+    var xscale = d3.scale.linear()
+      .domain([0, 23])
+      .range([0, this.width-40]);
+    
+    var yscale = d3.scale.linear()
+      .domain([Math.max.apply(Math,rates.map(function(o){return o.y;})), 0 ])
+      .range([0, this.height-40]);  
+    
+    var lineFunction = d3.svg.line()
+       .x(function(d) { return xscale(d.x); })
+       .y(function(d) { return yscale(d.y); })
+       .interpolate("basis");
+
+    this.timesvg.append("svg:path")
+            .attr("d", lineFunction(rates))
+            .style("stroke-width", 2)
+            .style("stroke", "#399F2E")
+            .style("fill", "none");
+
+
 };
+
+
+
 
       
 /**
