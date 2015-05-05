@@ -56,50 +56,7 @@ MapVis.prototype.initVis = function() {
 //   this.setScale(_filterFunction);
 // };
 MapVis.prototype.updateVis = function(b) {
-	var that = this;
-	//create min/max values for sliders
-	var dist_max = Math.max.apply(Math, this.routeData.map(function(o) {
-		return o.dist;
-	}));
-	var dist_min = Math.min.apply(Math, this.routeData.map(function(o) {
-		return o.dist;
-	}));
-	var time_max = Math.max.apply(Math, this.routeData.map(function(o) {
-		return o.time;
-	}));
-	var time_min = Math.min.apply(Math, this.routeData.map(function(o) {
-		return o.time;
-	}));
-	$("#slider-age").slider({
-		range: true,
-		min: 0,
-		max: 500,
-		values: [75, 300],
-		slide: function(event, ui) {
-			$("#age-amount").val("" + ui.values[0] + " - " + ui.values[1]);
-		}
-	});
-	$("#age-amount").val("" + $("#slider-age").slider("values", 0) + " - " + $("#slider-age").slider("values", 1));
-	$("#slider-distance").slider({
-		range: true,
-		min: dist_min,
-		max: dist_max,
-		values: [dist_min, dist_max],
-		slide: function(event, ui) {
-			$("#distance-amount").val("" + ui.values[0] + " - " + ui.values[1]);
-		}
-	});
-	$("#distance-amount").val("" + $("#slider-distance").slider("values", 0) + " - " + $("#slider-distance").slider("values", 1));
-	$("#slider-time").slider({
-		range: true,
-		min: time_min,
-		max: time_max,
-		values: [time_min, time_max],
-		slide: function(event, ui) {
-			$("#time-amount").val("" + ui.values[0] + " - " + ui.values[1]);
-		}
-	});
-	$("#time-amount").val("" + $("#slider-time").slider("values", 0) + " - " + $("#slider-time").slider("values", 1));
+
 	if (b > 0) {
 		this.map.removeLayer(this.allLines);
 	} else {
@@ -108,29 +65,33 @@ MapVis.prototype.updateVis = function(b) {
 	this.lines = new L.FeatureGroup();
 	var enter_polyline_options = {
 		className: 'line',
-		color: 'darkgreen',
-		opacity: 0.8
+		color: 'green',
+		opacity: 0.8,
+		weight: 10
 	};
 	var exit_polyline_options = {
 		className: 'line',
 		color: 'red',
-		opacity: 0.8
+		opacity: 0.8,
+		weight: 10
 	};
 	var popup_options = {
 		closeButton: true,
 		offset: [50, 60]
 	};
+
 	var stations = d3.keys(this.stationData);
 	this.areaScale = d3.scale.linear().range([0, 200000]).domain([0, d3.max(stations, function(ea) {
 		return (that.stationData[ea].overall.average.a + that.stationData[ea].overall.average.d)
 	})]);
+
 	this.color = d3.scale.linear().range(["red", "grey", "lightgreen"]).domain([0.45, 0.5, 0.55]);
 	this.routeData.forEach(function(o) {
 		if (b > 0) {
-			if (o.trips > 750 && parseInt(o.origdest.substring(0, 3)) == b) {
+			if (o.trips > 500 && parseInt(o.origdest.substring(0, 3)) == b) {
 				var line = L.Polyline.fromEncoded(o.polyline, enter_polyline_options).addTo(that.map);
 				that.lines.addLayer(line);
-			} else if (o.trips > 750 && parseInt(o.origdest.substring(3)) == b) {
+			} else if (o.trips > 500 && parseInt(o.origdest.substring(3)) == b) {
 				var line = L.Polyline.fromEncoded(o.polyline, exit_polyline_options).addTo(that.map);
 				that.lines.addLayer(line);
 			}
