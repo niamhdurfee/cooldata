@@ -6,9 +6,10 @@
  * @constructor
  */
 ChordVis = function (_parentElement,_metaData, _eventHandler) {
-  this.parentElement = _parentElement;ß
+  this.parentElement = _parentElement;
   this.neighborhoods = _metaData;
   this.eventHandler = _eventHandler;
+  this.display = 'all';
 
   // Define all "constants" here
   this.margin = {
@@ -114,13 +115,15 @@ ChordVis.prototype.updateVis = function() {
     var group_enter = group.enter().append("g")
       .attr("class", "group");
 
-    group.attr("d",this.arc);
+    group.attr("d",this.arc).transition().duration(300);
     group_enter.append("text");
     group_enter.append("path");
 
     group.select("text")
         .attr("dy", ".35em")
         .attr("text-anchor", function(d) {return ((d.startAngle + d.endAngle) / 2) > Math.PI ? "end" : null; })
+        .transition()
+        .duration(300)
         .attr("transform", function(d) {
         return "rotate(" + (((d.startAngle + d.endAngle) / 2) * 180 / Math.PI - 90) + ")"
             + "translate(" + (that.outerRadius +5) + ")"
@@ -184,19 +187,19 @@ ChordVis.prototype.onSelectionChange = function(d) {
   if (d !== that.display) {
   	that.display = d;
   	if (that.display =='all') {
-  		this.matrix = _matrixData;
+  		that.matrix = _matrixData;
   	}
   	else if (that.display =='registered') {
-  		this.matrix = _matrixRegisteredData;
+  		that.matrix = _matrixRegisteredData;
   	}
   	else if (that.display =='casual') {
-  		this.matrix = _matrixCasualData;
+  		that.matrix = _matrixCasualData;
   	}
     else if (that.display =='weekend') {
-  		this.matrix = _matrixWeekendData;
+  		that.matrix = _matrixWeekendData;
     }
     else if (that.display =='weekday') {
-    	this.matrix = _matrixWeekdayData;
+    	that.matrix = _matrixWeekdayData;
 
     };
     this.wrangleData();

@@ -70,7 +70,7 @@ AgeVis.prototype.initVis = function() {
 
   this.svg.append("g")
       .attr("class", "y axis")
-      .attr("transform", "translate("+this.margin.left+",0)")  
+      .attr("transform", "translate("+this.margin.left+",0)")
       .append("text")
       .attr("transform", "translate("+this.margin.left+","+this.margin.top+") rotate(-90)")
       .attr("y", -10)
@@ -94,7 +94,7 @@ AgeVis.prototype.initVis = function() {
 
   this.warning = this.svg.append("g")
     .attr("transform","translate("+(this.width/4)+","+(this.height/2)+")")
-    .append("text").attr("class","warning")
+    .append("text").attr("id","warning")
 
   // call the update method
   this.updateVis();
@@ -126,12 +126,12 @@ AgeVis.prototype.onSelectionChange = function(from,to,status) {
   var myDate = d3.time.format("%_m/%_d/%Y").parse('9/30/2012');
 
   if (status) {
-    this.svg.select(".warning").html("");
+    this.svg.select("#warning").html("");
     this.wrangleData(null)
   } else if (from > myDate) {
-    this.svg.select(".warning").html("Ages available through 9/30/2012")
+    this.svg.select("#warning").html("Ages available through 9/30/2012")
   } else {
-    this.svg.select(".warning").html("");
+    this.svg.select("#warning").html("");
     this.wrangleData(function(d) {
       return ((d.date >= from) && (d.date <= to))
     });

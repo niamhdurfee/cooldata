@@ -46,10 +46,11 @@
             <li><a href="/who.html">who</a></li>
             <li><a href="/where.html">where</a></li>
             <li><a href="/when.html">when</a></li>
-            <li class="active"><a href="/follow.html">follow me</a></li>            
+            <li class="active"><a href="/follow.html">follow me</a></li>
             <li><a href="/process.html">process book</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
+            <li><a id="reset"><span class="glyphicon glyphicon-refresh"></span></a></li>
             <li><a id="playpause"><span id="imgPlayPause" class="glyphicon glyphicon-pause"></span></a></li>
             <li><a data-toggle="modal" data-target="#help" id="helpButton"><span class="glyphicon glyphicon-question-sign"></span></a></li>
           </ul>
@@ -74,14 +75,46 @@
           <td colspan='2'>
             <div id="map"></div>
           </td>
-          <td>
-            <div id="runningVis" class="span4 "></div>
+          <td valign="top">
+            <div id="runningVis" class="span4">
+              <div>
+                <table width="100%">
+                  <thead>
+                    <tr>
+                      <th width="40%"></th>
+                      <th width="30%"></th>
+                      <th width="30%"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><div class="date" id="dateCountMonth"></div></td>
+                      <td><div class="date" id="dateCountDay"></div></td>
+                      <td><div class="date" id="dateCountYear"></div></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div>
+                <div class="total" align="center">
+                  <span id="totalCount"></span> trips <br>
+                  <span id="timeCount"></span><br>
+                  <span id="distCount"></span> miles
+                </div>
+              </div>
+
+            </div>
+            <div id="pieVis">
+            </div>
           </td>
         </tr>
-        
+        <tr>
+          <td colspan='3'><div id='progressVis'></div></td>
+        </tr>
+
       </tbody>
     </table>
-        
+
 
     </div><!-- /.container -->
     <div class="modal fade" id="play" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -90,7 +123,7 @@
           <div class="modal-body">
           <button type="button" class="btn btn-default btn-lg" id="playButton" style="margin: 0 auto;">
             <span class="glyphicon glyphicon-play"></span> Play!
-          </button> 
+          </button>
           </div>
         </div>
       </div>
@@ -124,19 +157,15 @@
 <script src="js/yearbrush.js"></script>
 <script src="js/followvis.js"></script>
 <script src="js/runningvis.js"></script>
+<script src="js/pievis.js"></script>
+<script src="js/progressvis.js"></script>
 <script>
 // Create a map in the div #map
 
 $(function() {
     var play = false;
-    // this function can convert Date objects to a string
-    // it can also convert strings to Date objects
-    // see: https://github.com/mbostock/d3/wiki/Time-Formatting
+
     $('#play').modal('show');
-
-
-
-
     var parseDate = d3.time.format("%_m/%_d/%Y %H:%M:%S").parse;
 
     //==========================================
@@ -152,7 +181,7 @@ $(function() {
       $('#playButton').on('click',function () {
         $('#play').modal('hide');
         play = true;
-        tick(); 
+        tick();
        });
       $('#helpButton').on('click',function () {
         play = false;
@@ -166,10 +195,15 @@ $(function() {
         play = play ? false : true;
         tick();
       });
+      $('#reset').on("click", function () {
+        i = 0;
+      })
 
 
-      var mapVis = new FollowVis(d3.select("body"), routeData, MyEventHandler);
+      // var mapVis = new FollowVis(d3.select("body"), routeData, MyEventHandler);
       var runningVis = new RunningVis(d3.select("#runningVis"), routeData,MyEventHandler);
+      var pieVis = new PieVis(d3.select("#pieVis"),MyEventHandler);
+      var progressVis = new ProgressVis(d3.select("#progressVis"),routeData,MyEventHandler);
 
       var i = 0;
 
@@ -179,6 +213,8 @@ $(function() {
           if (i < data.length) {
             runningVis.updateVis(i,data[i]);
             mapVis.tick(i,data[i]);
+            pieVis.tick(i,data[i]);
+            progressVis.tick(i,data[i]);
             setTimeout(tick, 100)
             i += 1
           } else {
@@ -186,9 +222,8 @@ $(function() {
             tick();
           }
         }
-      };
-
-    }
+      }
+    };
 
     // call this function after both files are loaded -- error should be "null" if no error
     var dataLoaded = function(_data,_routeData) {
@@ -196,7 +231,7 @@ $(function() {
 
        var neededRoutes = [];
 
-       data = _data.map(function (d) { 
+       data = _data.map(function (d) {
           var reverse, origdest;
           if (d.strt_statn == d.end_statn) {
             reverse = null;
@@ -208,8 +243,7 @@ $(function() {
           neededRoutes.push(origdest);
           return {
             duration: +d.duration,
-            start: parseDate(d.start),
-            end: parseDate(d.end),
+            date: parseDate(d.start),
             origdest: origdest,
             reverse: reverse,
             userType: d.userType,

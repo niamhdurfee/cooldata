@@ -120,9 +120,9 @@ $(function() {
       var MyEventHandler = {};
 
       // Instantiate all Vis Objects here
-      var chordVis = new ChordVis(d3.select("#chordVis")hoodData, MyEventHandler);
-      var neighborhoodVis = new NeighborhoodVis(d3.select("#neighborhoodVis"),stationData,hoodData, MyEventHandler);
       var formVis = new FormVis(d3.select("#formVis"), MyEventHandler); 
+      var chordVis = new ChordVis(d3.select("#chordVis"), hoodData, MyEventHandler);
+      // var neighborhoodVis = new NeighborhoodVis(d3.select("#neighborhoodVis"),stationData,hoodData, MyEventHandler);
      // var timeVis = new TimeVis(d3.select("#timeVis"),MyEventHandler);
 
       // Bind the eventHandler to the Vis Objects
