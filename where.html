@@ -48,6 +48,7 @@
             <li><a href="/process.html">process book</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
+            <li><a id="reset"><span class="glyphicon glyphicon-refresh"></span></a></li>
             <li><a data-toggle="modal" data-target="#help"><span class="glyphicon glyphicon-question-sign"></span></a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -151,6 +152,10 @@ $(function() {
         chordVis.onSelectionChange(selected);
         neighborhoodVis.onSelectionChange(selected);
       });
+      $('#reset').on("click", function () {
+          neighborhoodVis.onHoodChange(null);
+          // weatherVis.onTypeChange(["total"]);
+      })
     };
 
     // call this function after both files are loaded -- error should be "null" if no error
