@@ -5,10 +5,8 @@
  * @param _metaData -- the meta-data / data description object
  * @constructor
  */
-ChordVis = function (_parentElement, _data,_metaData, _eventHandler) {
-  this.parentElement = _parentElement;
-  this.display = 'all';
-  this.stationData = _data;
+ChordVis = function (_parentElement,_metaData, _eventHandler) {
+  this.parentElement = _parentElement;ß
   this.neighborhoods = _metaData;
   this.eventHandler = _eventHandler;
 
@@ -23,7 +21,7 @@ ChordVis = function (_parentElement, _data,_metaData, _eventHandler) {
   this.width = this.parentElement.node().clientWidth- this.margin.left - this.margin.right - this.margin.padding,
   this.height = this.parentElement.node().clientHeight - this.margin.top - this.margin.bottom - this.margin.padding,
   this.outerRadius = Math.min(this.width, this.height) / 2 - 100,
-  this.innerRadius = this.outerRadius - 24;
+  this.innerRadius = this.outerRadius - 36;
 
   this.initVis();
 }
@@ -36,6 +34,9 @@ ChordVis.prototype.initVis = function() {
     var that = this;
 
     this.matrix = _matrixData;
+    var formatPercent = d3.format(".1%");
+    var formatInt = d3.format(",");
+
 
     this.arc = d3.svg.arc()
     .innerRadius(this.innerRadius)
@@ -43,7 +44,7 @@ ChordVis.prototype.initVis = function() {
 
     this.layout = d3.layout.chord()
     .padding(.1)
-    .sortSubgroups(d3.descending)
+    .sortSubgroups(d3.ascending)
     .sortChords(d3.ascending);
 
     this.path = d3.svg.chord()
@@ -61,19 +62,27 @@ ChordVis.prototype.initVis = function() {
 
     this.tipGroup = d3.tip()
       .attr('class', 'd3-tip')
-      .attr('x',0)
-      .attr('y',0)
       .offset([-10, 0])
       .html(function(d) {
-        console.log(d);
-        return "<span class='highlight'>"+"YES"+"</span><br><small>"+"YES"+" of "+"YES"+" trips</small></span>";
+        return "<span style='color:red'>"+ that.neighborhoods[d.index].name + "</span><br>" + formatPercent(d.value/that.displayData.total) + " of origins";
       })
     this.tipChord = d3.tip()
       .attr('class', 'd3-tip')
       .offset([-10, 0])
       .html(function(d) {
-        return "<span class='highlight'>"+"NO"+"</span><br><small>"+"NO"+" of "+"NO"+" trips</small></span>";
-      })
+        if (d.source.index == d.target.index) {
+          return "<span style='color:red'>Within " + that.neighborhoods[d.source.index].name + ":</span> "
+                  + d.source.value + " trips"
+        }
+        else {
+          return "<span style='color:red'>"+ that.neighborhoods[d.source.index].name
+                 + " → " + that.neighborhoods[d.target.index].name 
+                 + ": </span>" + formatInt(d.source.value)
+                 + "<br><span style='color:red'>" + that.neighborhoods[d.target.index].name
+                 + " → " + that.neighborhoods[d.source.index].name
+                 + ": </span>" + formatInt(d.target.value);
+       } 
+     })
 
     this.svg.call(this.tipGroup);
     this.svg.call(this.tipChord);
@@ -95,9 +104,6 @@ ChordVis.prototype.updateVis = function() {
     var that = this;
     var color = d3.scale.category20();
 
-    var formatPercent = d3.format(".1%");
-
-
     // Compute the chord layout.
     this.layout.matrix(this.matrix);
 
@@ -109,14 +115,8 @@ ChordVis.prototype.updateVis = function() {
       .attr("class", "group");
 
     group.attr("d",this.arc);
-    group_enter.append("title");
     group_enter.append("text");
     group_enter.append("path");
-
-        // Add a mouseover title.
-    group.select("title").text(function(d, i) {
-        return that.neighborhoods[i].name + ": " + formatPercent(d.value/that.displayData.total) + " of origins";
-    });
 
     group.select("text")
         .attr("dy", ".35em")
@@ -156,16 +156,6 @@ ChordVis.prototype.updateVis = function() {
       .on("mouseout",this.tipChord.hide)
       .on("mousemove", function(){return that.tipChord.style("top", (event.pageY+20)+"px").style("left",event.pageX+"px");});
 
-    chord_enter.append("title")
-
-    chord.select("title").text(function(d) {
-     return that.neighborhoods[d.source.index].name
-     + " → " + that.neighborhoods[d.target.index].name
-     + ": " + d.source.value
-     + "\n" + that.neighborhoods[d.target.index].name
-     + " → " + that.neighborhoods[d.source.index].name
-     + ": " + d.target.value;
-     });
 
     chord.exit().remove()
     group.exit().remove();
@@ -177,6 +167,7 @@ ChordVis.prototype.updateVis = function() {
       that.tipGroup.show(d);
     }
     function mouseoutGroup(d, i) {
+      chord.classed("fade", false);
       that.tipGroup.hide(d);
     }
 

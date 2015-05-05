@@ -67,7 +67,6 @@ RunningVis.prototype.updateVis = function(i,trip) {
   var that = this;
   if (i == 0) { this.resetCounts(); }
   if (trip.tripType == "greenyellow") {
-    console.log(trip.gender);
     var formatInt = d3.format(',');
     var formatFloat = d3.format(',.2f');
     that.timeCount += trip.duration;

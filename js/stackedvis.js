@@ -233,8 +233,6 @@ StackedVis.prototype.onHoverChange = function(date) {
     that.focustext.select(".date").text(formatDate(sel[0].date));
     that.focustext.select(".value1").text(myStr[0]);
     that.focustext.select(".value2").text(myStr[1]);
-  } else {
-      console.log("its null, bitches")
   }
 }
 

@@ -99,7 +99,6 @@ WhenVis.prototype.initVis = function() {
 
 WhenVis.prototype.wrangleData = function(_filterFunction) {
 
-  console.log('wrangling');
   this.displayData = this.filterAndAggregate(_filterFunction);
 }
 
@@ -108,7 +107,7 @@ WhenVis.prototype.updateVis = function() {
   var that = this;
 
   // this.x.domain(d3.extent(that.displayData, function(d) { console.log(d); return d.timeofday; }));
-  this.y.domain([0,d3.max(that.displayData, function (d) {  return d3.max(d.total, function (a) {console.log(a); return a.value})})]);
+  this.y.domain([0,d3.max(that.displayData, function (d) {  return d3.max(d.total, function (a) { return a.value})})]);
 
   this.svg.select(".y.axis")
     .call(this.yAxis);
