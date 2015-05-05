@@ -63,7 +63,7 @@ StationVis.prototype.initVis = function() {
 
 
 StationVis.prototype.updateVis = function(id) {
-    
+
     // updates four svgs on change of station
     // **************************************
     // whosvg -- breakdown of users for a station
@@ -90,7 +90,7 @@ StationVis.prototype.updateVis = function(id) {
     // USER BREAKDOWNS
     // ***************
     // whosvg
-    
+
     var y = d3.scale.linear()
       .domain([0, station.overall.average.t])
       .range([0, this.width-40]);
@@ -136,7 +136,7 @@ StationVis.prototype.updateVis = function(id) {
     // TOP DESTINATIONS
     // ***************
     // destsvg
-    
+
     var destinations = [];
     for (var route in station.routes)
         destinations.push([route, station.routes[route]]);
@@ -171,7 +171,7 @@ StationVis.prototype.updateVis = function(id) {
       .attr("x", function(d, i) { return i*55 + 9; })
       .attr("y", function(d) { return y_dest(destinations[0][1]) - y_dest(d[1]) + 65; });
     dest_num_labels.exit().remove();
-  
+
     var dest_text_labels = this.destsvg.selectAll(".textlabels")
       .data(destinations);
     var dest_text_labels_enter = dest_text_labels.enter().append("text").attr('class', 'textlabels');
@@ -184,20 +184,20 @@ StationVis.prototype.updateVis = function(id) {
       .attr("y", function(d, i) { return i*55 + 2; })
       .attr("x", function(d) { return -1 * ( y_dest(destinations[0][1]) + 50); })
       .attr("transform", function(d) {
-        return "rotate(-90)" 
+        return "rotate(-90)"
       });
     dest_text_labels.exit().remove();
-    
-    
 
-    
-    
-    
+
+
+
+
+
 
     // TOP ORIGINS
     // ***************
     // originsvg
-    
+
     var origins = [];
     for (var key in this.stationData)
         origins.push([key, this.stationData[key].routes[id]]);
@@ -232,7 +232,7 @@ StationVis.prototype.updateVis = function(id) {
       .attr("x", function(d, i) { return i*55 + 9; })
       .attr("y", function(d) { return y_origin(origins[0][1]) - y_origin(d[1]) + 65; });
     origin_num_labels.exit().remove();
-  
+
     var origin_text_labels = this.originsvg.selectAll(".textlabels")
       .data(origins);
     var origin_text_labels_enter = origin_text_labels.enter().append("text").attr('class', 'textlabels');
@@ -241,24 +241,24 @@ StationVis.prototype.updateVis = function(id) {
       .style('font-size', '12px')
       .style('font-weight', '400')
       .style('fill', '#555')
-      .text( function (d) { console.log(that.stationData[d[0]]); return that.stationData[d[0]].short; })
+      .text( function (d) { return that.stationData[d[0]].short; })
       .attr("y", function(d, i) { return i*55 + 2; })
       .attr("x", function(d) { return -1 * ( y_origin(origins[0][1]) + 50); })
       .attr("transform", function(d) {
-        return "rotate(-90)" 
+        return "rotate(-90)"
       });
     origin_text_labels.exit().remove();
-    
-    
+
+
     // HOURLY WHEN
     // ***************
     // timesvg
-    
+
     var rates = [];
     for (var time in this.stationData[id].overall.hourly)
         rates.push({'x': time, 'y': this.stationData[id].overall.hourly[time]['t']});
 
-    
+
     var time_x = d3.scale.linear()
       .domain([0, 23])
       .range([0, this.width-40]);
@@ -276,7 +276,7 @@ StationVis.prototype.updateVis = function(id) {
         .data(rates);
 
     var path_enter = path.enter().append("path");
-    
+
     path
         .attr("d", lineFunction(rates))
         .style("stroke-width", 2)

@@ -42,12 +42,20 @@ MapVis.prototype.initVis = function() {
 		color: 'grey',
 		opacity: 0.5
 	};
+	var polyline_options2 = {
+		className: 'line',
+		color: 'grey',
+		opacity: 0.1
+	};
 	this.allLines = new L.FeatureGroup();
+	this.opaqueLines = new L.FeatureGroup();
 	this.lines = new L.FeatureGroup();
 	this.routeData.forEach(function(o) {
 		if (o.trips > 750) {
 			var line = L.Polyline.fromEncoded(o.polyline, polyline_options).addTo(that.map);
+			var opaqueLine = L.Polyline.fromEncoded(o.polyline, polyline_options2).addTo(that.map);
 			that.allLines.addLayer(line);
+			that.opaqueLines.addLayer(opaqueLine);
 		}
 	});
 	this.updateVis(-1);
@@ -104,6 +112,7 @@ MapVis.prototype.updateVis = function(b) {
 		this.map.removeLayer(this.allLines);
 	} else {
 		this.map.removeLayer(this.lines);
+		this.map.removeLayer(this.opaqueLines);
 	}
 	this.lines = new L.FeatureGroup();
 	var enter_polyline_options = {
@@ -138,6 +147,7 @@ MapVis.prototype.updateVis = function(b) {
 	});
 	if (b > 0) {
 		this.map.addLayer(this.lines);
+		this.map.addLayer(this.opaqueLines);
 	} else {
 		this.map.addLayer(this.allLines);
 	}
