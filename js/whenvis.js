@@ -90,6 +90,15 @@ WhenVis.prototype.initVis = function() {
 
   this.yAxisLabel = this.svg.select('.y.axis').select('text');
 
+  this.tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    return "<span class='highlight'>"+d.type+"</span>";
+  })
+
+  this.svg.call(this.tip);
+
   this.wrangleData();
   // // call the update method
   this.updateVis();
@@ -119,6 +128,9 @@ WhenVis.prototype.updateVis = function() {
 
   area.enter().append("g")
       .attr('class','area')
+      .on('mouseover', this.tip.show)
+      .on("mousemove", function(){return that.tip.style("top", (event.pageY+20)+"px").style("left",event.pageX+"px");})
+      .on('mouseout', this.tip.hide)
       .append("path")
       .attr("class", "areaPath");
 
@@ -133,11 +145,14 @@ WhenVis.prototype.updateVis = function() {
 
   line.enter().append("g")
       .attr('class','line')
+      .on('mouseover', this.tip.show)
+      .on("mousemove", function(){return that.tip.style("top", (event.pageY+20)+"px").style("left",event.pageX+"px");})
+      .on('mouseout', this.tip.hide)
       .append("path")
-
   line.select("path").transition().duration(300)
       .attr("d",function (d) { return that.line(d.points)})
       .style("stroke", function(d,i) {return that.color(i)});
+
 
   var text = this.svg.selectAll(".datalabel")
       .data(that.displayData);
