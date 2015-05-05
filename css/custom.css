@@ -39,9 +39,6 @@ body {
     float: middle;
 }
 
-.btn-group {
- max-width: 300px;   
-}
 
 .btn {
   min-width: 120px;
@@ -59,7 +56,7 @@ body {
   height: 350px;
 }
 #whenVis {
-	height:500px;
+	height:700px;
 }
 #yearBrush {
  position: fixed;
@@ -178,4 +175,3 @@ body {
 .panel-heading {
  padding: 0;
 }
-
