@@ -30,14 +30,14 @@ FollowVis = function(_parentElement, _metaData,_eventHandler) {
 FollowVis.prototype.initVis = function() {
   var that = this;
   this.map = new L.mapbox.map('map', 'niamhdurfee.m3dcii07',{center: [42.35272,-71.09], zoom: 13});
-
+  this.map.legendControl.addLegend(document.getElementById('legend').innerHTML);
   d3.entries(this.routeData).forEach( function (d) {L.Polyline.fromEncoded(d.value.polyline, {stroke:5,opacity:0,className:"trips od"+d.key}).addTo(that.map)})
   // // call the update method
   this.updateVis();
 }
 
 FollowVis.prototype.tick = function(i,trip) {
-  if (i == 0) { 
+  if (i == 0) {
     d3.selectAll(".trips").attr("stroke-opacity",0).classed("taken",false);
 
   }
@@ -47,7 +47,7 @@ FollowVis.prototype.tick = function(i,trip) {
   d3.select(a).attr("stroke-opacity",1).attr("stroke-width",8).attr("stroke",trip.tripType).classed("taken",true);
 
   }
- 
+
 
 FollowVis.prototype.updateVis = function() {
   var that = this;

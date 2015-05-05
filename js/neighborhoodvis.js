@@ -113,7 +113,11 @@ NeighborhoodVis.prototype.updateVis = function() {
  */
  NeighborhoodVis.prototype.onHoodChange = function(d) {
       var that = this;
-      this.wrangleData(function (a) { return a.hood == d}, null);
+      if (d) {
+        this.wrangleData(function (a) { return a.hood == d}, null);
+      } else {
+        this.wrangleData(function (a) { return true },null)
+      }
       this.updateVis();
  };
  NeighborhoodVis.prototype.onSelectionChange = function(d) {
