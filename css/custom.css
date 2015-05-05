@@ -5,13 +5,13 @@ body {
     width:300px;
 }
 #timeVis {
-  height: 40px;
+  height: 60px;
 }
 .pievis {
-  height: 200px;
+  height: 280px;
 }
 .time {
-  height: 80px;
+  height: 100px;
   width: 100%;
 }
 .year.axis path, line
@@ -30,7 +30,7 @@ body {
   height:50px;
 }
 #stackedVis, #weatherVis, #ageVis {
-  height: 350px;
+  height: 400px;
 }
 #whenVis {
 	height:500px;
