@@ -65,21 +65,21 @@ ChordVis.prototype.initVis = function() {
       .attr('class', 'd3-tip')
       .offset([-10, 0])
       .html(function(d) {
-        return "<span style='color:red'>"+ that.neighborhoods[d.index].name + "</span><br>" + formatPercent(d.value/that.displayData.total) + " of origins";
+        return "<span style='color:#399F2E'>"+ that.neighborhoods[d.index].name + "</span><br>" + formatPercent(d.value/that.displayData.total) + " of origins";
       })
     this.tipChord = d3.tip()
       .attr('class', 'd3-tip')
       .offset([-10, 0])
       .html(function(d) {
         if (d.source.index == d.target.index) {
-          return "<span style='color:red'>Within " + that.neighborhoods[d.source.index].name + ":</span> "
+          return "<span style='color:#399F2E'>Within " + that.neighborhoods[d.source.index].name + ":</span> "
                   + d.source.value + " trips"
         }
         else {
-          return "<span style='color:red'>"+ that.neighborhoods[d.source.index].name
+          return "<span style='color:#399F2E'>"+ that.neighborhoods[d.source.index].name
                  + " → " + that.neighborhoods[d.target.index].name 
                  + ": </span>" + formatInt(d.source.value)
-                 + "<br><span style='color:red'>" + that.neighborhoods[d.target.index].name
+                 + "<br><span style='color:#399F2E'>" + that.neighborhoods[d.target.index].name
                  + " → " + that.neighborhoods[d.source.index].name
                  + ": </span>" + formatInt(d.target.value);
        } 
@@ -103,8 +103,10 @@ ChordVis.prototype.wrangleData = function() {
 
 ChordVis.prototype.updateVis = function() {
     var that = this;
-    var color = d3.scale.category20();
+    var color = d3.scale.category20c();
 
+
+    console.log(color(1));
     // Compute the chord layout.
     this.layout.matrix(this.matrix);
 
@@ -139,7 +141,8 @@ ChordVis.prototype.updateVis = function() {
     group.select('path')
       .attr("id", function(d, i) { return "group" + i; })
       .attr("d", this.arc)
-      .style("fill", function(d, i) { return that.neighborhoods[i].color; })
+//      .style("fill", function(d, i) { console.log(i); return color[i]; })
+      .style("fill", function(d, i) { console.log(i); return color(i); })
       .on("mouseover", mouseoverGroup)
       .on("mouseout", mouseoutGroup)
       .on("mousemove", function(){return that.tipGroup.style("top", (event.pageY+20)+"px").style("left",event.pageX+"px");});
@@ -154,7 +157,7 @@ ChordVis.prototype.updateVis = function() {
 
     chord
       .attr("d", this.path)
-      .style("fill", function(d) { return that.neighborhoods[d.source.index].color; })
+      .style("fill", function(d) {return color(d.source.index); })
       .on("mouseover",this.tipChord.show)
       .on("mouseout",this.tipChord.hide)
       .on("mousemove", function(){return that.tipChord.style("top", (event.pageY+20)+"px").style("left",event.pageX+"px");});
