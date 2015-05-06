@@ -236,8 +236,31 @@
 
          <h3>who.html<small> whopievis.js, stackedvis.js, agevis.js, yearbrush.js</small></h3>
 
-<p>  The who page allows viewers to explore the makeup of riders on Hubway.  The visualization shows pie charts for breakdowns on casual/registered, female/male, leisure/commuter, and visitor/local with <a href="/js/whopievis.js"><code>WhoPieVis</code></a>.  It also shows the daily distribution of trips and the distribution for riders' ages with <a href="/js/stackedvis.js"><code>StackedVis</code></a> and <a href="js/agevis.js"><code>AgeVis</code></a>, respectively.  Viewers can further explore the rider breakdown by selecting a pie chart and seeing how the daily distribution of trips breaks down.  For example, a viewer can select the male-female pie to see daily distributions of male riders and female riders.  We also decided to give the viewer the ability to explore these breakdowns over time.  The visualization has a <a href="/js/yearbrush.js"><code>YearBrush</code></a> that allows viewers to brush over the entire time period that we have data from.  This allows them to see how the breakdowns, daily trip distribution, and age distribution change over time.</p>
-</p>
+<p>  The who page allows viewers to explore the makeup of riders on Hubway.  The visualization shows pie charts for breakdowns on casual/registered, female/male, leisure/commuter, and visitor/local.  Each of these breakdowns is a separate <a href="/js/whopievis.js"><code>WhoPieVis</code></a> that shows the user composition into two segments.  We allow the viewer to hover to see actual number of trips broken down.  A sample of the first iteration of a pie chart is shown below in Figure 15.</p>
+
+         <div class="center" id="figure15"><img src="design/img/pievis.png"></br> Figure 15:  Original Pie Breakdown of Casual and Registered<br/><br/></div>
+
+
+<p>The visualization also shows the daily distribution of trips with <a href="/js/stackedvis.js"><code>StackedVis</code></a>.  The quantity of trips are shown over a certain time period in a line graph.  In addition, a viewer can hover over the line graph to see a specific day and the number of trips, as shown in Figure 16.   The viewer can click any of the pie graphs and the distribution of trips will break down into the two subcategories.  For example, if we were to click the gender pie graph, the distribution of trips would split into two lines--one for males and one for females.  The hover would then show the specific trip breakdown.  These features are shown below in Figure 17.  </p>
+
+         <div class="center" id="figure17"><img src="design/img/stackedvis.png"></br> Figure 16:  Daily Distribution of Trips, Total<br/><br/></div>
+         <div class="center" id="figure17"><img src="design/img/genderstackedvis.png"></br> Figure 17:  Daily Distribution of Trips, Stacked by Gender<br/><br/></div>
+
+<p>Next, the page gives viewers the opportunity to see the distribution of riders' ages with <a href="js/agevis.js"><code>AgeVis</code></a>.  The age data for registered users is only available through Sept. 30, 2012.  We made sure to leave a note on the asterisk to let our viewers know this.  While we were at it, we let them know that the age, gender, and ZIP code for trips are only available for datapoints from registered users.  However, we also noted that registered users make up 75% of all the trips.  The age distribution visual is shown below in Figure 18.</p>
+
+         <div class="center" id="figure18"><img src="design/img/age.png"></br> Figure 18:  Age Distribution<br/><br/></div>
+
+<p>Lastly, we gave the ability to brush over time to see all of the above figures.  Originally, the brush was an hourly breakdown of time as shown in Figure 19.  However, we decided that it would be more pertinent to brush over the entire dataset of time (i.e. years, not hours).  The final brush is set over a background image so that viewers can easily see what the overall time looks like.  From quickly looking at the brush, they can see that there is no usage during the winters and hence, the other visualizations will reflect this.  The final brush was implemented as <a href="/js/yearbrush.js"><code>YearBrush</code></a> and is shown below in Figure 20.</p>
+
+         <div class="center" id="figure19"><img src="design/img/brush.png"></br> Figure 19:  Original Hourly Brush<br/><br/></div>
+         <div class="center" id="figure20"><img src="design/img/brush.gif"></br> Figure 20:  Final Year Brush<br/><br/></div>
+
+
+<p>In the end, we decided to design the page to better reflect the Hubway data scheme.  The result were changes to hover colors, pie chart colors, title colors, and line colors.  These design choices are shown below in Figure 21.</p>
+
+         <div class="center" id="figure21"><img src="design/img/who-page.png"></br> Figure 21:  Final <b>Who</b> Page<br/><br/></div>
+
+
 
          <h3>when.html<small> weathervis.js, whenvis.js</small></h3>
          <h3>where.html<small> chordvis.js, neighborhoodvis.js, formvis.js</small></h3>
