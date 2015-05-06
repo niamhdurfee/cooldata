@@ -24,7 +24,7 @@ StationVis = function(_whoParentElement,_originParentElement,_destParentElement,
       left: 10
     },
   this.width = 340 - this.margin.left - this.margin.right,
-  this.height = 200 - this.margin.top - this.margin.bottom;
+  this.height = 220 - this.margin.top - this.margin.bottom;
 
   // set up SVG
   this.initVis();
@@ -144,19 +144,19 @@ StationVis.prototype.updateVis = function(id) {
     destinations.sort(function(a, b) {return b[1] - a[1]})
     destinations = destinations.slice(0,5);
 
-    var y_dest = d3.scale.linear()
+    var x_dest = d3.scale.linear()
       .domain([0, destinations[0][1] ])
-      .range([0, this.height-40]);
+      .range([0, this.width-80]);
 
     // vertical bars for top 5 destinations
     var dest_rects = this.destsvg.selectAll("rect")
       .data(destinations);
     var dest_rects_enter = dest_rects.enter().append("rect");
     dest_rects
-      .attr("x", function(d, i) { return i*55 + 5; })
-      .attr("y", function(d) { return y_dest(destinations[0][1]) - y_dest(d[1]) + 50; })
-      .attr("width", function(d) { return 30; })
-      .attr("height", function(d) { return y_dest(d[1]); })
+      .attr("y", function(d, i) { return i*55 + 20; })
+      .attr("x", 0)
+      .attr("width", function(d) { return x_dest(d[1]); })
+      .attr("height", 30)
       .style("fill", "#399F2E");
     dest_rects.exit().remove();
 
@@ -169,8 +169,8 @@ StationVis.prototype.updateVis = function(id) {
       .style('font-weight', '800')
       .style('fill', 'white')
       .text( function (d) { return d[1]; })
-      .attr("x", function(d, i) { return i*55 + 9; })
-      .attr("y", function(d) { return y_dest(destinations[0][1]) - y_dest(d[1]) + 65; });
+      .attr("y", function(d, i) { return i*55 + 37; })
+      .attr("x", function(d) { return x_dest(d[1]) -25; });
     dest_num_labels.exit().remove();
 
     var dest_text_labels = this.destsvg.selectAll(".textlabels")
@@ -182,18 +182,9 @@ StationVis.prototype.updateVis = function(id) {
       .style('font-weight', '400')
       .style('fill', '#555')
       .text( function (d) { return that.stationData[d[0]].short; })
-      .attr("y", function(d, i) { return i*55 + 2; })
-      .attr("x", function(d) { return -1 * ( y_dest(destinations[0][1]) + 50); })
-      .attr("transform", function(d) {
-        return "rotate(-90)"
-      });
+      .attr("y", function(d, i) { return i*55 + 17; })
+      .attr("x",0);
     dest_text_labels.exit().remove();
-
-
-
-
-
-
 
     // TOP ORIGINS
     // ***************
@@ -207,17 +198,17 @@ StationVis.prototype.updateVis = function(id) {
 
     var y_origin = d3.scale.linear()
       .domain([0, origins[0][1] ])
-      .range([0, this.height-40]);
+      .range([0, this.width-80]);
 
     // vertical bars for top 5 origins
     var origin_rects = this.originsvg.selectAll("rect")
       .data(origins);
     var origin_rects_enter = origin_rects.enter().append("rect");
     origin_rects
-      .attr("x", function(d, i) { return i*55 + 5; })
-      .attr("y", function(d) { return y_origin(origins[0][1]) - y_origin(d[1]) + 50; })
-      .attr("width", function(d) { return 30; })
-      .attr("height", function(d) { return y_origin(d[1]); })
+      .attr("y", function(d, i) { return i*55 + 20; })
+      .attr("x", 0)
+      .attr("width", function(d) { return y_origin(d[1]); })
+      .attr("height", 30)
       .style("fill", "#399F2E");
     origin_rects.exit().remove();
 
@@ -230,8 +221,8 @@ StationVis.prototype.updateVis = function(id) {
       .style('font-weight', '800')
       .style('fill', 'white')
       .text( function (d) { return d[1]; })
-      .attr("x", function(d, i) { return i*55 + 9; })
-      .attr("y", function(d) { return y_origin(origins[0][1]) - y_origin(d[1]) + 65; });
+      .attr("y", function(d, i) { return i*55 + 37; })
+      .attr("x", function(d) { return y_origin(d[1]) -25; });
     origin_num_labels.exit().remove();
 
     var origin_text_labels = this.originsvg.selectAll(".textlabels")
@@ -243,11 +234,8 @@ StationVis.prototype.updateVis = function(id) {
       .style('font-weight', '400')
       .style('fill', '#555')
       .text( function (d) { return that.stationData[d[0]].short; })
-      .attr("y", function(d, i) { return i*55 + 2; })
-      .attr("x", function(d) { return -1 * ( y_origin(origins[0][1]) + 50); })
-      .attr("transform", function(d) {
-        return "rotate(-90)"
-      });
+      .attr("y", function(d, i) { return i*55 + 17; })
+      .attr("x", 0);
     origin_text_labels.exit().remove();
 
 
