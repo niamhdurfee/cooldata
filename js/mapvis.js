@@ -33,21 +33,27 @@ MapVis = function(_parentElement, _stationData, _routeData, _eventHandler) {
 MapVis.prototype.initVis = function() {
 	that = this;
 	this.map = L.mapbox.map('mapVis', 'niamhdurfee.loko84n8',{center: [42.359960, -71.053449], zoom: 13});
-	// fromEncoded(encoded).addto(map);
-	// var line_points = [[42.361285,-71.06514],[42.353412,-71.044624]];
-	// var polyline = L.polyline(line_points).addTo(map);
-	// // call the update method
+	this.map.legendControl.addLegend(document.getElementById('legend').innerHTML);
+
 	var polyline_options = {
 		className: 'line',
 		color: 'grey',
 		opacity: 0.5
 	};
+	var polyline_options2 = {
+		className: 'line',
+		color: 'grey',
+		opacity: 0.1
+	};
 	this.allLines = new L.FeatureGroup();
+	this.opaqueLines = new L.FeatureGroup();
 	this.lines = new L.FeatureGroup();
 	this.routeData.forEach(function(o) {
 		if (o.trips > 750) {
 			var line = L.Polyline.fromEncoded(o.polyline, polyline_options).addTo(that.map);
+			var opaqueLine = L.Polyline.fromEncoded(o.polyline, polyline_options2).addTo(that.map);
 			that.allLines.addLayer(line);
+			that.opaqueLines.addLayer(opaqueLine);
 		}
 	});
 	this.updateVis(-1);
@@ -61,6 +67,7 @@ MapVis.prototype.updateVis = function(b) {
 		this.map.removeLayer(this.allLines);
 	} else {
 		this.map.removeLayer(this.lines);
+		this.map.removeLayer(this.opaqueLines);
 	}
 	this.lines = new L.FeatureGroup();
 	var enter_polyline_options = {
@@ -99,6 +106,7 @@ MapVis.prototype.updateVis = function(b) {
 	});
 	if (b > 0) {
 		this.map.addLayer(this.lines);
+		this.map.addLayer(this.opaqueLines);
 	} else {
 		this.map.addLayer(this.allLines);
 	}
