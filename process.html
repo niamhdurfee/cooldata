@@ -256,16 +256,37 @@
          <div class="center" id="figure20"><img src="design/img/brush.gif"></br> Figure 20:  Final Year Brush<br/><br/></div>
 
 
-<p>In the end, we decided to design the page to better reflect the Hubway data scheme.  The result were changes to hover colors, pie chart colors, title colors, and line colors.  These design choices are shown below in Figure 21.</p>
+<p>In the end, we decided to design the page to better reflect the Hubway data scheme.  The result were changes to hover colors, pie chart colors, title colors, and line colors.  These design choices are shown below in Figures 21, 22, and 23.</p>
 
-         <div class="center" id="figure21"><img src="design/img/who-page.png"></br> Figure 21:  Final <b>Who</b> Page<br/><br/></div>
+         <div class="center" id="figure21"><img src="design/img/all-pies.png"></br> Figure 21:  Final Pie Charts<br/><br/><br/><br/></div>
+         <div class="center" id="figure22"><img src="design/img/final-stacked.png"></br> Figure 22:  Final Stacked Vis with Hover<br/><br/><br/><br/></div>
+         <div class="center" id="figure23"><img class="full-width" src="design/img/who-page.png"></br> Figure 23:  Final <b>Who</b> Page<br/><br/></div>
 
 
 
          <h3>when.html<small> weathervis.js, whenvis.js</small></h3>
          <h3>where.html<small> chordvis.js, neighborhoodvis.js, formvis.js</small></h3>
          <p>The simplest component of this visualization is <a href="js/formvis.js">FormVis</a>, which is simply the controls that appear on top of the chord diagram and trigger event handlers for which dataset should be employed.</p>
-         <p>For <a href='js/chordvis.js'>ChordVis</a>, the biggest challenge was making sure the enter, append, and exit selections were all appropriately selected and altered.  We grouped the stations according to neighborhood, and used a bright color scheme to differentiate between each neighborhood.  On hover, the user can focus on one neighborhood and its interactions with other neighborhoods, as well as see more detail information.</p>
+         <p>For <a href='js/chordvis.js'>ChordVis</a>, the biggest challenge was making sure the enter, append, and exit selections were all appropriately selected and altered.  We grouped the stations according to neighborhood, and used a bright color scheme to differentiate between each neighborhood.  On hover, the user can focus on one neighborhood and its interactions with other neighborhoods, as well as see more detail information.  The entire chord vis is shown below in Figure 24 and a hovered neighborhood is shown in Figure 25.</p>
+         <div class="center" id="figure24"><img src="design/img/chordvis.png"></br> Figure 24:  Chord Neighborhoods<br/><br/></div>
+         <div class="center" id="figure25"><img src="design/img/chordvis_hover.png"></br> Figure 25:  Hovered Neighborhood<br/><br/></div>
+
+
+<p>We decided to use a more muted color scheme.  In addition, we added hovers to the chords and neighborhoods.  Upon hovering on a neighborhood, we see the percentage of trips that the selected neighborhood accounts for.  On hovering on a chord, we see the number of trips between the two stations--in both directions.  Our final design for the chord visualization is shown in Figure 26.</p>
+
+         <div class="center" id="figure26"><img src="design/img/updated-chords.png"></br> Figure 26:  Final Chord Neighborhoods<br/><br/></div>
+
+
+<p>Next, we created a map of these neighborhoods by modifying our original MapVis.  Like MapVis, the stations on <a href="js/neighborhoodvis.js"><code>NeighborhoodVis</code></a> are sized according to the traffic at each station.  Furthermore, when a neighborhood is selected in the chord visualization, only the corresponding stations in that neighborhood are shown on the map.  The map of all stations in neighborhoods is shown in Figure 27.</p>
+
+         <div class="center" id="figure27"><img src="design/img/neighborhoods.png"></br> Figure 27: Neighborhoods Mapped<br/><br/></div>
+
+<p>Lastly, we added the ability to toggle between overall data, for only weekend or weekday and for only casual or registered users.  The entire where page is shown below in Figure 28.  In this figure, the Back Bay neighborhood is selected on the chord visualization and thus, only the stations in the Back Bay are visible in the map.</p>
+
+         <div class="center" id="figure27"><img class="full-width" src="design/img/final-where.png"></br> Figure 28: Final <b>Where </b> Page<br/><br/></div>
+
+
+
          <h3>follow.html<small> followvis.js, runningvis.js</small></h3>
          <p>Having become more comfortable with using Mapbox, Leaflet, and D3 in combination, we realized we could pull off a "follow the bike" in a very basic form.</p>
          <p>By filtering the original <code>hubway_trips.csv</code> file for trips made on bike B00001 and removing extraneous information, we created a data file <a href="data/mayorsbike.csv"><code>mayorsbike.csv</code></a> (for further details, see <a href="#scripts">scripts</a>).
