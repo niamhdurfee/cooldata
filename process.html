@@ -207,6 +207,10 @@
 
 <p>Once we realized we could get polylines from the Google Maps Direction API, we realized we could plot the routes between stations more "true" to form. This simply meant decoding a polyline for each route, and adding it to the map (Figure 10).</p>
          <div class="center" id="figure10"><img src="design/img/map_polylines.png"></br> Figure 10: Routes with 750+ trips, plotted with polylines from Google Directions<br/><br/></div>
+
+<p>In order to further explore the map view, we created an exploration tool that dived deeper into the <b>who, where and what</b> of each station.  On hovering over a station, we highlighted the trips in and out of the station.  In addition, a menu slides out to reveal a breakdown female/male, registered/unregistered, and leisure/commuting composition of trips from that station (Figure 11).  This menu also has bar graphs for the top 5 origins and top 5 destinations of that station (Figure 12).  Lastly, the menu displays the total traffic at the station by hour of the day (Figure 13). </p>
+
+
          <h3>who.html<small> whopievis.js, stackedvis.js, agevis.js, yearbrush.js</small></h3>
          <h3>when.html<small> weathervis.js, whenvis.js</small></h3>
          <h3>where.html<small> chordvis.js, neighborhoodvis.js, formvis.js</small></h3>
