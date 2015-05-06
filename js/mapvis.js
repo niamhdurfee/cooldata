@@ -32,9 +32,11 @@ MapVis = function(_parentElement, _stationData, _routeData, _eventHandler) {
  */
 MapVis.prototype.initVis = function() {
 	that = this;
-	this.map = L.mapbox.map('mapVis', 'niamhdurfee.loko84n8',{center: [42.359960, -71.053449], zoom: 13});
+	this.map = L.mapbox.map('mapVis', 'niamhdurfee.loko84n8', {
+		center: [42.359960, -71.053449],
+		zoom: 13
+	});
 	this.map.legendControl.addLegend(document.getElementById('legend').innerHTML);
-
 	var polyline_options = {
 		className: 'line',
 		color: 'grey',
@@ -48,6 +50,7 @@ MapVis.prototype.initVis = function() {
 	this.allLines = new L.FeatureGroup();
 	this.opaqueLines = new L.FeatureGroup();
 	this.lines = new L.FeatureGroup();
+	this.circles = new L.FeatureGroup();
 	this.routeData.forEach(function(o) {
 		if (o.trips > 750) {
 			var line = L.Polyline.fromEncoded(o.polyline, polyline_options).addTo(that.map);
@@ -56,13 +59,47 @@ MapVis.prototype.initVis = function() {
 			that.opaqueLines.addLayer(opaqueLine);
 		}
 	});
+	this.initCircles();
 	this.updateVis(-1);
+};
+MapVis.prototype.initCircles = function() {
+	that = this;
+	var stations = d3.keys(this.stationData);
+	this.areaScale = d3.scale.linear().range([0, 200000]).domain([0, d3.max(stations, function(ea) {
+		return (that.stationData[ea].overall.average.a + that.stationData[ea].overall.average.d)
+	})]);
+	this.color = d3.scale.linear().range(["red", "grey", "lightgreen"]).domain([0.45, 0.5, 0.55]);
+	stations.forEach(function(o) {
+		var orig = that.stationData[o],
+			s = orig.overall.average.a + orig.overall.average.d,
+			r = that.getRadius(that.areaScale(s)),
+			c = that.color(orig.overall.average.a / s);
+		var circle = L.circle(orig.loc, r, {
+			color: c,
+			opacity: 1,
+			fillOpacity: 0.8,
+			className: 'station station' + o,
+			weight: 2
+		})
+		circle.on('mouseover', function(event) {
+			that.display_station_info(o);
+			that.updateVis(o);
+			d3.selectAll(".station").classed("notHovered", true);
+			d3.select(".station" + o).classed("notHovered", false);
+			that.circles.bringToFront();
+		});
+		circle.on('mouseout', function() {
+			d3.selectAll(".station").classed("notHovered", false);
+			that.updateVis(-1);
+		});
+		that.circles.addLayer(circle);
+	})
+	this.map.addLayer(this.circles);
 };
 // MapVis.prototype.wrangleData = function(_filterFunction) {
 //   this.setScale(_filterFunction);
 // };
 MapVis.prototype.updateVis = function(b) {
-
 	if (b > 0) {
 		this.map.removeLayer(this.allLines);
 	} else {
@@ -86,13 +123,6 @@ MapVis.prototype.updateVis = function(b) {
 		closeButton: true,
 		offset: [50, 60]
 	};
-
-	var stations = d3.keys(this.stationData);
-	this.areaScale = d3.scale.linear().range([0, 200000]).domain([0, d3.max(stations, function(ea) {
-		return (that.stationData[ea].overall.average.a + that.stationData[ea].overall.average.d)
-	})]);
-
-	this.color = d3.scale.linear().range(["red", "grey", "lightgreen"]).domain([0.45, 0.5, 0.55]);
 	this.routeData.forEach(function(o) {
 		if (b > 0) {
 			if (o.trips > 500 && parseInt(o.origdest.substring(0, 3)) == b) {
@@ -110,26 +140,7 @@ MapVis.prototype.updateVis = function(b) {
 	} else {
 		this.map.addLayer(this.allLines);
 	}
-	stations.forEach(function(o) {
-		var orig = that.stationData[o],
-			s = orig.overall.average.a + orig.overall.average.d,
-			r = that.getRadius(that.areaScale(s)),
-			c = that.color(orig.overall.average.a / s);
-		var circle = L.circle(orig.loc, r, {
-			color: c,
-			opacity: 1,
-			fillOpacity: 0.8,
-			className: 'station',
-			weight: 2
-		}).addTo(that.map)
-		circle.on('mouseover', function(event) {
-			that.display_station_info(o);
-			that.updateVis(o);
-		});
-		circle.on('mouseout', function() {
-			that.updateVis(-1);
-		})
-	})
+	that.circles.bringToFront();
 };
 /**
  * Gets called by event handler and should create new aggregated data

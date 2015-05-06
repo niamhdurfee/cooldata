@@ -26,6 +26,9 @@ body {
 .highlight {
   color:#399F2E;
 }
+.notHovered {
+	opacity: 0.3;
+}
 #formVis {
   width: 50%;
   height:50px;
@@ -134,7 +137,12 @@ body {
   height:0px;
   }
 
-
+.stationA {
+	opacity: 1 !important;
+}
+.stationN {
+	opacity: 0.3 !important;
+}
 .d3-tip {
   line-height: 1;
   font-weight: bold;
