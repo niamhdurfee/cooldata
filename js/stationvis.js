@@ -264,7 +264,16 @@ StationVis.prototype.updateVis = function(id) {
     this.timesvg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0,"+(this.height-20)+")")
-        .call(timeXAxis);
+        .call(timeXAxis)
+        .attr("fill",'black')
+        .attr("font-size",9)
+        .attr('font-weight','regular');
+    this.timesvg.append("g")
+        .attr("transform", "translate(0,10)")
+        .append("text")
+        .text("hour of day")
+        .attr('fill','black');
+
     var lineFunction = d3.svg.line()
        .x(function(d) { return time_x(d.x); })
        .y(function(d) { return time_y(d.y); })
