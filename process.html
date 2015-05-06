@@ -299,8 +299,19 @@ The issue arose when we actually tried to plot the data.  Firstly, all of the no
            <p>Instead of passing all the data to each visualization, we instead use follow.html as a sort of controller file, giving each visualization the data piece it needs at each time step. Once the controller has looped through all the data, it tells the visualizations to reset, and starts over.</p>
            <p>In terms of design, we wanted to keep this page simple.  The map was made to be dark so that as the trips were drawn, their "shadow" would be more apparent, and in general give a higher contrast between contextual information (the map) and the data (the routes drawn). When the routes are drawn, they are intially full opacity and slightly bolded. As newer trips are drawn, the old ones are faded to a set opacity, and are slightly thinner.  This lets the user see each new trip plotted more clearly, as well as lends itself to creating this bike's footprint across Boston.</p>
            <p>For the RunningVis, we had planned to keep things simply with glyphicons, one each representing a user and colored according to gender. This proved difficult as it was the opposite of simple; With so many trips, the information started flowing off the page <a href="#figure">Figure </a></p>
-           <div class="center" id="figure11"><img src="design/img/offpage.png"></br> Figure 11: Not the simplest visualization<br/><br/></div>
-           <p>Instead, we opted for a simple pie chart that would be updated with each new trip.  For this, we simply modified <a href="js/whopievis.js"><code>WhoPieVis</code></a> to make <a href="js/pievis.js"><code>PieVis</code></a>
+           <div class="center" id="figure29"><img src="design/img/offpage.png"></br> Figure 29: Not the simplest visualization<br/><br/></div>
+           <p>Instead, we opted for a simple pie chart that would be updated with each new trip.  For this, we simply modified <a href="js/whopievis.js"><code>WhoPieVis</code></a> to make <a href="js/pievis.js"><code>PieVis</code></a>.  This new pie chart, along with running tallies of the date, how many trips have been taken, total time the bike has been used, and how far the bike has been ridden.  These are shown below in Figure 30.  
+               
+       <div class="center" id="figure30"><img src="design/img/stats.png"></br> Figure 30: The Mayor's Bike Statistics<br/><br/></div>
+
+            <p>Lastly, we can see a dicontinuous area graph of the miles covered as they are tallied (in conjunction with the rest of the visualization).  This <a href="/js/progressvis.js"><code>ProgressVis</code></a> gives the viewer an idea of how far the bike has traveled over the course of the dataset and is shown below in Figure 31.</p>
+
+       <div class="center" id="figure31"><img src="design/img/progress.png"></br> Figure 31: The Mayor's Bike Statistics<br/><br/></div>
+
+
+<p>This is what the <b>follow the bike </b> visualization looks like at its completion.</p>
+
+       <div class="center" id="figure32"><img class="full-width" src="design/img/mayorsbike.png"></br> Figure 32: The Mayor's Bike<br/><br/></div>
 
          </section>
                 <section id="evaluation"><hr>
