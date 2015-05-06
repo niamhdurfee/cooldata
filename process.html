@@ -54,6 +54,9 @@
             <li><a href="/follow.html">follow me</a></li>
             <li class="active"><a href="/process.html">process book</a></li>
           </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><span class="glyphicon glyphicon-question-sign"></span></a></li>
+          </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
@@ -165,7 +168,7 @@
                 </section>
                 <section id="exploration"><hr>
                     <h2>Exploratory Data Analysis</h2> <h5>What visualizations did you use to initially look at your data? What insights did you gain? How did these insights inform your design?</h5>
-                    <p>Most of our exploration with the data happened during the process in which we fine-tuned and manipulated the data into the </p>
+                    <p>Most of our exploration with the data happened during the process in which we manipulated the data and tested visualizations out.  While manipulating the data, we discovered which </p>
 
                 </section>
                 <section id="evolution"><hr>
@@ -189,6 +192,22 @@
 
          <p>By the time the design studio came around, it seemed that both layouts were each doable, but we would not be able to do both views.  Therefore, we used the design studio to get feedback from another group whether to pursue the map or the chord layout.  While the other team informed us that they did like the chord layout, it was clear that the map design was more intuitive and preferable for better exploring.  Therefore, we decided to focus our efforts on the map layout moving forward.</p>
 
+<p>  Our next decision was to make the overview page a bit cleaner.  The overview would now display stations and most popular routes on a map.  We would give viewers the ability to explore further by showing rider demographics, top origins/destinations, and hourly traffic for each station.  However, we would allow <i>even further exploration</i> into the who, what, and when by creating separate pages.  Since time allowed, these pages would be a different, deeper look into our initial questions.  We even decided to include the chord layout since time allowed.  The following is a breakdown of our designs for the who, what, and where pages.</p>
+
+
+<p>The <b>who</b> page would show pie charts for breakdowns on casual/registered, female/male, leisure/commuter, and visitor/local.  It also shows the daily distribution of trips and the distribution for riders' ages.  Viewers can further explore the rider breakdown by selecting a pie chart and seeing how the daily distribution of trips breaks down.  For example, a viewer can select the male-female pie to see daily distributions of male riders and female riders.  We also decided to give the viewer the ability to explore these breakdowns over time.  The visualization allows viewers to brush over the entire time period that we have data from.  This allows them to see how the breakdowns, daily trip distribution, and age distribution change over time.</p>
+
+<p>The <b>where</b> page is the chord diagram of neighborhoods.  In this layout, the groups are neighborhoods and the chords between them are the traffic between neighborhoods.  We wanted to give viewers the option to filter--weekend/weekday and casual/registered.  Furthermore, we decided that we would add a map to this page with stations so that viewers could see which stations fall into which neighborhoods.</p>
+
+
+<p>The <b>when</b> page would show a breakdown of hourly traffic.  We would give the option to toggle between total/weekday/weekend.  We also wanted to give the option to see difference in make/female, commuter/leisure, and registered/casual.  We also wanted to give viewers the option to look at duration, speed, and distance of routes over the course of the day. </p>
+
+
+<p>  Lastly, we decided to add one last feature: follow the bike.  There is a Hubway Bike deemed "The Mayor's Bike" (it looks special).  We wanted to design a page in which viewers could follow where the bike traveled over time.  As time passed, we wanted to be able to see where on the map the bike traveled, as well as the total distance/time it travels.  We decided to show this on the map, with a distance + time + data + gender counter.  Additionally, we decided to show the distance covered over time as the bike traveled.</p>
+
+<div id="thelostone"></div><p>The visualization that didn't make the final cut was <a href="/js/WeatherVis.js">WeatherVis</a>, so named because we added daily weather data to the daily totals we had derived from the trip data.  Early versions of it consisted of two axes, one with one weather variable (in this case, the daily average wind) and the other with another (daily maximum temperature).  Each day was plotted according to these variables, and the daily trip volume was encoded in the mark's volume.<br><div class="center"><img src="design/img/before-overlapcircles.png"><img src="design/img/circles.png"><div><br>
+The issue arose when we actually tried to plot the data.  Firstly, all of the nodes overlapped because of their volume, and since diminishing the volume would diminish how well we conveyed this third dimension of data, we relied on brushing to "filter" the data.  Secondly, when we tried to breakdown the data (male/female, commuter/leisure, etc.), we ended up with even more circles on circles.  As a final attempt, we shaded the circles according to how much the value for a given attribute varied from the average in a given time frame.  This simply was not clear, and did not yield any fruitful information besides the fact that 51 crazy people rode Hubway on the day of Hurricane Sandy.</p>
+<p>Initially, WeatherVis was in who.html, but as we worked to answer the questions more throughly, we realized this was not the appropriate panel for this data.  Then, we tried putting it in when.html, but since one view would deal with data generalized for the period of a day, and this one would deal with data for each day from all years, there was no logical way to make these two interactive fluidly and coherently.</p>
 
                 </section>
                 <section id="implementation">
@@ -207,11 +226,69 @@
 
 <p>Once we realized we could get polylines from the Google Maps Direction API, we realized we could plot the routes between stations more "true" to form. This simply meant decoding a polyline for each route, and adding it to the map (Figure 10).</p>
          <div class="center" id="figure10"><img src="design/img/map_polylines.png"></br> Figure 10: Routes with 750+ trips, plotted with polylines from Google Directions<br/><br/></div>
+
+<p>In order to further explore the map view, we created an exploration tool that dived deeper into the <b>who, where and what</b> of each station.  On hovering over a station, we highlighted the trips in and out of the station.  In addition, a menu slides out to show <a href="/js/StationVis.js">StationVis</a>.  The first tab on the menu reveals a breakdown female/male, registered/unregistered, and leisure/commuting composition of trips from that station (Figure 11).  This menu also has bar graphs for the top 5 origins and top 5 destinations of that station (Figures 12 & 13).  Lastly, the menu displays the total traffic at the station by hour of the day (Figure 14). </p><br/>
+
+    <div class="row">
+         <div class="col-xs-3"id="figure11"><span class="figure"><img src="design/img/menu-who.png"></br><div class="centered">Figure 11: Menu Exploring 'Who' Breakdown</div></span></div>
+        <div class="col-xs-3" id="figure12"><span class="figure"><img src="design/img/menu-origins.png"></br><div class="centered">Figure 12: Menu Exploring Top 5 Origins</div></span></div>
+        <div class="col-xs-3" id="figure13"><span class="figure"><img src="design/img/menu-dests.png"></br><div class="centered">Figure 13: Menu Exploring Top 5 Destinations</div></span></div>
+        <div class="col-xs-3" id="figure14"> <span class="figure"><img src="design/img/menu-time.png"></br><div class="centered">Figure 14: Menu Exploring Hourly Traffic</div></span></div>
+    </div>
+
          <h3>who.html<small> whopievis.js, stackedvis.js, agevis.js, yearbrush.js</small></h3>
+
+<p>  The who page allows viewers to explore the makeup of riders on Hubway.  The visualization shows pie charts for breakdowns on casual/registered, female/male, leisure/commuter, and visitor/local.  Each of these breakdowns is a separate <a href="/js/whopievis.js"><code>WhoPieVis</code></a> that shows the user composition into two segments.  We allow the viewer to hover to see actual number of trips broken down.  A sample of the first iteration of a pie chart is shown below in Figure 15.</p>
+
+         <div class="center" id="figure15"><img src="design/img/pievis.png"></br> Figure 15:  Original Pie Breakdown of Casual and Registered<br/><br/></div>
+
+
+<p>The visualization also shows the daily distribution of trips with <a href="/js/stackedvis.js"><code>StackedVis</code></a>.  The quantity of trips are shown over a certain time period in a line graph.  In addition, a viewer can hover over the line graph to see a specific day and the number of trips, as shown in Figure 16.   The viewer can click any of the pie graphs and the distribution of trips will break down into the two subcategories.  For example, if we were to click the gender pie graph, the distribution of trips would split into two lines--one for males and one for females.  The hover would then show the specific trip breakdown.  These features are shown below in Figure 17.  </p>
+
+         <div class="center" id="figure17"><img src="design/img/stackedvis.png"></br> Figure 16:  Daily Distribution of Trips, Total<br/><br/></div>
+         <div class="center" id="figure17"><img src="design/img/genderstackedvis.png"></br> Figure 17:  Daily Distribution of Trips, Stacked by Gender<br/><br/></div>
+
+<p>Next, the page gives viewers the opportunity to see the distribution of riders' ages with <a href="js/agevis.js"><code>AgeVis</code></a>.  The age data for registered users is only available through Sept. 30, 2012.  We made sure to leave a note on the asterisk to let our viewers know this.  While we were at it, we let them know that the age, gender, and ZIP code for trips are only available for datapoints from registered users.  However, we also noted that registered users make up 75% of all the trips.  The age distribution visual is shown below in Figure 18.</p>
+
+         <div class="center" id="figure18"><img src="design/img/age.png"></br> Figure 18:  Age Distribution<br/><br/></div>
+
+<p>Lastly, we gave the ability to brush over time to see all of the above figures.  Originally, the brush was an hourly breakdown of time as shown in Figure 19.  However, we decided that it would be more pertinent to brush over the entire dataset of time (i.e. years, not hours).  The final brush is set over a background image so that viewers can easily see what the overall time looks like.  From quickly looking at the brush, they can see that there is no usage during the winters and hence, the other visualizations will reflect this.  The final brush was implemented as <a href="/js/yearbrush.js"><code>YearBrush</code></a> and is shown below in Figure 20.</p>
+
+         <div class="center" id="figure19"><img src="design/img/brush.png"></br> Figure 19:  Original Hourly Brush<br/><br/></div>
+         <div class="center" id="figure20"><img src="design/img/brush.gif"></br> Figure 20:  Final Year Brush<br/><br/></div>
+
+
+<p>In the end, we decided to design the page to better reflect the Hubway data scheme.  The result were changes to hover colors, pie chart colors, title colors, and line colors.  These design choices are shown below in Figures 21, 22, and 23.</p>
+
+         <div class="center" id="figure21"><img src="design/img/all-pies.png"></br> Figure 21:  Final Pie Charts<br/><br/><br/><br/></div>
+         <div class="center" id="figure22"><img src="design/img/final-stacked.png"></br> Figure 22:  Final Stacked Vis with Hover<br/><br/><br/><br/></div>
+         <div class="center" id="figure23"><img class="full-width" src="design/img/who-page.png"></br> Figure 23:  Final <b>Who</b> Page<br/><br/></div>
+
+
+
          <h3>when.html<small> weathervis.js, whenvis.js</small></h3>
          <h3>where.html<small> chordvis.js, neighborhoodvis.js, formvis.js</small></h3>
          <p>The simplest component of this visualization is <a href="js/formvis.js">FormVis</a>, which is simply the controls that appear on top of the chord diagram and trigger event handlers for which dataset should be employed.</p>
-         <p>For <a href='js/chordvis.js'>ChordVis</a>, the biggest challenge was making sure the enter, append, and exit selections were all appropriately selected and altered.  We grouped the stations according to neighborhood, and used a bright color scheme to differentiate between each neighborhood.  On hover, the user can focus on one neighborhood and its interactions with other neighborhoods, as well as see more detail information.</p>
+         <p>For <a href='js/chordvis.js'>ChordVis</a>, the biggest challenge was making sure the enter, append, and exit selections were all appropriately selected and altered.  We grouped the stations according to neighborhood, and used a bright color scheme to differentiate between each neighborhood.  On hover, the user can focus on one neighborhood and its interactions with other neighborhoods, as well as see more detail information.  The entire chord vis is shown below in Figure 24 and a hovered neighborhood is shown in Figure 25.</p>
+         <div class="center" id="figure24"><img src="design/img/chordvis.png"></br> Figure 24:  Chord Neighborhoods<br/><br/></div>
+         <div class="center" id="figure25"><img src="design/img/chordvis_hover.png"></br> Figure 25:  Hovered Neighborhood<br/><br/></div>
+
+
+<p>We decided to use a more muted color scheme.  In addition, we added hovers to the chords and neighborhoods.  Upon hovering on a neighborhood, we see the percentage of trips that the selected neighborhood accounts for.  On hovering on a chord, we see the number of trips between the two stations--in both directions.  Our final design for the chord visualization is shown in Figure 26.</p>
+
+         <div class="center" id="figure26"><img src="design/img/updated-chords.png"></br> Figure 26:  Final Chord Neighborhoods<br/><br/></div>
+
+
+<p>Next, we created a map of these neighborhoods by modifying our original MapVis.  Like MapVis, the stations on <a href="js/neighborhoodvis.js"><code>NeighborhoodVis</code></a> are sized according to the traffic at each station.  Furthermore, when a neighborhood is selected in the chord visualization, only the corresponding stations in that neighborhood are shown on the map.  The map of all stations in neighborhoods is shown in Figure 27.</p>
+
+         <div class="center" id="figure27"><img src="design/img/neighborhoods.png"></br> Figure 27: Neighborhoods Mapped<br/><br/></div>
+
+<p>Lastly, we added the ability to toggle between overall data, for only weekend or weekday and for only casual or registered users.  The entire where page is shown below in Figure 28.  In this figure, the Back Bay neighborhood is selected on the chord visualization and thus, only the stations in the Back Bay are visible in the map.</p>
+
+         <div class="center" id="figure27"><img class="full-width" src="design/img/final-where.png"></br> Figure 28: Final <b>Where </b> Page<br/><br/></div>
+
+
+
          <h3>follow.html<small> followvis.js, runningvis.js</small></h3>
          <p>Having become more comfortable with using Mapbox, Leaflet, and D3 in combination, we realized we could pull off a "follow the bike" in a very basic form.</p>
          <p>By filtering the original <code>hubway_trips.csv</code> file for trips made on bike B00001 and removing extraneous information, we created a data file <a href="data/mayorsbike.csv"><code>mayorsbike.csv</code></a> (for further details, see <a href="#scripts">scripts</a>).
