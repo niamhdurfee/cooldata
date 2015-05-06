@@ -89,7 +89,7 @@ StackedVis.prototype.initVis = function() {
 
   this.svg.append("g")
       .attr("class", "y axis")
-      .attr("transform", "translate("+this.margin.left+",0)")  
+      .attr("transform", "translate("+this.margin.left+",0)")
       .append("text")
       .attr("transform", "translate("+this.margin.left+","+this.margin.top+") rotate(-90)")
       .attr("y", -10)
@@ -129,7 +129,7 @@ StackedVis.prototype.updateVis = function() {
   var formatDate = d3.time.format("%b %_d, %Y")
   this.x.domain(d3.extent(that.displayData[0].values, function(d) { return d.date; }));
   this.y.domain([0,
-    d3.max([1.2*d3.max(that.displayData, function (d) { 
+    d3.max([1.2*d3.max(that.displayData, function (d) {
       return d3.max(d.values, function (a) {return a.value})
     }),3000])
   ]);
@@ -151,7 +151,7 @@ StackedVis.prototype.updateVis = function() {
   user.select('.area').attr("d", function(d) { return that.area(d.values); })
       .transition()
       .style("fill", function(d) { return that.color(d.type); })
-      .style("opacity", 0.5);
+      .style("opacity", 0.7);
 
   // user.select('.area')
   //     .on("mouseover", this.mouseover)
@@ -286,8 +286,8 @@ StackedVis.prototype.filterAndAggregate = function(_filter) {
 }
 
 StackedVis.prototype.checkDate = function(date1, date2) {
-  return ((date1.getDate() == date2.getDate()) 
-       && (date1.getFullYear() ==date2.getFullYear()) 
+  return ((date1.getDate() == date2.getDate())
+       && (date1.getFullYear() ==date2.getFullYear())
        && (date1.getMonth() == date2.getMonth()))
 }
 
