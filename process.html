@@ -205,7 +205,9 @@
 
 <p>  Lastly, we decided to add one last feature: follow the bike.  There is a Hubway Bike deemed "The Mayor's Bike" (it looks special).  We wanted to design a page in which viewers could follow where the bike traveled over time.  As time passed, we wanted to be able to see where on the map the bike traveled, as well as the total distance/time it travels.  We decided to show this on the map, with a distance + time + data + gender counter.  Additionally, we decided to show the distance covered over time as the bike traveled.</p>
 
-
+<div id="thelostone"></div><p>The visualization that didn't make the final cut was <a href="/js/WeatherVis.js">WeatherVis</a>, so named because we added daily weather data to the daily totals we had derived from the trip data.  Early versions of it consisted of two axes, one with one weather variable (in this case, the daily average wind) and the other with another (daily maximum temperature).  Each day was plotted according to these variables, and the daily trip volume was encoded in the mark's volume.<br><div class="center"><img src="design/img/before-overlapcircles.png"><img src="design/img/circles.png"><div><br>
+The issue arose when we actually tried to plot the data.  Firstly, all of the nodes overlapped because of their volume, and since diminishing the volume would diminish how well we conveyed this third dimension of data, we relied on brushing to "filter" the data.  Secondly, when we tried to breakdown the data (male/female, commuter/leisure, etc.), we ended up with even more circles on circles.  As a final attempt, we shaded the circles according to how much the value for a given attribute varied from the average in a given time frame.  This simply was not clear, and did not yield any fruitful information besides the fact that 51 crazy people rode Hubway on the day of Hurricane Sandy.</p>
+<p>Initially, WeatherVis was in who.html, but as we worked to answer the questions more throughly, we realized this was not the appropriate panel for this data.  Then, we tried putting it in when.html, but since one view would deal with data generalized for the period of a day, and this one would deal with data for each day from all years, there was no logical way to make these two interactive fluidly and coherently.</p>
 
                 </section>
                 <section id="implementation">
@@ -226,7 +228,7 @@
          <div class="center" id="figure10"><img src="design/img/map_polylines.png"></br> Figure 10: Routes with 750+ trips, plotted with polylines from Google Directions<br/><br/></div>
 
 <p>In order to further explore the map view, we created an exploration tool that dived deeper into the <b>who, where and what</b> of each station.  On hovering over a station, we highlighted the trips in and out of the station.  In addition, a menu slides out to show <a href="/js/StationVis.js">StationVis</a>.  The first tab on the menu reveals a breakdown female/male, registered/unregistered, and leisure/commuting composition of trips from that station (Figure 11).  This menu also has bar graphs for the top 5 origins and top 5 destinations of that station (Figures 12 & 13).  Lastly, the menu displays the total traffic at the station by hour of the day (Figure 14). </p><br/>
-    
+
     <div class="row">
          <div class="col-xs-3"id="figure11"><span class="figure"><img src="design/img/menu-who.png"></br><div class="centered">Figure 11: Menu Exploring 'Who' Breakdown</div></span></div>
         <div class="col-xs-3" id="figure12"><span class="figure"><img src="design/img/menu-origins.png"></br><div class="centered">Figure 12: Menu Exploring Top 5 Origins</div></span></div>
