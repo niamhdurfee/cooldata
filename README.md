@@ -1,9 +1,6 @@
 # Datahub
 
 
-
-The README file must give an overview of what you are handing in: which parts are your code, which parts are libraries, and so on. The README must contain URLs to your project websites and screencast videos. The README must also explain any non-obvious features of your interface.
-
 ###About Hubway
 
 Hubway is a bicycle sharying system in the Boston area. Launched at the end of July in 2011, Hubway started with 61 stations throughout the city and 600 bicycles. In the time afterwards, Hubway expanded to the neighboring cities of Cambridge, Somerville, and Brookline. Since its launch in 2011, Hubway has grown to more than 140 stations and more than 1300 bikes.
