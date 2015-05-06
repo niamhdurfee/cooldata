@@ -73,3 +73,18 @@ ul.nav-tabs li:last-child a {
 ul.nav-tabs.affix {
 	top: 75px; /* Set the top position of pinned element */
 }
+
+.figure {
+    font-size: 11px;
+    text-align: center;
+}
+
+.centered
+{
+    text-align: center;
+}
+
+.figure > img {
+ width: 100%;   
+}
+

@@ -165,7 +165,7 @@
                 </section>
                 <section id="exploration"><hr>
                     <h2>Exploratory Data Analysis</h2> <h5>What visualizations did you use to initially look at your data? What insights did you gain? How did these insights inform your design?</h5>
-                    <p>Most of our exploration with the data happened during the process in which we fine-tuned and manipulated the data into the </p>
+                    <p>Most of our exploration with the data happened during the process in which we manipulated the data and tested visualizations out.  While manipulating the data, we discovered which </p>
 
                 </section>
                 <section id="evolution"><hr>
@@ -189,6 +189,20 @@
 
          <p>By the time the design studio came around, it seemed that both layouts were each doable, but we would not be able to do both views.  Therefore, we used the design studio to get feedback from another group whether to pursue the map or the chord layout.  While the other team informed us that they did like the chord layout, it was clear that the map design was more intuitive and preferable for better exploring.  Therefore, we decided to focus our efforts on the map layout moving forward.</p>
 
+<p>  Our next decision was to make the overview page a bit cleaner.  The overview would now display stations and most popular routes on a map.  We would give viewers the ability to explore further by showing rider demographics, top origins/destinations, and hourly traffic for each station.  However, we would allow <i>even further exploration</i> into the who, what, and when by creating separate pages.  Since time allowed, these pages would be a different, deeper look into our initial questions.  We even decided to include the chord layout since time allowed.  The following is a breakdown of our designs for the who, what, and where pages.</p>
+
+
+<p>The <b>who</b> page would show pie charts for breakdowns on casual/registered, female/male, leisure/commuter, and visitor/local.  It also shows the daily distribution of trips and the distribution for riders' ages.  Viewers can further explore the rider breakdown by selecting a pie chart and seeing how the daily distribution of trips breaks down.  For example, a viewer can select the male-female pie to see daily distributions of male riders and female riders.  We also decided to give the viewer the ability to explore these breakdowns over time.  The visualization allows viewers to brush over the entire time period that we have data from.  This allows them to see how the breakdowns, daily trip distribution, and age distribution change over time.</p>
+
+<p>The <b>where</b> page is the chord diagram of neighborhoods.  In this layout, the groups are neighborhoods and the chords between them are the traffic between neighborhoods.  We wanted to give viewers the option to filter--weekend/weekday and casual/registered.  Furthermore, we decided that we would add a map to this page with stations so that viewers could see which stations fall into which neighborhoods.</p>
+
+
+<p>The <b>when</b> page would show a breakdown of hourly traffic.  We would give the option to toggle between total/weekday/weekend.  We also wanted to give the option to see difference in make/female, commuter/leisure, and registered/casual.  We also wanted to give viewers the option to look at duration, speed, and distance of routes over the course of the day. </p>
+
+
+<p>  Lastly, we decided to add one last feature: follow the bike.  There is a Hubway Bike deemed "The Mayor's Bike" (it looks special).  We wanted to design a page in which viewers could follow where the bike traveled over time.  As time passed, we wanted to be able to see where on the map the bike traveled, as well as the total distance/time it travels.  We decided to show this on the map, with a distance + time + data + gender counter.  Additionally, we decided to show the distance covered over time as the bike traveled.</p>
+
+
 
                 </section>
                 <section id="implementation">
@@ -208,10 +222,20 @@
 <p>Once we realized we could get polylines from the Google Maps Direction API, we realized we could plot the routes between stations more "true" to form. This simply meant decoding a polyline for each route, and adding it to the map (Figure 10).</p>
          <div class="center" id="figure10"><img src="design/img/map_polylines.png"></br> Figure 10: Routes with 750+ trips, plotted with polylines from Google Directions<br/><br/></div>
 
-<p>In order to further explore the map view, we created an exploration tool that dived deeper into the <b>who, where and what</b> of each station.  On hovering over a station, we highlighted the trips in and out of the station.  In addition, a menu slides out to reveal a breakdown female/male, registered/unregistered, and leisure/commuting composition of trips from that station (Figure 11).  This menu also has bar graphs for the top 5 origins and top 5 destinations of that station (Figure 12).  Lastly, the menu displays the total traffic at the station by hour of the day (Figure 13). </p>
-
+<p>In order to further explore the map view, we created an exploration tool that dived deeper into the <b>who, where and what</b> of each station.  On hovering over a station, we highlighted the trips in and out of the station.  In addition, a menu slides out to show <a href="/js/StationVis.js">StationVis</a>.  The first tab on the menu reveals a breakdown female/male, registered/unregistered, and leisure/commuting composition of trips from that station (Figure 11).  This menu also has bar graphs for the top 5 origins and top 5 destinations of that station (Figures 12 & 13).  Lastly, the menu displays the total traffic at the station by hour of the day (Figure 14). </p><br/>
+    
+    <div class="row">
+         <div class="col-xs-3"id="figure11"><span class="figure"><img src="design/img/menu-who.png"></br><div class="centered">Figure 11: Menu Exploring 'Who' Breakdown</div></span></div>
+        <div class="col-xs-3" id="figure12"><span class="figure"><img src="design/img/menu-origins.png"></br><div class="centered">Figure 12: Menu Exploring Top 5 Origins</div></span></div>
+        <div class="col-xs-3" id="figure13"><span class="figure"><img src="design/img/menu-dests.png"></br><div class="centered">Figure 13: Menu Exploring Top 5 Destinations</div></span></div>
+        <div class="col-xs-3" id="figure14"> <span class="figure"><img src="design/img/menu-time.png"></br><div class="centered">Figure 14: Menu Exploring Hourly Traffic</div></span></div>
+    </div>
 
          <h3>who.html<small> whopievis.js, stackedvis.js, agevis.js, yearbrush.js</small></h3>
+
+<p>  The who page allows viewers to explore the makeup of riders on Hubway.  The visualization shows pie charts for breakdowns on casual/registered, female/male, leisure/commuter, and visitor/local with <a href="/js/whopievis.js"><code>WhoPieVis</code></a>.  It also shows the daily distribution of trips and the distribution for riders' ages with <a href="/js/stackedvis.js"><code>StackedVis</code></a> and <a href="js/agevis.js"><code>AgeVis</code></a>, respectively.  Viewers can further explore the rider breakdown by selecting a pie chart and seeing how the daily distribution of trips breaks down.  For example, a viewer can select the male-female pie to see daily distributions of male riders and female riders.  We also decided to give the viewer the ability to explore these breakdowns over time.  The visualization has a <a href="/js/yearbrush.js"><code>YearBrush</code></a> that allows viewers to brush over the entire time period that we have data from.  This allows them to see how the breakdowns, daily trip distribution, and age distribution change over time.</p>
+</p>
+
          <h3>when.html<small> weathervis.js, whenvis.js</small></h3>
          <h3>where.html<small> chordvis.js, neighborhoodvis.js, formvis.js</small></h3>
          <p>The simplest component of this visualization is <a href="js/formvis.js">FormVis</a>, which is simply the controls that appear on top of the chord diagram and trigger event handlers for which dataset should be employed.</p>

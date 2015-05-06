@@ -1,8 +1,11 @@
 /**
- * MapVis
- * @param _parentElement -- the HTML or SVG element (D3 node) to which to attach the vis
- * @param _data -- the data array
- * @param _metaData -- the meta-data / data description object
+ * StationVis
+ * @param _whoParentElement -- the HTML or SVG element (D3 node) to which to attach the who vis
+ * @param _originParentElement -- the HTML or SVG element (D3 node) to which to attach the top 5 origins vis
+ * @param _destParentElement -- the HTML or SVG element (D3 node) to which to attach the top 5 destinations vis
+ * @param _timeParentElement -- the HTML or SVG element (D3 node) to which to attach the hourly traffic vis
+ * @param _stationData -- the data for stations
+ * @param _routeData -- the data for routes
  * @constructor
  */
 StationVis = function(_whoParentElement,_originParentElement,_destParentElement,_timeParentElement,_stationData, _routeData) {
@@ -50,13 +53,13 @@ StationVis.prototype.initVis = function() {
   this.destsvg = this.destParentElement.append("svg")
     .attr("width", this.width + 10 + this.margin.left + this.margin.right)
     .attr("height", this.height + 55 + this.margin.top + this.margin.bottom)
-    .append("g")
+  .append("g")
     .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
 
   this.timesvg = this.timeParentElement.append("svg")
     .attr("width", this.width + this.margin.left + this.margin.right)
     .attr("height", this.height  + this.margin.top + this.margin.bottom)
-    .append("g")
+  .append("g")
     .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")")
     .attr("fill","white");
 
@@ -130,8 +133,6 @@ StationVis.prototype.updateVis = function(id) {
       .style('text-anchor', function (d,i) { if (i%2 == 0) return 'start'; else return 'end'; });
 
     who_labels.exit().remove();
-
-
 
 
     // TOP DESTINATIONS
@@ -312,9 +313,7 @@ StationVis.prototype.updateVis = function(id) {
 
 
 /**
- * Gets called by event handler and should create new aggregated data
- * aggregation is done by the function "aggregate(filter)". Filter has to
- * be defined here.
+ * Gets called to update station id
  * @param selection
  */
 StationVis.prototype.onSelectionChange = function(id) {
