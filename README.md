@@ -24,5 +24,5 @@ On each page there is a question mark icon in the top right corner that opens a 
 
 ###URLs
 
-* You find our site at this url
-* You can find our video at this url
+* You find our site at [teamdatahub.github.io](teamdatahub.github.io)
+* You can find our video at this [http://youtu.be/EYuwbsYR7N4](http://youtu.be/EYuwbsYR7N4)
