@@ -20,8 +20,11 @@ color: #217D1C;
   padding-left: 20px
 }
 
-#pieVis, #progressVis {
+#pieVis {
   height: 200px;
+}
+#progressVis {
+  height: 270px;
 }
 .date {
   font-size:48px;
