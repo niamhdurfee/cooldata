@@ -4,30 +4,30 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="apple-touch-icon" sizes="57x57" href="img/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="img/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="img/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="img/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="img/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="img/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="img/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="img/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192"  href="img/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="img/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
-    <link rel="manifest" href="img/manifest.json">
+    <link rel="apple-touch-icon" sizes="57x57" href="./img/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="./img/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="./img/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="./img/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="./img/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="./img/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="./img/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="./img/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./img/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="./img/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="./img/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./img/favicon-16x16.png">
+    <link rel="manifest" href="./img/manifest.json">
     <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="img/ms-icon-144x144.png">
+    <meta name="msapplication-TileImage" content="./img/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
 
     <title>datahub</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/universal.css" rel="stylesheet">
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/universal.css" rel="stylesheet">
     <style>
     body {
 		padding-top: 60px;
@@ -96,7 +96,7 @@
                     <h2>Related Work</h2><h5>Anything that inspired you, such as a paper, a web site, visualizations we discussed in class, etc.</h5>
                     <p>The Hubway Visualization Challenge has already come to a close and awards were given out to visualizations in a few categories:  Overall Best Visualization, Best Analysis, Best Data Narrative, Best Data Exploration Tool, People's Choice, and Honorable Mention.  Despite these being available, we made it a point not to look at the winner's examples.  We were intent on not allowing other designs to fixate our own focus.  However, there is a possibility we were slightly influenced by some of the winners--since we were able to see the narrow screenshot of each winner, as shown below.   </p>
 
-                    <div class="center"><img src="img/challengewinners.png"></div>
+                    <div class="center"><img src="./img/challengewinners.png"></div>
 
                     <p>  We also decided to look at some inspiration from a different mode of transportation--taxis.  There are a couple visualizations recently about the travel of taxis throughout New York City.  Therefore, we took a look at a visualizations tackling this problem.  These are available <a href="http://www.nytimes.com/interactive/2010/04/02/nyregion/taxi-map.html?_r=0">here </a> and <a href="http://chriswhong.com/data-visualization/taxitechblog1/">here.</a></p>
                 </section>
@@ -130,37 +130,37 @@
 
                     </ul>
 
-                <p>This data is available for download in a CSV file at the <a href="http://hubwaydatachallenge.org/trip-history-data/">Hubway Data Visualization Challenge</a>.  We immediately ran into two main issues with the dataset.  First, the dataset was a large file at more than 175 MB.  Second, we needed to manipulate the data such that they were in the correct layout for our visualization.</p>
+                <p>This data is available for download in a CSV file at the <a href="http://hubwaydatachallenge.org/trip-history-./data/">Hubway Data Visualization Challenge</a>.  We immediately ran into two main issues with the dataset.  First, the dataset was a large file at more than 175 MB.  Second, we needed to manipulate the data such that they were in the correct layout for our visualization.</p>
                 <h3 id="scripts">scripts</h3>
                 <p>To do this, Niamh wrote a number of Python scripts to both cut down the size of the data as well as to derive additional values.  As a result, we have a number of CSV files with data for different purposes. Below is a list of Python scripts, their purpose, and the data files they produced.</p>
 
                 <ul>
-	                <li><a href="data/scripts/create_matrix.py"><code>create_matrix.py</code></a>
-	                went through each trip, determined whether or not the trip was on a weekend or weekday, and whether it was by a casual or a registered user. It then determined the neighborhood of the starting station (A), and that of the destination station (B), and tallied a trip in the corresponding array element (i.e. matrix[A][B]). Five separate global variables were made, <code>_matrixData</code>, <code>_matrixWeekendData</code>, <code>_matrixWeekdayData</code>, <code>_matrixCasualData</code>, <code>_matrixRegisteredData</code>, and stored in the file <a href='data/matrix.js'><code>matrix.js</code></a>
+	                <li><a href="./data/scripts/create_matrix.py"><code>create_matrix.py</code></a>
+	                went through each trip, determined whether or not the trip was on a weekend or weekday, and whether it was by a casual or a registered user. It then determined the neighborhood of the starting station (A), and that of the destination station (B), and tallied a trip in the corresponding array element (i.e. matrix[A][B]). Five separate global variables were made, <code>_matrixData</code>, <code>_matrixWeekendData</code>, <code>_matrixWeekdayData</code>, <code>_matrixCasualData</code>, <code>_matrixRegisteredData</code>, and stored in the file <a href='./data/matrix.js'><code>matrix.js</code></a>
 	                </li>
 
-	                <li><a href='data/scripts/editdata.py'><code>editdata.py</code></a>
-	                took in the raw CSV data from the<a href="http://hubwaydatachallenge.org/"> Hubway Visualization Challenge</a>, and removed extraneous information (bike number, any unique IDs, trip status). It also removed any trips that were not "closed" (only about 50), and removed any trips that were fewer than 60 seconds long.  It converted the trip duration to minutes, and abbreviated many variables.  It produces the file <a href='data/trips.min.csv'><code>trips.min.csv</code><a>
+	                <li><a href='./data/scripts/editdata.py'><code>editdata.py</code></a>
+	                took in the raw CSV data from the<a href="http://hubwaydatachallenge.org/"> Hubway Visualization Challenge</a>, and removed extraneous information (bike number, any unique IDs, trip status). It also removed any trips that were not "closed" (only about 50), and removed any trips that were fewer than 60 seconds long.  It converted the trip duration to minutes, and abbreviated many variables.  It produces the file <a href='./data/trips.min.csv'><code>trips.min.csv</code><a>
 	                </li>
 
-	                <li><p><a href='data/scripts/getRoutes.py'><code>getRoutes.py</code></a> Between the 140 Hubway stations, there are 20022 unique trips possible, but since this includes going from A to B as well as B to A, and we wanted to save space, we felt it was an appropriate shortcut to reduce this to 10011 trips (essentially saying that the same route could be used by bikes going either direction).</p> <p>This script took in all 10011 possible trips, determined the starting latitude and longitudes of the stations in question from <a href='data/stations.csv'><code>stations.csv</code></a>, and then queried the GoogleMaps Directions API.  This returned the time & distance predicted for a bike trip between two given locations, and also gave us an encoded polyline that could be used to plot the trips on the map. The former allowed us to determine if, for a given trip, the user had taken moretime than normal to go a certain distance, and from that we determined whether the ride was commuting, or simply leisure (1.2x the Google Maps suggested time for biking along that route).  Any trip that started and ended at the same station was marked a leisure trip.  This information was used in the files <a href='data/trips.min.csv'><code>trips.min.csv</code></a>, <a href='data/routes_stats.csv'><code>routes_stats.csv</code></a>,<a href='data/stations.json'><code>stations.json</code></a>, and <a href='data/stations_keyed.json'><code>stations_keyed.json</code></a></p>
+	                <li><p><a href='./data/scripts/getRoutes.py'><code>getRoutes.py</code></a> Between the 140 Hubway stations, there are 20022 unique trips possible, but since this includes going from A to B as well as B to A, and we wanted to save space, we felt it was an appropriate shortcut to reduce this to 10011 trips (essentially saying that the same route could be used by bikes going either direction).</p> <p>This script took in all 10011 possible trips, determined the starting latitude and longitudes of the stations in question from <a href='./data/stations.csv'><code>stations.csv</code></a>, and then queried the GoogleMaps Directions API.  This returned the time & distance predicted for a bike trip between two given locations, and also gave us an encoded polyline that could be used to plot the trips on the map. The former allowed us to determine if, for a given trip, the user had taken moretime than normal to go a certain distance, and from that we determined whether the ride was commuting, or simply leisure (1.2x the Google Maps suggested time for biking along that route).  Any trip that started and ended at the same station was marked a leisure trip.  This information was used in the files <a href='./data/trips.min.csv'><code>trips.min.csv</code></a>, <a href='./data/routes_stats.csv'><code>routes_stats.csv</code></a>,<a href='./data/stations.json'><code>stations.json</code></a>, and <a href='./data/stations_keyed.json'><code>stations_keyed.json</code></a></p>
 
 	                </li>
 
-	                <li><a href='data/scripts/split.py'><code>getYearData.py</code></a> is a script that, well, frankly, served many purposes.  A quick look is all you need to see that this wrote multiple data files at one point in its history.  This script was used to take the <a href='data/trips.min.csv'>trip data</a> and
+	                <li><a href='./data/scripts/split.py'><code>getYearData.py</code></a> is a script that, well, frankly, served many purposes.  A quick look is all you need to see that this wrote multiple data files at one point in its history.  This script was used to take the <a href='./data/trips.min.csv'>trip data</a> and
 	                	<ul>
-	                	<li>compile statistics about a given day of the year over the course of the 2-3 years (<a href='data/yeardata.csv'><code>yeardata.csv</code></a>),</li>
-	                	<li>compile statistics about the distribution of ages over a year (<a href='data/yeardata_age.csv'><code>yeardata_age.csv</code></a>),</li>
-	                	<li>and compile age distributions for each date Hubway was active in the span of the data (<a href='data/ages.csv'><code>age.csv</code></a>).</li>
+	                	<li>compile statistics about a given day of the year over the course of the 2-3 years (<a href='./data/yeardata.csv'><code>yeardata.csv</code></a>),</li>
+	                	<li>compile statistics about the distribution of ages over a year (<a href='./data/yeardata_age.csv'><code>yeardata_age.csv</code></a>),</li>
+	                	<li>and compile age distributions for each date Hubway was active in the span of the data (<a href='./data/ages.csv'><code>age.csv</code></a>).</li>
 	                	</ul>
 	                </li>
 
-	                <li><a href='data/scripts/getMinuteData.py'><code>getMinuteData.py</code></a> served a similar purpose as that above, but instead derived statistics about 15 minute intervals over the course of a day, for both weekdays and weekends.  For each 15 minutes interval, we include the number of trips started, length of the trips, duration, and who started them (male/female, registered/unregistered).  This data is found in <a href='data/timeofdaydata.csv'><code>timeofdaydata.csv</code></a>
+	                <li><a href='./data/scripts/getMinuteData.py'><code>getMinuteData.py</code></a> served a similar purpose as that above, but instead derived statistics about 15 minute intervals over the course of a day, for both weekdays and weekends.  For each 15 minutes interval, we include the number of trips started, length of the trips, duration, and who started them (male/female, registered/unregistered).  This data is found in <a href='./data/timeofdaydata.csv'><code>timeofdaydata.csv</code></a>
 	                </li>
 
-	                <li><a href='data/stations.py'><code>stations.py</code></a> is kind of a big deal. It brings together a lot of different data sets, derives statistics from them, and makes them available to the home page visualization.  For each station, it calculates the average daily trips, as well as hourly breakdowns, for arriving and departing bikes, gender, registration type, and how fast those trips were.  This is done overall, as well as each for weekend and weekday.  The resulting files are <a href='data/stations.json'><code>stations.json</code></a> and <a href='data/stations_keyed.json'><code>stations_keyed.json</code></a>
+	                <li><a href='./data/stations.py'><code>stations.py</code></a> is kind of a big deal. It brings together a lot of different data sets, derives statistics from them, and makes them available to the home page visualization.  For each station, it calculates the average daily trips, as well as hourly breakdowns, for arriving and departing bikes, gender, registration type, and how fast those trips were.  This is done overall, as well as each for weekend and weekday.  The resulting files are <a href='./data/stations.json'><code>stations.json</code></a> and <a href='./data/stations_keyed.json'><code>stations_keyed.json</code></a>
 	                </li>
-	    	        <li><a href='data/breakdown.py'><code>breakdown.py</code></a> incorporates two main aspects: the total usage per day (and the regular breakdown metrics), and the weather conditions that day, which we got from <a href="http://www.ncdc.noaa.gov/">NOAA</a> & cleaned up a bit. This script made <a href='data/breakdown.csv'><code>breakdown.csv</code></a>
+	    	        <li><a href='./data/breakdown.py'><code>breakdown.py</code></a> incorporates two main aspects: the total usage per day (and the regular breakdown metrics), and the weather conditions that day, which we got from <a href="http://www.ncdc.noaa.gov/">NOAA</a> & cleaned up a bit. This script made <a href='./data/breakdown.csv'><code>breakdown.csv</code></a>
 	                </li>
 
                 </ul>
@@ -176,10 +176,10 @@
 
                     <p>From the beginning, we had a rather clear idea of what types of visualizations we wanted to implement.  We wanted multiple views, with the option to explore with filters, ranges, and brushes.  The initial sketches of our visualization concepts are displayed below.</p>
 
-                    <div class="center" id="designMap"><img src="design/img/map.jpg"></br> Figure 1: Map visualization by Hubway station<br/><br/></div>
-                    <div class="center" id='designMapTrips'><img src="design/img/maptrips.JPG"></br> Figure 2: Map visualization of Hubway trips<br/><br/></div>
-                    <div class="center" id="designStationVis"><img src="design/img/stationdetails.jpg"></br> Figure 3: In Depth View of Hubway Stations<br/><br/></div>
-                    <div class="center"id="designBreakdown"><img src="design/img/databreakdown.jpg"></br> Figure 4: In-depth view of users<br/><br/></div>
+                    <div class="center" id="designMap"><img src="./design/img/map.jpg"></br> Figure 1: Map visualization by Hubway station<br/><br/></div>
+                    <div class="center" id='designMapTrips'><img src="./design/img/maptrips.JPG"></br> Figure 2: Map visualization of Hubway trips<br/><br/></div>
+                    <div class="center" id="designStationVis"><img src="./design/img/stationdetails.jpg"></br> Figure 3: In Depth View of Hubway Stations<br/><br/></div>
+                    <div class="center"id="designBreakdown"><img src="./design/img/databreakdown.jpg"></br> Figure 4: In-depth view of users<br/><br/></div>
 
                     <p>Our main view will be a map of the Boston, Cambridge, Somerville, & Brookline area. There will be two visualizations that you can switch between that are overlayed on the map. <a href="#designMap">Figure 1</a> shows nodes at the station locations.  Each node will vary in size depending on how a particular station is. You will be able to add filters for the time of day, gender, age, etc. that will modify the nodes. <a href="#designMapTrips">Figure 2</a> will be lines connecting the stations that will show the popularity of the route based on color. You will be able to apply the same filters from Figure 1 to this visualization. Also, hovering over a route can show more details of that route such as the average trip length, average speed, gender, and age of the rider. We also plan on having two more visualizations that will show other stats of the routes, stations, and the average user of Hubway (<a href="#designStationVis">Figure 3</a> & <a href="#designBreakdown">4</a>). We plan on switching to these views by either clicking on a station or route. Each of these visualizations will also have some filters and a time slider to allow the user to see how they change over time.</p>
 
@@ -187,7 +187,7 @@
 
                 <p>A week into the project, we decided that we should be working on a backup view in case we were unable to implement the map view exactly as we wanted to.  We decided upon a chord layout that would depict the relationship between separate neighborhoods.  This new view is shown in the figure below.  The main screen shows the relationship of trips between the four cities--Cambridge, Brooklin, Boston and Somerville.  The chords can be toggled to represent three different aspects--volume of trips, speed of the average trip, and average duration of the trip.  Furthermore, any chord can be examined further to see additional user, station and trip information (as we also had in our initial design).  Second, there is the option to select one particular city and look within that city.  Therefore, if we selected Cambridge, we would then transition to a similar chord layout that displays all the neighborhoods of Cambridge (i.e. Porter, Central, Kendall, and Harvard Squares).  We would be able to see the names of individual stations at this point.  Like the previous design, this design encompasses all three of our main questions and gives the user the ability to explore.</p>
 
-  <div class="center"><img src="design/img/design2.jpg"></br> Figure 5: Chord layout design<br/><br/></div>
+  <div class="center"><img src="./design/img/design2.jpg"></br> Figure 5: Chord layout design<br/><br/></div>
 
 
          <p>By the time the design studio came around, it seemed that both layouts were each doable, but we would not be able to do both views.  Therefore, we used the design studio to get feedback from another group whether to pursue the map or the chord layout.  While the other team informed us that they did like the chord layout, it was clear that the map design was more intuitive and preferable for better exploring.  Therefore, we decided to focus our efforts on the map layout moving forward.</p>
@@ -205,7 +205,7 @@
 
 <p>  Lastly, we decided to add one last feature: follow the bike.  There is a Hubway Bike deemed "The Mayor's Bike" (it looks special).  We wanted to design a page in which viewers could follow where the bike traveled over time.  As time passed, we wanted to be able to see where on the map the bike traveled, as well as the total distance/time it travels.  We decided to show this on the map, with a distance + time + data + gender counter.  Additionally, we decided to show the distance covered over time as the bike traveled.</p>
 
-<div id="thelostone"></div><p>The visualization that didn't make the final cut was <a href="/js/WeatherVis.js">WeatherVis</a>, so named because we added daily weather data to the daily totals we had derived from the trip data.  Early versions of it consisted of two axes, one with one weather variable (in this case, the daily average wind) and the other with another (daily maximum temperature).  Each day was plotted according to these variables, and the daily trip volume was encoded in the mark's volume.<br><div class="center"><img src="design/img/before-overlapcircles.png"><img src="design/img/circles.png"></div><br>
+<div id="thelostone"></div><p>The visualization that didn't make the final cut was <a href="/./js/WeatherVis.js">WeatherVis</a>, so named because we added daily weather data to the daily totals we had derived from the trip data.  Early versions of it consisted of two axes, one with one weather variable (in this case, the daily average wind) and the other with another (daily maximum temperature).  Each day was plotted according to these variables, and the daily trip volume was encoded in the mark's volume.<br><div class="center"><img src="./design/img/before-overlapcircles.png"><img src="./design/img/circles.png"></div><br>
 The issue arose when we actually tried to plot the data.  Firstly, all of the nodes overlapped because of their volume, and since diminishing the volume would diminish how well we conveyed this third dimension of data, we relied on brushing to "filter" the data.  Secondly, when we tried to breakdown the data (male/female, commuter/leisure, etc.), we ended up with even more circles on circles.  As a final attempt, we shaded the circles according to how much the value for a given attribute varied from the average in a given time frame.  This simply was not clear, and did not yield any fruitful information besides the fact that 51 crazy people rode Hubway on the day of Hurricane Sandy.</p>
 <p>Initially, WeatherVis was in who.html, but as we worked to answer the questions more throughly, we realized this was not the appropriate panel for this data.  Then, we tried putting it in when.html, but since one view would deal with data generalized for the period of a day, and this one would deal with data for each day from all years, there was no logical way to make these two interactive fluidly and coherently.</p>
 
@@ -216,102 +216,102 @@ The issue arose when we actually tried to plot the data.  Firstly, all of the no
                     <h3>index.html <small>mapvis.js, stationvis.js</small></h3>
                     <p>Our first step was deciding how to create a map view.  After some research and experimentation, we decided upon using Leaflet and MapBox.  More about these libraries can be found <a href="http://leafletjs.com/features.html">here</a> and <a href="https://www.mapbox.com/mapbox.js/api/v2.1.8/">here</a>.  From here, we were able to create a map view, as shown in Figure 6.  The nodes in the figure are sized in area according to the average trip volume per hour for that hub.  Furthermore, the color of the nodes represent the proportion of average trip volume that is arriving.  That means if more than 50% of trips are arriving, the nodes are green; if less than 50% of trips are arriving, the nodes are red; and if 50% of trips are arriving and departing, the nodes are grey.    Both color and size of the trips are determined on a scale.  Since all nodes fell between the 40%-60% range for arrivals, the scale for color is in a range from .45 to .55.  In addition, we created a hovering option for routes that quick displays the two stations as well as the volume of trips.</p>
 
-         <div class="center"><img src="design/img/map_view.png"></br> Figure 6: Map View<br/><br/></div>
+         <div class="center"><img src="./design/img/map_view.png"></br> Figure 6: Map View<br/><br/></div>
 
 <p>When it came to drawing the routes between stations, we ran into a problem.  There were so many trips between stations that the map became essentially impossible to see.  Therefore, at this point, we decided to show only routes with a minimum number of trips.  Below, we have included views that include ALL routes (Figure 7), routes with more than 200 trips (Figure 8) and routes with more than 500 trips (Figure 9). </p>
 
-         <div class="center" id="figure7"><img src="design/img/ALL.png"></br> Figure 7: All routes<br/><br/></div>
-         <div class="center" id="figure8"><img src="design/img/200.png"></br> Figure 8: Routes with 200+ trips<br/><br/></div>
-         <div class="center" id="figure9"><img src="design/img/500.png"></br> Figure 9: Routes with 500+ trips<br/><br/></div>
+         <div class="center" id="figure7"><img src="./design/img/ALL.png"></br> Figure 7: All routes<br/><br/></div>
+         <div class="center" id="figure8"><img src="./design/img/200.png"></br> Figure 8: Routes with 200+ trips<br/><br/></div>
+         <div class="center" id="figure9"><img src="./design/img/500.png"></br> Figure 9: Routes with 500+ trips<br/><br/></div>
 
 <p>Once we realized we could get polylines from the Google Maps Direction API, we realized we could plot the routes between stations more "true" to form. This simply meant decoding a polyline for each route, and adding it to the map (Figure 10).</p>
-         <div class="center" id="figure10"><img src="design/img/map_polylines.png"></br> Figure 10: Routes with 750+ trips, plotted with polylines from Google Directions<br/><br/></div>
+         <div class="center" id="figure10"><img src="./design/img/map_polylines.png"></br> Figure 10: Routes with 750+ trips, plotted with polylines from Google Directions<br/><br/></div>
 
-<p>In order to further explore the map view, we created an exploration tool that dived deeper into the <b>who, where and what</b> of each station.  On hovering over a station, we highlighted the trips in and out of the station.  In addition, a menu slides out to show <a href="/js/StationVis.js">StationVis</a>.  The first tab on the menu reveals a breakdown female/male, registered/unregistered, and leisure/commuting composition of trips from that station (Figure 11).  This menu also has bar graphs for the top 5 origins and top 5 destinations of that station (Figures 12 & 13).  Lastly, the menu displays the total traffic at the station by hour of the day (Figure 14). </p><br/>
+<p>In order to further explore the map view, we created an exploration tool that dived deeper into the <b>who, where and what</b> of each station.  On hovering over a station, we highlighted the trips in and out of the station.  In addition, a menu slides out to show <a href="/./js/StationVis.js">StationVis</a>.  The first tab on the menu reveals a breakdown female/male, registered/unregistered, and leisure/commuting composition of trips from that station (Figure 11).  This menu also has bar graphs for the top 5 origins and top 5 destinations of that station (Figures 12 & 13).  Lastly, the menu displays the total traffic at the station by hour of the day (Figure 14). </p><br/>
 
     <div class="row">
-         <div class="col-xs-3"id="figure11"><span class="figure"><img src="design/img/menu-who.png"></br><div class="centered">Figure 11: Menu Exploring 'Who' Breakdown</div></span></div>
-        <div class="col-xs-3" id="figure12"><span class="figure"><img src="design/img/menu-origins.png"></br><div class="centered">Figure 12: Menu Exploring Top 5 Origins</div></span></div>
-        <div class="col-xs-3" id="figure13"><span class="figure"><img src="design/img/menu-dests.png"></br><div class="centered">Figure 13: Menu Exploring Top 5 Destinations</div></span></div>
-        <div class="col-xs-3" id="figure14"> <span class="figure"><img src="design/img/menu-time.png"></br><div class="centered">Figure 14: Menu Exploring Hourly Traffic</div></span></div>
+         <div class="col-xs-3"id="figure11"><span class="figure"><img src="./design/img/menu-who.png"></br><div class="centered">Figure 11: Menu Exploring 'Who' Breakdown</div></span></div>
+        <div class="col-xs-3" id="figure12"><span class="figure"><img src="./design/img/menu-origins.png"></br><div class="centered">Figure 12: Menu Exploring Top 5 Origins</div></span></div>
+        <div class="col-xs-3" id="figure13"><span class="figure"><img src="./design/img/menu-dests.png"></br><div class="centered">Figure 13: Menu Exploring Top 5 Destinations</div></span></div>
+        <div class="col-xs-3" id="figure14"> <span class="figure"><img src="./design/img/menu-time.png"></br><div class="centered">Figure 14: Menu Exploring Hourly Traffic</div></span></div>
     </div>
 
          <h3>who.html<small> whopievis.js, stackedvis.js, agevis.js, yearbrush.js</small></h3>
 
-<p>  The who page allows viewers to explore the makeup of riders on Hubway.  The visualization shows pie charts for breakdowns on casual/registered, female/male, leisure/commuter, and visitor/local.  Each of these breakdowns is a separate <a href="/js/whopievis.js"><code>WhoPieVis</code></a> that shows the user composition into two segments.  We allow the viewer to hover to see actual number of trips broken down.  A sample of the first iteration of a pie chart is shown below in Figure 15.</p>
+<p>  The who page allows viewers to explore the makeup of riders on Hubway.  The visualization shows pie charts for breakdowns on casual/registered, female/male, leisure/commuter, and visitor/local.  Each of these breakdowns is a separate <a href="/./js/whopievis.js"><code>WhoPieVis</code></a> that shows the user composition into two segments.  We allow the viewer to hover to see actual number of trips broken down.  A sample of the first iteration of a pie chart is shown below in Figure 15.</p>
 
-         <div class="center" id="figure15"><img src="design/img/pievis.png"></br> Figure 15:  Original Pie Breakdown of Casual and Registered<br/><br/></div>
+         <div class="center" id="figure15"><img src="./design/img/pievis.png"></br> Figure 15:  Original Pie Breakdown of Casual and Registered<br/><br/></div>
 
 
-<p>The visualization also shows the daily distribution of trips with <a href="/js/stackedvis.js"><code>StackedVis</code></a>.  The quantity of trips are shown over a certain time period in a line graph.  In addition, a viewer can hover over the line graph to see a specific day and the number of trips, as shown in Figure 16.   The viewer can click any of the pie graphs and the distribution of trips will break down into the two subcategories.  For example, if we were to click the gender pie graph, the distribution of trips would split into two lines--one for males and one for females.  The hover would then show the specific trip breakdown.  These features are shown below in Figure 17.  </p>
+<p>The visualization also shows the daily distribution of trips with <a href="/./js/stackedvis.js"><code>StackedVis</code></a>.  The quantity of trips are shown over a certain time period in a line graph.  In addition, a viewer can hover over the line graph to see a specific day and the number of trips, as shown in Figure 16.   The viewer can click any of the pie graphs and the distribution of trips will break down into the two subcategories.  For example, if we were to click the gender pie graph, the distribution of trips would split into two lines--one for males and one for females.  The hover would then show the specific trip breakdown.  These features are shown below in Figure 17.  </p>
 
-         <div class="center" id="figure17"><img src="design/img/stackedvis.png"></br> Figure 16:  Daily Distribution of Trips, Total<br/><br/></div>
-         <div class="center" id="figure17"><img src="design/img/genderstackedvis.png"></br> Figure 17:  Daily Distribution of Trips, Stacked by Gender<br/><br/></div>
+         <div class="center" id="figure17"><img src="./design/img/stackedvis.png"></br> Figure 16:  Daily Distribution of Trips, Total<br/><br/></div>
+         <div class="center" id="figure17"><img src="./design/img/genderstackedvis.png"></br> Figure 17:  Daily Distribution of Trips, Stacked by Gender<br/><br/></div>
 
-<p>Next, the page gives viewers the opportunity to see the distribution of riders' ages with <a href="js/agevis.js"><code>AgeVis</code></a>.  The age data for registered users is only available through Sept. 30, 2012.  We made sure to leave a note on the asterisk to let our viewers know this.  While we were at it, we let them know that the age, gender, and ZIP code for trips are only available for datapoints from registered users.  However, we also noted that registered users make up 75% of all the trips.  The age distribution visual is shown below in Figure 18.</p>
+<p>Next, the page gives viewers the opportunity to see the distribution of riders' ages with <a href="./js/agevis.js"><code>AgeVis</code></a>.  The age data for registered users is only available through Sept. 30, 2012.  We made sure to leave a note on the asterisk to let our viewers know this.  While we were at it, we let them know that the age, gender, and ZIP code for trips are only available for datapoints from registered users.  However, we also noted that registered users make up 75% of all the trips.  The age distribution visual is shown below in Figure 18.</p>
 
-         <div class="center" id="figure18"><img src="design/img/age.png"></br> Figure 18:  Age Distribution<br/><br/></div>
+         <div class="center" id="figure18"><img src="./design/img/age.png"></br> Figure 18:  Age Distribution<br/><br/></div>
 
-<p>Lastly, we gave the ability to brush over time to see all of the above figures.  Originally, the brush was an hourly breakdown of time as shown in Figure 19.  However, we decided that it would be more pertinent to brush over the entire dataset of time (i.e. years, not hours).  The final brush is set over a background image so that viewers can easily see what the overall time looks like.  From quickly looking at the brush, they can see that there is no usage during the winters and hence, the other visualizations will reflect this.  The final brush was implemented as <a href="/js/yearbrush.js"><code>YearBrush</code></a> and is shown below in Figure 20.</p>
+<p>Lastly, we gave the ability to brush over time to see all of the above figures.  Originally, the brush was an hourly breakdown of time as shown in Figure 19.  However, we decided that it would be more pertinent to brush over the entire dataset of time (i.e. years, not hours).  The final brush is set over a background image so that viewers can easily see what the overall time looks like.  From quickly looking at the brush, they can see that there is no usage during the winters and hence, the other visualizations will reflect this.  The final brush was implemented as <a href="/./js/yearbrush.js"><code>YearBrush</code></a> and is shown below in Figure 20.</p>
 
-         <div class="center" id="figure19"><img src="design/img/brush.png"></br> Figure 19:  Original Hourly Brush<br/><br/></div>
-         <div class="center" id="figure20"><img src="design/img/brush.gif"></br> Figure 20:  Final Year Brush<br/><br/></div>
+         <div class="center" id="figure19"><img src="./design/img/brush.png"></br> Figure 19:  Original Hourly Brush<br/><br/></div>
+         <div class="center" id="figure20"><img src="./design/img/brush.gif"></br> Figure 20:  Final Year Brush<br/><br/></div>
 
 
 <p>In the end, we decided to design the page to better reflect the Hubway data scheme.  The result were changes to hover colors, pie chart colors, title colors, and line colors.  These design choices are shown below in Figures 21, 22, and 23.</p>
 
-         <div class="center" id="figure21"><img src="design/img/all-pies.png"></br> Figure 21:  Final Pie Charts<br/><br/><br/><br/></div>
-         <div class="center" id="figure22"><img src="design/img/final-stacked.png"></br> Figure 22:  Final Stacked Vis with Hover<br/><br/><br/><br/></div>
-         <div class="center" id="figure23"><img class="full-width" src="design/img/who-page.png"></br> Figure 23:  Final <b>Who</b> Page<br/><br/></div>
+         <div class="center" id="figure21"><img src="./design/img/all-pies.png"></br> Figure 21:  Final Pie Charts<br/><br/><br/><br/></div>
+         <div class="center" id="figure22"><img src="./design/img/final-stacked.png"></br> Figure 22:  Final Stacked Vis with Hover<br/><br/><br/><br/></div>
+         <div class="center" id="figure23"><img class="full-width" src="./design/img/who-page.png"></br> Figure 23:  Final <b>Who</b> Page<br/><br/></div>
 
 
 
          <h3>when.html<small> weathervis.js, whenvis.js</small></h3>
-         <p>To answer the question of when people use Hubway, we came up with two visualizations. Ultimately, we only used one, but you can see why we made the call to eliminate <a href="js/weathervis.js"><code>WeatherVis</code></a><a href="#thelostone">here.</a></p>
-<p>The one that made the cut was <a href="js/whenvis.js"><code>WhenVis</code></a>.  It is a simple overall design: an area chart. Since this design came much later in the building process than our other visualizations, we had a much more specific purpose and simplified design for it. The x-axis is the hour of the day, and the y-axis is a variable attribute of any given 15 minute period over the day. For each 15 minute period, we calculated the total number of trips taken, the total length, distance ridden, number of registered/casual/female/male/etc. users, and broke that down further between weekday and weekend.  This data can be found in <a href="data/timeofdaydata.csv"><code>timeofdaydata.csv</code></a></p>
+         <p>To answer the question of when people use Hubway, we came up with two visualizations. Ultimately, we only used one, but you can see why we made the call to eliminate <a href="./js/weathervis.js"><code>WeatherVis</code></a><a href="#thelostone">here.</a></p>
+<p>The one that made the cut was <a href="./js/whenvis.js"><code>WhenVis</code></a>.  It is a simple overall design: an area chart. Since this design came much later in the building process than our other visualizations, we had a much more specific purpose and simplified design for it. The x-axis is the hour of the day, and the y-axis is a variable attribute of any given 15 minute period over the day. For each 15 minute period, we calculated the total number of trips taken, the total length, distance ridden, number of registered/casual/female/male/etc. users, and broke that down further between weekday and weekend.  This data can be found in <a href="./data/timeofdaydata.csv"><code>timeofdaydata.csv</code></a></p>
 <p>After some client-side data processing, the result is an area chart that can be "played with."  Users can view either total trip data, or a subset from either the weekend or weekday.  Users can then set what attribute of the data they want to view--trip speed, trip distance, etc.<p>
          <h3>where.html<small> chordvis.js, neighborhoodvis.js, formvis.js</small></h3>
-         <p>The simplest component of this visualization is <a href="js/formvis.js">FormVis</a>, which is simply the controls that appear on top of the chord diagram and trigger event handlers for which dataset should be employed.</p>
-         <p>For <a href='js/chordvis.js'>ChordVis</a>, the biggest challenge was making sure the enter, append, and exit selections were all appropriately selected and altered.  We grouped the stations according to neighborhood, and used a bright color scheme to differentiate between each neighborhood.  On hover, the user can focus on one neighborhood and its interactions with other neighborhoods, as well as see more detail information.  The entire chord vis is shown below in Figure 24 and a hovered neighborhood is shown in Figure 25.</p>
-         <div class="center" id="figure24"><img src="design/img/chordvis.png"></br> Figure 24:  Chord Neighborhoods<br/><br/></div>
-         <div class="center" id="figure25"><img src="design/img/chordvis_hover.png"></br> Figure 25:  Hovered Neighborhood<br/><br/></div>
+         <p>The simplest component of this visualization is <a href="./js/formvis.js">FormVis</a>, which is simply the controls that appear on top of the chord diagram and trigger event handlers for which dataset should be employed.</p>
+         <p>For <a href='./js/chordvis.js'>ChordVis</a>, the biggest challenge was making sure the enter, append, and exit selections were all appropriately selected and altered.  We grouped the stations according to neighborhood, and used a bright color scheme to differentiate between each neighborhood.  On hover, the user can focus on one neighborhood and its interactions with other neighborhoods, as well as see more detail information.  The entire chord vis is shown below in Figure 24 and a hovered neighborhood is shown in Figure 25.</p>
+         <div class="center" id="figure24"><img src="./design/img/chordvis.png"></br> Figure 24:  Chord Neighborhoods<br/><br/></div>
+         <div class="center" id="figure25"><img src="./design/img/chordvis_hover.png"></br> Figure 25:  Hovered Neighborhood<br/><br/></div>
 
 
 <p>We decided to use a more muted color scheme.  In addition, we added hovers to the chords and neighborhoods.  Upon hovering on a neighborhood, we see the percentage of trips that the selected neighborhood accounts for.  On hovering on a chord, we see the number of trips between the two stations--in both directions.  Our final design for the chord visualization is shown in Figure 26.</p>
 
-         <div class="center" id="figure26"><img src="design/img/updated-chords.png"></br> Figure 26:  Final Chord Neighborhoods<br/><br/></div>
+         <div class="center" id="figure26"><img src="./design/img/updated-chords.png"></br> Figure 26:  Final Chord Neighborhoods<br/><br/></div>
 
 
-<p>Next, we created a map of these neighborhoods by modifying our original MapVis.  Like MapVis, the stations on <a href="js/neighborhoodvis.js"><code>NeighborhoodVis</code></a> are sized according to the traffic at each station.  Furthermore, when a neighborhood is selected in the chord visualization, only the corresponding stations in that neighborhood are shown on the map.  The map of all stations in neighborhoods is shown in Figure 27.</p>
+<p>Next, we created a map of these neighborhoods by modifying our original MapVis.  Like MapVis, the stations on <a href="./js/neighborhoodvis.js"><code>NeighborhoodVis</code></a> are sized according to the traffic at each station.  Furthermore, when a neighborhood is selected in the chord visualization, only the corresponding stations in that neighborhood are shown on the map.  The map of all stations in neighborhoods is shown in Figure 27.</p>
 
-         <div class="center" id="figure27"><img src="design/img/neighborhoods.png"></br> Figure 27: Neighborhoods Mapped<br/><br/></div>
+         <div class="center" id="figure27"><img src="./design/img/neighborhoods.png"></br> Figure 27: Neighborhoods Mapped<br/><br/></div>
 
 <p>Lastly, we added the ability to toggle between overall data, for only weekend or weekday and for only casual or registered users.  The entire where page is shown below in Figure 28.  In this figure, the Back Bay neighborhood is selected on the chord visualization and thus, only the stations in the Back Bay are visible in the map.</p>
 
-         <div class="center" id="figure27"><img class="full-width" src="design/img/final-where.png"></br> Figure 28: Final <b>Where </b> Page<br/><br/></div>
+         <div class="center" id="figure27"><img class="full-width" src="./design/img/final-where.png"></br> Figure 28: Final <b>Where </b> Page<br/><br/></div>
 
 
 
          <h3>follow.html<small> followvis.js, runningvis.js</small></h3>
          <p>Having become more comfortable with using Mapbox, Leaflet, and D3 in combination, we realized we could pull off a "follow the bike" in a very basic form.</p>
-         <p>By filtering the original <code>hubway_trips.csv</code> file for trips made on bike B00001 and removing extraneous information, we created a data file <a href="data/mayorsbike.csv"><code>mayorsbike.csv</code></a> (for further details, see <a href="#scripts">scripts</a>).
-           One visualization, <a href="js/followvis.js">FollowVis</a> controls implementing and updating the map, while the other, <a href="js/runningvis.js">RunningVis</a> keeps a "running" tally of the total distance, time, trips, and so on made by this single bike.</p>
+         <p>By filtering the original <code>hubway_trips.csv</code> file for trips made on bike B00001 and removing extraneous information, we created a data file <a href="./data/mayorsbike.csv"><code>mayorsbike.csv</code></a> (for further details, see <a href="#scripts">scripts</a>).
+           One visualization, <a href="./js/followvis.js">FollowVis</a> controls implementing and updating the map, while the other, <a href="./js/runningvis.js">RunningVis</a> keeps a "running" tally of the total distance, time, trips, and so on made by this single bike.</p>
            <p>Instead of passing all the data to each visualization, we instead use follow.html as a sort of controller file, giving each visualization the data piece it needs at each time step. Once the controller has looped through all the data, it tells the visualizations to reset, and starts over.</p>
            <p>In terms of design, we wanted to keep this page simple.  The map was made to be dark so that as the trips were drawn, their "shadow" would be more apparent, and in general give a higher contrast between contextual information (the map) and the data (the routes drawn). When the routes are drawn, they are intially full opacity and slightly bolded. As newer trips are drawn, the old ones are faded to a set opacity, and are slightly thinner.  This lets the user see each new trip plotted more clearly, as well as lends itself to creating this bike's footprint across Boston.</p>
            <p>For the RunningVis, we had planned to keep things simply with glyphicons, one each representing a user and colored according to gender. This proved difficult as it was the opposite of simple; With so many trips, the information started flowing off the page <a href="#figure">Figure </a></p>
-           <div class="center" id="figure29"><img src="design/img/offpage.png"></br> Figure 29: Not the simplest visualization<br/><br/></div>
-           <p>Instead, we opted for a simple pie chart that would be updated with each new trip.  For this, we simply modified <a href="js/whopievis.js"><code>WhoPieVis</code></a> to make <a href="js/pievis.js"><code>PieVis</code></a>.  This new pie chart, along with running tallies of the date, how many trips have been taken, total time the bike has been used, and how far the bike has been ridden.  These are shown below in Figure 30.  
+           <div class="center" id="figure29"><img src="./design/img/offpage.png"></br> Figure 29: Not the simplest visualization<br/><br/></div>
+           <p>Instead, we opted for a simple pie chart that would be updated with each new trip.  For this, we simply modified <a href="./js/whopievis.js"><code>WhoPieVis</code></a> to make <a href="./js/pievis.js"><code>PieVis</code></a>.  This new pie chart, along with running tallies of the date, how many trips have been taken, total time the bike has been used, and how far the bike has been ridden.  These are shown below in Figure 30.  
                
-       <div class="center" id="figure30"><img src="design/img/stats.png"></br> Figure 30: The Mayor's Bike Statistics<br/><br/></div>
+       <div class="center" id="figure30"><img src="./design/img/stats.png"></br> Figure 30: The Mayor's Bike Statistics<br/><br/></div>
 
-            <p>Lastly, we can see a dicontinuous area graph of the miles covered as they are tallied (in conjunction with the rest of the visualization).  This <a href="/js/progressvis.js"><code>ProgressVis</code></a> gives the viewer an idea of how far the bike has traveled over the course of the dataset and is shown below in Figure 31.</p>
+            <p>Lastly, we can see a dicontinuous area graph of the miles covered as they are tallied (in conjunction with the rest of the visualization).  This <a href="./js/progressvis.js"><code>ProgressVis</code></a> gives the viewer an idea of how far the bike has traveled over the course of the dataset and is shown below in Figure 31.</p>
 
-       <div class="center" id="figure31"><img src="design/img/progress.png"></br> Figure 31: The Mayor's Bike Statistics<br/><br/></div>
+       <div class="center" id="figure31"><img src="./design/img/progress.png"></br> Figure 31: The Mayor's Bike Statistics<br/><br/></div>
 
 
 <p>This is what the <b>follow the bike </b> visualization looks like at its completion.</p>
 
-       <div class="center" id="figure32"><img class="full-width" src="design/img/mayorsbike.png"></br> Figure 32: The Mayor's Bike<br/><br/></div>
+       <div class="center" id="figure32"><img class="full-width" src="./design/img/mayorsbike.png"></br> Figure 32: The Mayor's Bike<br/><br/></div>
 
          </section>
                 <section id="evaluation"><hr>
@@ -338,8 +338,8 @@ The issue arose when we actually tried to plot the data.  Firstly, all of the no
         </div>
     </div>
 
-    <script src="libs/jquery-2.1.3.min.js"></script>
-    <script src="libs/bootstrap.min.js"></script>
-    <script src="libs/d3.min.js"></script>
+    <script src="./libs/jquery-2.1.3.min.js"></script>
+    <script src="./libs/bootstrap.min.js"></script>
+    <script src="./libs/d3.min.js"></script>
   </body>
 </html>
